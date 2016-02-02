@@ -1,0 +1,82 @@
+<application>
+  <component name="ProjectManager">
+    <defaultProject>
+      <component name="Behat">
+        <behat_settings>
+          <BehatSettings />
+        </behat_settings>
+      </component>
+      <component name="Encoding">
+        <file url="PROJECT" charset="UTF-8" />
+      </component>
+      <component name="InspectionProjectProfileManager">
+        <profile version="1.0">
+          <option name="myName" value="Project Default" />
+          <inspection_tool class="SpellCheckingInspection" enabled="false" level="TYPO" enabled_by_default="false" />
+        </profile>
+        <option name="PROJECT_PROFILE" value="Project Default" />
+        <option name="USE_PROJECT_PROFILE" value="true" />
+        <version value="1.0" />
+      </component>
+      <component name="PhpUnit">
+        <phpunit_settings>
+          <PhpUnitSettings />
+        </phpunit_settings>
+      </component>
+      <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="Xampp">
+        <include_path>
+          <path value="" />
+        </include_path>
+      </component>
+      <component name="ProjectInspectionProfilesVisibleTreeState">
+        <entry key="Project Default">
+          <profile-state>
+            <expanded-state>
+              <State>
+                <id />
+              </State>
+              <State>
+                <id>Spelling</id>
+              </State>
+            </expanded-state>
+            <selected-state>
+              <State>
+                <id>Spelling</id>
+              </State>
+            </selected-state>
+          </profile-state>
+        </entry>
+      </component>
+      <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+        <OptionsSetting value="true" id="Add" />
+        <OptionsSetting value="true" id="Remove" />
+        <OptionsSetting value="true" id="Checkout" />
+        <OptionsSetting value="true" id="Update" />
+        <OptionsSetting value="true" id="Status" />
+        <OptionsSetting value="true" id="Edit" />
+        <ConfirmationsSetting value="0" id="Add" />
+        <ConfirmationsSetting value="0" id="Remove" />
+      </component>
+      <component name="PropertiesComponent">
+        <property name="settings.editor.selected.configurable" value="File.Encoding" />
+        <property name="settings.editor.splitter.proportion" value="0.2" />
+        <property name="last_opened_file_path" value="C:/xampp/php/php.exe" />
+      </component>
+      <component name="masterDetails">
+        <states>
+          <state key="ScopeChooserConfigurable.UI">
+            <settings>
+              <splitter-proportions>
+                <option name="proportions">
+                  <list>
+                    <option value="0.2" />
+                  </list>
+                </option>
+              </splitter-proportions>
+            </settings>
+          </state>
+        </states>
+      </component>
+    </defaultProject>
+  </component>
+</application>
