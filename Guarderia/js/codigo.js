@@ -1,21 +1,21 @@
 window.onload=function(){inicio()};
 var guarderia;
 function inicio() {
-   /* document.getElementById("mostrarFormAltaProf").addEventListener("click", mostrarFormAltaProf, false);
+    document.getElementById("mostrarFormAltaProf").addEventListener("click", mostrarFormAltaProf, false);
     document.getElementById("mostrarFormModProf").addEventListener("click", mostrarFormModProf, false);
     document.getElementById("mostrarFormBajProf").addEventListener("click", mostrarFormBajProf, false);
     document.getElementById("mostrarFormAltaAlum").addEventListener("click",mostrarFormAltaAlum,false);
     document.getElementById("mostrarFormModAlum").addEventListener("click",mostrarFormModAlum,false);
-    document.getElementById("mostrarFormBajAlum").addEventListener("click",mostrarFormBajAlum,false);*/
+    document.getElementById("mostrarFormBajAlum").addEventListener("click",mostrarFormBajAlum,false);
     document.getElementById("btnAltaProf").addEventListener("click", validarFormProf, false);
     document.getElementById("btnModProf").addEventListener("click",validarFormModProf,false);
-    document.getElementById("btnBajaProf").addEventListener("click",validarFormBajaProf,false);/*
+    document.getElementById("btnBajaProf").addEventListener("click",validarFormBajaProf,false);
     document.getElementById("btnAltaAlum").addEventListener("click",validarFormAltaAlum,false);
     document.getElementById("btnModAlum").addEventListener("click",validarFormModAlum,false);
     document.getElementById("btnBajaAlum").addEventListener("click",validarBajaAlum,false);
     document.getElementById("btnAltaAct").addEventListener("click",validarAltaAct,false);
     document.getElementById("btnModAct").addEventListener("click",validarModAct,false);
-    document.getElementById("btnBajaAct").addEventListener("click",validarBajaAct,false);*/
+    document.getElementById("btnBajaAct").addEventListener("click",validarBajaAct,false);
 
      guarderia=new Guarderia();
 }
@@ -251,15 +251,9 @@ function inicio() {
     if(todoOk==false)
         alert(sMensajeError);
     else {
-        var actividad=guarderia.buscarActividadExtra(form_bajaAct.text_id.value);
-        if(actividad==null){
-            alert("Actividad no registrada");
-        }
-        else{
-            alert(guarderia.bajaActividadExtra(actividad));
+            alert(guarderia.bajaActividadExtra(form_bajaAct.text_id.value));
             form_bajaAct.text_id.value="";
         }
-    }
 }
 
 

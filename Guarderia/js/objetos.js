@@ -198,9 +198,10 @@ Guarderia.prototype.altaActividadExtra=function(oActividadExtra){
     return sRes;
 };
 
-Guarderia.prototype.bajaActividadExtra= function (oActividad) {
+Guarderia.prototype.bajaActividadExtra= function (id) {
     var sRes = "Actividad eliminada correctamente";
-    if (this.buscarActividadExtra(oActividad.id) != null ){
+    var oActividad=this.buscarActividadExtra(id);
+    if ( oActividad != null ){
         this.actividadesExtra.remove(oActividad);
     }
     else{
@@ -210,9 +211,10 @@ Guarderia.prototype.bajaActividadExtra= function (oActividad) {
     return sRes;
 };
 
-Guarderia.prototype.bajaProfesor= function (oProfesor) {
+Guarderia.prototype.bajaProfesor= function (dni) {
     var sRes = "Profesor eliminado correctamente";
-    if (this.buscarProfesor(oProfesor.dni) != null ){
+    var oProfesor=this.buscarProfesor(dni);
+    if ( oProfesor != null ){
         this.profesores.remove(oProfesor);
     }
     else{
@@ -221,9 +223,10 @@ Guarderia.prototype.bajaProfesor= function (oProfesor) {
 
     return sRes;
 };
-Guarderia.prototype.bajaAlumno= function (oAlumno) {
+Guarderia.prototype.bajaAlumno= function (dni) {
     var sRes = "Alumno eliminado correctamente";
-    if (this.buscarAlumno(oAlumno.dni) != null ){
+    var oAlumno= this.buscarAlumno(dni);
+    if ( oAlumno != null ){
         this.alumnos.remove(oAlumno);
     }
     else{
@@ -254,9 +257,10 @@ Guarderia.prototype.bajaExpediente=function(sDniAlumno){
         sRes="El expediente no existe";
     }
 };
-Guarderia.prototype.bajaBonoComedor=function(oBonocomedor){
+Guarderia.prototype.bajaBonoComedor=function(dni){
     var sRes="Baja de bono correcta";
-    if(this.buscarBonoComedor(oBonocomedor.alumno)!=null){
+    var oBonoComedor=this.buscarBonoComedor(dni);
+    if(oBonoComedor !=null){
         this.bonosComedor.remove(oBonocomedor);
     }
     else{
