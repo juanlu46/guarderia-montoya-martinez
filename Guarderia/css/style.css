@@ -1,0 +1,29 @@
+
+body{
+    background: transparent linear-gradient(#B78CCE, #FFF) no-repeat;
+
+}
+.central{
+    margin-top: 22px;
+    color: #4B4359;
+}
+
+.menu{
+   box-shadow: 3px 2px 11px 3px rgba(0, 0, 0, 0.75);
+}
+.barra-dere{
+    margin-top: 89px;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.75);
+   background-color: #80689F;
+}
+.barra-dere h2{color: #CABDE7;}
+.barra-dere a{
+    color:white;
+}
+.barra-dere th:hover{
+    background-color:#8973A7;
+}
+
+.divFormularios{
+    margin-right: 0.5px;
+}
