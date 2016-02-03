@@ -293,5 +293,201 @@
         </div>
     </div>
 </div>
+<!--FORMULARIOS ACTIVIDADES-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+    </div>
+    <div class="row">
+        <div class="col-md-3 oculto" id="menuAct">
+            <ul class="list-group">
+                <li class="list-group-item" id="mostrarFormAltaAct">Alta de Actividad</li>
+                <li class="list-group-item" id="mostrarFormModAct">Modificación de Actividad</li>
+                <li class="list-group-item" id="mostrarFormBajAct">Baja de Actividad</li>
+            </ul>
+
+        </div>
+        <div class="col-md-9">
+            <div class="row contenido">
+                <div class="col-md-offset-2 col-md-8">
+                    <div class="form_altaAct" >
+                        <form name="form_altaAct" id="form_altaAct" class="form-horizontal oculto">
+                            <h3 class="text-primary">Alta Actividad</h3>
+                            <div class="form-group">
+                                <label for="text_id" class="col-sm-4 control-label">ID</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_id" placeholder="Id"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_nombre" class="col-sm-4 control-label">Nombre</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_nombre" placeholder="Nombre"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-xs-4">
+                                    <button type="button" id="btnAltaAct" class="btn btn-info">Añadir</button>
+                                    <button type="button" class="btn btn-danger">Cancelar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="form_modAct">
+                        <form id="form_modAct" name="form_modAct"  class="form-horizontal oculto">
+                            <h3 class="text-primary">Modificación de Actividad</h3>
+                            <div class="form-group">
+                                <label for="text_id" class="col-sm-4 control-label">ID</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_id" placeholder="Id"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_nombre" class="col-sm-4 control-label">Nombre</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_nombre" placeholder="Nombre"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-xs-6">
+                                    <button type="button" id="btnModAct" class="btn btn-info">Guardar Cambios</button>
+                                    <button type="button" class="btn btn-danger">Cancelar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="form_bajaAct">
+                        <form name="form_bajaAct" id="form_bajaAct" class="form-horizontal oculto">
+                            <h3 class="text-primary">Baja de Actividad</h3>
+                            <div class="form-group">
+                                <label for="text_id" class="col-sm-4 control-label">Id</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_id" placeholder="Id"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-xs-4">
+                                    <button type="button" id="btnBajaAct" class="btn btn-info">Eliminar</button>
+                                    <button type="button" class="btn btn-danger">Cancelar</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--FORMULARIO COMEDOR-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 oculto" id="menuComed">
+                <ul class="list-group" >
+                    <li class="list-group-item" id="mostrarFormAltaComed">Alta de Bono Comedor</li>
+                    <li class="list-group-item" id="mostrarFormModComed">Modificación de Bono Comedor</li>
+                    <li class="list-group-item" id="mostrarFormBajComed">Baja de Bono Comedor</li>
+                </ul>
+
+            </div>
+            <div class="col-md-9">
+                <div class="row contenido">
+                    <div class="col-md-offset-2 col-md-8">
+                        <div class="form_altaBono" >
+                            <form name="form_altaBono" id="form_altaBono" class="form-horizontal oculto">
+                                <h3 class="text-primary">Alta Bono Comedor</h3>
+                                <div class="form-group">
+                                    <label for="text_alumno" class="col-sm-4 control-label">Dni Alumno</label>
+                                    <div class="col-xs-4">
+                                        <input type="text" class="form-control" id="text_alumno" placeholder="dni"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="text_horario" class="col-sm-4 control-label">Horario</label>
+                                    <div class="col-xs-4">
+                                        <input type="text" class="form-control" id="text_horario" placeholder="horario"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="text_alimentos" class="col-sm-4 control-label">Alimentos alérgicos</label>
+                                    <div class="col-xs-4">
+                                        <input type="text" class="form-control" id="text_alimentos" placeholder="alimento"/>
+                                        <textarea class="form-control" rows="6">Escriba aquí su texto.</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-4 col-xs-4">
+                                        <button type="button" id="btnAltaBono" class="btn btn-info">Añadir</button>
+                                        <button type="button" class="btn btn-danger">Cancelar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="form_modBono">
+                            <form id="form_modBono" name="form_modBono"  class="form-horizontal oculto">
+                                <h3 class="text-primary">Modificación de Bono Comedor</h3>
+                                <div class="form-group">
+                                    <label for="text_alumno" class="col-sm-4 control-label">Dni Alumno</label>
+                                    <div class="col-xs-4">
+                                        <input type="text" class="form-control" id="text_alumno" placeholder="dni"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="text_horario" class="col-sm-4 control-label">Horario</label>
+                                    <div class="col-xs-4">
+                                        <input type="text" class="form-control" id="text_horario" placeholder="horario"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="text_alimentos" class="col-sm-4 control-label">Alimentos alérgicos</label>
+                                    <div class="col-xs-4">
+                                        <input type="text" class="form-control" id="text_alimentos" placeholder="alimento"/>
+                                        <textarea class="form-control" rows="6">Escriba aquí su texto.</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-4 col-xs-4">
+                                        <button type="button" id="btnModBono" class="btn btn-info">Añadir</button>
+                                        <button type="button" class="btn btn-danger">Cancelar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="form_bajaBono">
+                            <form name="form_bajaBono" id="form_bajaBono" class="form-horizontal oculto">
+                                <h3 class="text-primary">Baja de Bono Comedor</h3>
+                                <div class="form-group">
+                                    <label for="text_dni" class="col-sm-4 control-label">Dni</label>
+                                    <div class="col-xs-4">
+                                        <input type="text" class="form-control" id="text_dni" placeholder="dni"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-4 col-xs-4">
+                                        <button type="button" id="btnBajaBono" class="btn btn-info">Eliminar</button>
+                                        <button type="button" class="btn btn-danger">Cancelar</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
