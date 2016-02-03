@@ -227,7 +227,7 @@ Guarderia.prototype.bajaAlumno= function (dni) {
     var sRes = "Alumno eliminado correctamente";
     var oAlumno= this.buscarAlumno(dni);
     if ( oAlumno != null ){
-        this.alumnos.remove(oAlumno);
+        this.alumnos.remove(oAlumno); //NO FUNCIONA EL .REMOVE
     }
     else{
         sRes = "Alumno no registrado";

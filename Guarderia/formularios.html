@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>Guarderia</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="js/codigo.js"></script>
+    <script type="text/javascript" src="js/objetos.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+</head>
+<body>
+<style type="text/css">
+    .oculto{display: none;}
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="menu">
+                <nav class="navbar navbar-inverse" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                        </button> <a class="navbar-brand" href="index.html">Guarderia</a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li id="alumnos">
+                                <a href="#">Alumnos</a>
+                            </li>
+                            <li id="profesores">
+                                <a href="#">Profesores</a>
+                            </li>
+                            <li id="actividades">
+                                <a href="#">Actividades extraescolares</a>
+                            </li>
+                            <li id="comedor">
+                                <a href="#">Comedor</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </nav></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 oculto" id="menuProf">
+            <ul class="list-group">
+                <li class="list-group-item" id="mostrarFormAltaProf">Alta de Profesor</li>
+                <li class="list-group-item" id="mostrarFormModProf">Modificación de Profesor</li>
+                <li class="list-group-item" id="mostrarFormBajProf">Baja de Profesor</li>
+            </ul>
+
+        </div>
+        <div class="col-md-9">
+            <div class="row contenido">
+                <div class="col-md-offset-2 col-md-8">
+                    <div class="form_altaProf" >
+                        <form name="form_altaProf" id="form_altaProf" class="form-horizontal oculto">
+                            <h3 class="text-primary">Alta Profesor</h3>
+                            <div class="form-group">
+                                <label for="text_nombre" class="col-sm-4 control-label">Nombre</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_nombre" placeholder="Nombre"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_apellido" class="col-sm-4 control-label">Apellido</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_apellido" placeholder="Apellido"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="text_dni" class="col-sm-4 control-label">Dni</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_dni" placeholder="Dni"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_tlfn" class="col-sm-4 control-label">Teléfono</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_tlfn" placeholder="Teléfono"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-xs-4">
+                                    <button type="button" id="btnAltaProf" class="btn btn-info">Añadir</button>
+                                    <button type="button" class="btn btn-danger">Cancelar</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="form_modProf">
+                        <form id="form_modProf" name="form_modProf"  class="form-horizontal oculto">
+                            <h3 class="text-primary">Modificación Profesor</h3>
+                            <div class="form-group">
+                                <label for="text_nombre" class="col-sm-4 control-label">Nombre</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_nombre" placeholder="Nombre"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_apellido" class="col-sm-4 control-label">Apellido</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_apellido" placeholder="Apellido"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="text_dni" class="col-sm-4 control-label">Dni</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_dni" placeholder="Dni"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_tlfn" class="col-sm-4 control-label">Teléfono</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_tlfn" placeholder="Teléfono"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-xs-6">
+                                    <button type="button" id="btnModProf" class="btn btn-info">Guardar Cambios</button>
+                                    <button type="button" class="btn btn-danger">Cancelar</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="form_bajaProf">
+                        <form name="form_bajaProf" id="form_bajaProf" class="form-horizontal oculto">
+                            <h3 class="text-primary">Baja Profesor</h3>
+                            <div class="form-group">
+                                <label for="text_dni" class="col-sm-4 control-label">Dni</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_dni" placeholder="Dni"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-xs-4">
+                                    <button type="button" id="btnBajaProf" class="btn btn-info">Eliminar</button>
+                                    <button type="button" class="btn btn-danger">Cancelar</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+    <!--FORMULARIOS ALUMNOS-->
+    <div class="row">
+        <div class="col-md-3 oculto" id="menuAlum">
+            <ul class="list-group">
+                <li class="list-group-item" id="mostrarFormAltaAlum">Alta de alumnos</li>
+                <li class="list-group-item" id="mostrarFormModAlum">Modificación de alumnos</li>
+                <li class="list-group-item" id="mostrarFormBajAlum">Baja de alumnos</li>
+            </ul>
+
+        </div>
+        <div class="col-md-9">
+            <div class="row divFormularios">
+                <div class="col-md-offset-2 col-md-8">
+                    <div class="form_altaAlum" >
+                        <form name="form_altaAlum" id="form_altaAlum" class="form-horizontal oculto">
+                            <h3 class="text-primary">Alta Alumno</h3>
+                            <div class="form-group">
+                                <label for="text_nombre" class="col-sm-4 control-label">Nombre</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_nombre" placeholder="Nombre"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_apellido" class="col-sm-4 control-label">Apellido</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_apellido" placeholder="Apellido"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="text_dni" class="col-sm-4 control-label">Dni</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_dni" placeholder="Dni"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_edad" class="col-sm-4 control-label">Edad</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_edad" placeholder="Edad"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_tlfn" class="col-sm-4 control-label">Teléfono</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_tlfn" placeholder="Teléfono"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_direccion" class="col-sm-4 control-label">Dirección</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_direccion" placeholder="Dirección"/><br>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-xs-4">
+                                    <button type="button" id="btnAltaAlum" class="btn btn-info">Añadir</button>
+                                    <button type="button" class="btn btn-danger">Cancelar</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="form_modAlum">
+                        <form name="form_modAlum" id="form_modAlum" class="form-horizontal oculto">
+                            <h3 class="text-primary">Modificación Alumno</h3>
+                            <div class="form-group">
+                                <label for="text_nombre" class="col-sm-4 control-label">Nombre</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_nombre" placeholder="Nombre"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_apellido" class="col-sm-4 control-label">Apellido</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_apellido" placeholder="Apellido"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="text_dni" class="col-sm-4 control-label">Dni</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_dni" placeholder="Dni"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_edad" class="col-sm-4 control-label">Edad</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_edad" placeholder="Edad"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_tlfn" class="col-sm-4 control-label">Teléfono</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_tlfn" placeholder="Teléfono"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_direccion" class="col-sm-4 control-label">Dirección</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_direccion" placeholder="Dirección"/><br>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-xs-4">
+                                    <button type="button" id="btnModAlum" class="btn btn-info">Guardar Cambios</button>
+                                    <button type="button" class="btn btn-danger">Cancelar</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="form_bajaAlum" >
+                        <form name="form_bajaAlum" id="form_bajaAlum" class="form-horizontal oculto">
+                            <h3 class="text-primary">Baja Alumno</h3>
+                            <div class="form-group">
+                                <label for="text_dni" class="col-sm-4 control-label">Dni</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_dni" placeholder="Dni"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-xs-4">
+                                    <button type="button" id="btnBajaAlum" class="btn btn-info">Eliminar</button>
+                                    <button type="button" class="btn btn-danger">Cancelar</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

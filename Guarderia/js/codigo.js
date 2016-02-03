@@ -1,23 +1,35 @@
 window.onload=function(){inicio()};
 var guarderia;
 function inicio() {
-    document.getElementById("mostrarFormAltaProf").addEventListener("click", mostrarFormAltaProf, false);
-    document.getElementById("mostrarFormModProf").addEventListener("click", mostrarFormModProf, false);
-    document.getElementById("mostrarFormBajProf").addEventListener("click", mostrarFormBajProf, false);
+    document.getElementById("alumnos").addEventListener("click",mostrarFormsAlumnos,false);
+    document.getElementById("profesores").addEventListener("click",mostrarFormsProf,false);
+
+  /*
+    document.getElementById("btnAltaAct").addEventListener("click",validarAltaAct,false);
+    document.getElementById("btnModAct").addEventListener("click",validarModAct,false);
+    document.getElementById("btnBajaAct").addEventListener("click",validarBajaAct,false);*/
+
+     guarderia=new Guarderia();
+}
+function mostrarFormsAlumnos(){
+    ocultar("menuProf");
+    $("form").hide("normal");
+    document.getElementById("menuAlum").classList.remove("oculto");
     document.getElementById("mostrarFormAltaAlum").addEventListener("click",mostrarFormAltaAlum,false);
     document.getElementById("mostrarFormModAlum").addEventListener("click",mostrarFormModAlum,false);
     document.getElementById("mostrarFormBajAlum").addEventListener("click",mostrarFormBajAlum,false);
-    document.getElementById("btnAltaProf").addEventListener("click", validarFormProf, false);
-    document.getElementById("btnModProf").addEventListener("click",validarFormModProf,false);
-    document.getElementById("btnBajaProf").addEventListener("click",validarFormBajaProf,false);
-    document.getElementById("btnAltaAlum").addEventListener("click",validarFormAltaAlum,false);
-    document.getElementById("btnModAlum").addEventListener("click",validarFormModAlum,false);
-    document.getElementById("btnBajaAlum").addEventListener("click",validarBajaAlum,false);
-    document.getElementById("btnAltaAct").addEventListener("click",validarAltaAct,false);
-    document.getElementById("btnModAct").addEventListener("click",validarModAct,false);
-    document.getElementById("btnBajaAct").addEventListener("click",validarBajaAct,false);
+}
+function ocultar(elemento){
+    document.getElementById(elemento).classList.add("oculto");
+}
 
-     guarderia=new Guarderia();
+function mostrarFormsProf(){
+    ocultar("menuAlum");
+    document.getElementById("menuProf").classList.remove("oculto");
+    document.getElementById("mostrarFormAltaProf").addEventListener("click", mostrarFormAltaProf, false);
+    document.getElementById("mostrarFormModProf").addEventListener("click", mostrarFormModProf, false);
+    document.getElementById("mostrarFormBajProf").addEventListener("click", mostrarFormBajProf, false);
+
 }
     function validarFormAltaAlum(){
         var sMensajeError="";
@@ -103,14 +115,15 @@ function inicio() {
     function validarBajaAlum(){
         var todoOk=true;
         var sMensajeError="";
-        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_modAlum.text_dni.value)){
+
+        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_bajaAlum.text_dni.value)){
             sMensajeError="Dni incorrecto\n";
             todoOk=false;
         }
         if(todoOk==false)
             alert(sMensajeError);
         else
-        guarderia.bajaAlumno(form_altaAlum.text_dni.value);
+        guarderia.bajaAlumno(form_bajaAlum.text_dni.value);
     }
 
 
@@ -262,29 +275,35 @@ function inicio() {
         document.getElementById("form_altaProf").classList.remove("oculto");
         document.getElementById("form_modProf").classList.add("oculto");
         document.getElementById("form_bajaProf").classList.add("oculto");
+        document.getElementById("btnAltaProf").addEventListener("click", validarFormProf, false);
     }
     function mostrarFormModProf(){
         document.getElementById("form_modProf").classList.remove("oculto");
         document.getElementById("form_altaProf").classList.add("oculto");
         document.getElementById("form_bajaProf").classList.add("oculto");
+        document.getElementById("btnModProf").addEventListener("click",validarFormModProf,false);
     }
     function mostrarFormBajProf(){
         document.getElementById("form_bajaProf").classList.remove("oculto");
         document.getElementById("form_altaProf").classList.add("oculto");
         document.getElementById("form_modProf").classList.add("oculto");
+        document.getElementById("btnBajaProf").addEventListener("click",validarFormBajaProf,false);
     }
     function mostrarFormAltaAlum(){
         document.getElementById("form_altaAlum").classList.remove("oculto");
         document.getElementById("form_modAlum").classList.add("oculto");
         document.getElementById("form_bajaAlum").classList.add("oculto");
+        document.getElementById("btnAltaAlum").addEventListener("click",validarFormAltaAlum,false);
     }
     function mostrarFormModAlum(){
         document.getElementById("form_modAlum").classList.remove("oculto");
         document.getElementById("form_altaAlum").classList.add("oculto");
         document.getElementById("form_bajaAlum").classList.add("oculto");
+        document.getElementById("btnModAlum").addEventListener("click",validarFormModAlum,false);
     }
     function mostrarFormBajAlum(){
     document.getElementById("form_bajaAlum").classList.remove("oculto");
     document.getElementById("form_altaAlum").classList.add("oculto");
     document.getElementById("form_modAlum").classList.add("oculto");
+    document.getElementById("btnBajaAlum").addEventListener("click",validarBajaAlum,false);
 }
