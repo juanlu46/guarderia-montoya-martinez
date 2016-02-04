@@ -79,6 +79,29 @@
         }
         return oProfesor;
     }
+
+    //Metodos Añadir
+    function añadirProfesor(oProfesor){
+        var sRes="Alta de profesor satisfactoria";
+        if(buscarProfesor(oProfesor.querySelector("dni").value)==null) {
+            var oProfesores = oXML.querySelector("profesores");
+            oProfesores.appendChild(oProfesor);
+        }
+        else
+        {
+            sRes="Profesor ya registrado";
+        }
+        return sRes;
+    }
+
+    //Metodos borrar
+    function borrarProfesor(sDni){
+        var sRes="Baja de profesor satisfactoria";
+        if(buscarProfesor(sDni)!=null){
+
+        }
+    }
+
     function validarFormAltaAlum(){
         var sMensajeError="";
         var todoOk=true;
