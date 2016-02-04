@@ -3,6 +3,7 @@ function Profesor(sNombre,sApellidos,sDni,iTelefono){
     this.apellidos=sApellidos;
     this.dni=sDni;
     this.telefono=iTelefono;
+    this.grupos=[];
 }
 
 function Alumno(sNombre,sApellidos,sDni,iEdad,iContacto,sDireccion){
@@ -12,6 +13,7 @@ function Alumno(sNombre,sApellidos,sDni,iEdad,iContacto,sDireccion){
     this.edad=iEdad;
     this.contacto=iContacto;
     this.direccion=sDireccion;
+    this.grupo;
 }
 
 function ActividadExtra(iId,sNombre){
@@ -27,16 +29,6 @@ function Asignatura(iId,sNombre,sProfesor){
     this.alumnos=[];
 }
 
-function Grupo(sNombre,sCurso,sProfesor){
-    this.alumnos=[];
-    this.nombre=sNombre;
-    this.curso=sCurso;
-    this.profesor=sProfesor;
-}
-function Matricula(sAlumno,iAnnio){
-    this.alumno=sAlumno;
-    this.annio=iAnnio;
-}
 function Expediente(sAlumno){
     this.alumno=sAlumno;
     this.notas=new Array([]);

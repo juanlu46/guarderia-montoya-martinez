@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <guarderia>
     <profesores>
-
+        <!--<profesor>
+            ...
+            <grupos>
+                <grupo id="2A"/>
+                <grupo id="1B"/>
+            </grupos>
+        </profesor>-->
     </profesores>
     <alumnos>
 
@@ -11,24 +17,16 @@
             <id>jfshj</id>
             <nombre>dfhshjk</nombre>
             <alumnosAct>
-                <alumnoAct>
-                    dni
-                </alumnoAct>
-                <alumnoAct>
-                    dni
-                </alumnoAct>
+                <alumnoAct id="454365X"/>
             </alumnosAct>
         </actividad>-->
     </actividades>
-    <grupos>
+    <asignaturas>
 
-    </grupos>
-    <matriculas>
-
-    </matriculas>
+    </asignaturas>
     <expedientes>
         <!--<expediente>
-            <alumnoExp>dni</alumnoExp>
+            <alumnoExp id="23432A"/>
             <notas>
                 <nota>
                     <asignatura id="43">9,75</asignatura>

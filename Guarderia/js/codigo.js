@@ -21,6 +21,61 @@
                 break;
         }
     }
+
+    /* METODOS TRATAMEINTO XML */
+    //Metodos Añadir
+    function añadirProfesor(oProfesor){
+        var sRes="Alta de profesor satisfactoria";
+        if(buscarProfesor(oProfesor.querySelector("dni").nodeValue)==null) {
+            var oProfesores = oXML.querySelector("profesores");
+            oProfesores.appendChild(oProfesor);
+        }
+        else
+        {
+            sRes="Profesor ya registrado";
+        }
+        return sRes;
+    }
+
+    //Metodos borrar
+    function borrarProfesor(sDni){
+        var sRes="Baja de profesor satisfactoria";
+        var oProfesor=buscarProfesor(sDni);
+        if(oProfesor!=null){
+            //Borro el objeto
+            oXML.querySelector("profesores").removeChild(oProfesor);
+            //Buscamos dependencias del objeto borrado, las eliminamos y notificamos si existen
+            var oAsignaturas=oXML.querySelectorAll("asignatura");
+            var bEncontrado=false;
+            var oAsigAfectada;
+            for(var i=0;i<oAsignaturas.length && !bEncontrado;i++){
+                //Cogemos el profesor de la asignatura
+                var oProfesorAsig=oAsignaturas[i].querySelector("profesor");
+                if(oProfesorAsig.nodeValue==sDni) { //Si el valor de la etiqueta es igual al dni que pasamos por parametro
+                    //Modificamos el valor, dicienod que no hay ninguno asignado
+                    oProfesorAsig.nodeValue = "No asignado";
+                    //Guardamos el id de la asignatura, para notificar que no tiene profesor asignado
+                    oAsigAfectada=oAsignaturas.querySelector("id").nodeValue;
+                    //salimos del bucle
+                    bEncontrado = true;
+                }
+            }
+            if(bEncontrado)
+                sRes+="\n-La asignatura con id "+oAsigAfectada+", no tiene profesor asignado"+
+                    ", debido a que dicho profesor se ha dado de baja";
+        }
+        else{
+            sRes="El profesor que inteta borrar, no existe por ese DNI";
+        }
+        return sRes;
+    }
+
+    //Metodos de modificar
+    function modificarXMLProfesor(oProfesor)
+    {
+        var oProfAnterior = buscarProfesor(oProfesor.querySelector("dni").nodeValue);
+        oXML.replaceChild(oProfesor,oProfAnterior);
+    }
     function mostrarFormsAlumnos(){
         ocultar("menuProf");
         ocultar("menuAct");
@@ -80,32 +135,11 @@
         return oProfesor;
     }
 
-    //Metodos Añadir
-    function añadirProfesor(oProfesor){
-        var sRes="Alta de profesor satisfactoria";
-        if(buscarProfesor(oProfesor.querySelector("dni").value)==null) {
-            var oProfesores = oXML.querySelector("profesores");
-            oProfesores.appendChild(oProfesor);
-        }
-        else
-        {
-            sRes="Profesor ya registrado";
-        }
-        return sRes;
-    }
-
-    //Metodos borrar
-    function borrarProfesor(sDni){
-        var sRes="Baja de profesor satisfactoria";
-        if(buscarProfesor(sDni)!=null){
-
-        }
-    }
 
     function validarFormAltaAlum(){
         var sMensajeError="";
         var todoOk=true;
-        var alumnoActual=null;
+        var oAlumno=document.createElement("alumno");
 
        if(!/^[a-z\d_]{2,15}$/.test(form_altaAlum.text_nombre.value)){
            sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
@@ -486,6 +520,43 @@
         $("#form_bajaBono").show("normal");
         document.getElementById("btnBajaBono").addEventListener("click",validarBajaBono,false);
     }
+
+    /* METODOS AUXILIARES*/
+    //Constructor de objeto XML, alumno
+    function newAlumno(sNombre,sApellidos,sDni,iEdad,iContacto,sDireccion,sGrupo){
+        var oTags=["nombre","apellidos","dni","edad","contacto","direccion","grupo"];
+        var oNodos=[];
+        var oAlumno=document.createElement("alumno");
+        for(var i=0;i<oTags.length;i++)
+            oNodos.push(document.createTextNode(oTags[i]));
+        var oTagsValues=[sNombre,sApellidos,sDni,iEdad,iContacto,sDireccion,sGrupo];
+        for(var i=0;i<oTags.length;i++) {
+            addContenido(oNodos[i], oTagsValues[i]);
+            oAlumno.appendChild(oNodos[i]);
+        }
+        return oAlumno;
+    }
+    //Constructor de objeto XML, profesor
+    function newProfesor(sNombre,sApellidos,sDni,iTelefono,sGrupo){
+        var oTags=["nombre","apellidos","dni","telefono","grupo"];
+        var oNodos=[];
+        var oProfesor=document.createElement("profesor");
+        for(var i=0;i<oTags.length;i++)
+            oNodos.push(document.createTextNode(oTags[i]));
+        var oTagsValues=[sNombre,sApellidos,sDni,iTelefono,sGrupo];
+        for(var i=0;i<oTags.length;i++) {
+            addContenido(oNodos[i], oTagsValues[i]);
+            oProfesor.appendChild(oNodos[i]);
+        }
+        return oProfesor;
+    }
+
+    //Metodo para añadir nodos de textos
+    function addContenido(oNodo,sTexto){
+        var oTexto=document.createTextNode(sTexto);
+        oNodo.appendChild(oTexto);
+    }
+
     // Metodo para coger parametros GET para cargar incialmente el formulario correspondiente.
     function getGet(){
         var url = document.location.href;
