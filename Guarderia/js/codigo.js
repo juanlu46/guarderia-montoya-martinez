@@ -5,8 +5,21 @@
         document.getElementById("profesores").addEventListener("click",mostrarFormsProf,false);
         document.getElementById("actividades").addEventListener("click",mostrarFormsAct,false);
         document.getElementById("comedor").addEventListener("click",mostrarFormsComed,false);
-
          guarderia=new Guarderia();
+        switch(getGet()){
+            case "alumno":
+                mostrarFormsAlumnos();
+                break;
+            case "profesor":
+                mostrarFormsProf();
+                break;
+            case "actividades":
+                mostrarFormsAct();
+                break;
+            default:
+                mostrarFormsComed();
+                break;
+        }
     }
     function mostrarFormsAlumnos(){
         ocultar("menuProf");
@@ -435,4 +448,11 @@
         $("form").hide("normal");
         $("#form_bajaBono").show("normal");
         document.getElementById("btnBajaBono").addEventListener("click",validarBajaBono,false);
+    }
+    // Metodo para coger parametros GET para cargar incialmente el formulario correspondiente.
+    function getGet(){
+        var url = document.location.href;
+        var getString = url.split('?')[1];
+        var tmp = getString.split('=')[1];
+        return unescape(decodeURI(tmp));
     }

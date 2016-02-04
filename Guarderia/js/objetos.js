@@ -202,7 +202,8 @@ Guarderia.prototype.bajaActividadExtra= function (id) {
     var sRes = "Actividad eliminada correctamente";
     var oActividad=this.buscarActividadExtra(id);
     if ( oActividad != null ){
-        this.actividadesExtra.remove(oActividad);
+        var index=this.actividadesExtra.indexOf(oActividad);
+        this.actividadesExtra.splice(index,index);
     }
     else{
         sRes = "Actividad no registrada";
@@ -215,7 +216,8 @@ Guarderia.prototype.bajaProfesor= function (dni) {
     var sRes = "Profesor eliminado correctamente";
     var oProfesor=this.buscarProfesor(dni);
     if ( oProfesor != null ){
-        this.profesores.remove(oProfesor);
+        var index=this.profesores.indexOf(oProfesor);
+        this.profesores.splice(index,index);
     }
     else{
         sRes = "Profesor no registrado";
@@ -227,7 +229,8 @@ Guarderia.prototype.bajaAlumno= function (dni) {
     var sRes = "Alumno eliminado correctamente";
     var oAlumno= this.buscarAlumno(dni);
     if ( oAlumno != null ){
-        this.alumnos.remove(oAlumno); //NO FUNCIONA EL .REMOVE
+        var index=this.alumnos.indexOf(oAlumno);
+        this.alumnos.splice(index,index);
     }
     else{
         sRes = "Alumno no registrado";
@@ -239,7 +242,8 @@ Guarderia.prototype.bajaMatricula=function(sDniAlumno,iAnnio){
     var sRes="Matricula dada de baja";
     var oMatricula=this.buscarMatricula(sDniAlumno,iAnnio);
     if(oMatricula!=null){
-        this.matriculas.remove(oMatricula);
+        var index=this.matriculas.indexOf(oMatricula);
+        this.matriculas.splice(index,index);
     }
     else{
         sRes="La matricula no existe";
@@ -251,7 +255,8 @@ Guarderia.prototype.bajaExpediente=function(sDniAlumno){
     var oExpediente=this.buscarExpediente(sDniAlumno);
     if(oExpediente!=null)
     {
-        this.expedientes.remove(oExpediente);
+        var index=this.expedientes.splice(oExpediente);
+        this.expedientes.splice(index,index);
     }
     else{
         sRes="El expediente no existe";
@@ -261,7 +266,8 @@ Guarderia.prototype.bajaBonoComedor=function(dni){
     var sRes="Baja de bono correcta";
     var oBonoComedor=this.buscarBonoComedor(dni);
     if(oBonoComedor !=null){
-        this.bonosComedor.remove(oBonocomedor);
+        var index=this.bonosComedor.indexOf(oBonoComedor);
+        this.bonosComedor.splice(index,index);
     }
     else{
         sRes="El bono no existe";
