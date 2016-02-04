@@ -536,7 +536,7 @@
         }
         return oAlumno;
     }
-    //Constructor de objeto XML, profesor
+    //Constructor de objeto XML, profesor.
     function newProfesor(sNombre,sApellidos,sDni,iTelefono,sGrupo){
         var oTags=["nombre","apellidos","dni","telefono","grupo"];
         var oNodos=[];
