@@ -48,6 +48,31 @@
         }
         return sRes;
     }
+    function añadirActividad(oActividad){
+        var sRes="Alta de actividad satisfactoria";
+        if(buscarActividad(oActividad.querySelector("id").nodeValue)==null) {
+            var oActividades = oXML.querySelector("actividades");
+            oActividades.appendChild(oActividad);
+        }
+        else
+        {
+            sRes="Actividad ya registrado";
+        }
+        return sRes;
+    }
+
+    function añadirBono(oBono){
+        var sRes="Alta de bono comedor satisfactoria";
+        if(buscarBono(oBono.querySelector("alumno").nodeValue)==null) {
+            var oBonos = oXML.querySelector("bonos");
+            oBonos.appendChild(oBono);
+        }
+        else
+        {
+            sRes="Bono comedor ya registrado";
+        }
+        return sRes;
+    }
 
     //Metodos borrar
     function borrarProfesor(sDni){
@@ -149,7 +174,7 @@
     function buscarAlumno(sDni){
         var oAlumno=null;
         var bEncontrado=false;
-        var oAlumnos=oXML.querySelectorAll("alumno");
+        var oAlumnos=oXML.querySelectorAll("alumnos");
         for(var i=0;i<oAlumnos.length && !bEncontrado;i++){
             var oDni=oAlumnos[i].querySelector("dni");
             if(oDni.value==sDni){
@@ -158,6 +183,34 @@
             }
         }
         return oAlumno;
+    }
+
+    function buscarActividad(sId){
+        var oActividad=null;
+        var bEncontrado=false;
+        var oActividades=oXML.querySelectorAll("actividades");
+        for(var i=0;i<oActividades.length && !bEncontrado;i++){
+            var oId=oActividades[i].querySelector("id");
+            if(oId.value==sId){
+                oActividad =  oActividades[i];
+                bEncontrado=true;
+            }
+        }
+        return oActividad;
+    }
+
+    function buscarBono(sDni){
+        var oBono=null;
+        var bEncontrado=false;
+        var oBonos=oXML.querySelectorAll("bonos");
+        for(var i=0;i<oBonos.length && !bEncontrado;i++){
+            var alumno=oBonos[i].querySelector("alumno");
+            if(alumno.value==sDni){
+                oBono =  oBonos[i];
+                bEncontrado=true;
+            }
+        }
+        return oBono;
     }
 
     function validarFormAltaAlum(){
