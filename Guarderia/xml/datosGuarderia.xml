@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<guarderia>
+    <profesores>
+
+    </profesores>
+    <alumnos>
+
+    </alumnos>
+    <actividades>
+        <!--<actividad>
+            <id>jfshj</id>
+            <nombre>dfhshjk</nombre>
+            <alumnosAct>
+                <alumnoAct>
+                    dni
+                </alumnoAct>
+                <alumnoAct>
+                    dni
+                </alumnoAct>
+            </alumnosAct>
+        </actividad>-->
+    </actividades>
+    <grupos>
+
+    </grupos>
+    <matriculas>
+
+    </matriculas>
+    <expedientes>
+        <!--<expediente>
+            <alumnoExp>dni</alumnoExp>
+            <notas>
+                <nota>
+                    <asignatura id="43">9,75</asignatura>
+                    <asignatura id="56">6,78</asignatura>
+                </nota>
+            </notas>
+        </expediente>-->
+    </expedientes>
+    <bonos>
+
+    </bonos>
+</guarderia>

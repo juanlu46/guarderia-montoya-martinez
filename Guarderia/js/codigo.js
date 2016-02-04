@@ -1,11 +1,11 @@
-    window.onload=function(){inicio()};
-    var guarderia;
+    window.addEventListener('load',inicio,false);
+    var oXML;
     function inicio() {
         document.getElementById("alumnos").addEventListener("click",mostrarFormsAlumnos,false);
         document.getElementById("profesores").addEventListener("click",mostrarFormsProf,false);
         document.getElementById("actividades").addEventListener("click",mostrarFormsAct,false);
         document.getElementById("comedor").addEventListener("click",mostrarFormsComed,false);
-         guarderia=new Guarderia();
+        oXML.loadXML("../xml/datosGuarderia.xml");
         switch(getGet()){
             case "alumno":
                 mostrarFormsAlumnos();
@@ -65,6 +65,20 @@
     function ocultar(elemento){
     document.getElementById(elemento).classList.add("oculto");
 }
+    //Metodos buscar
+    function buscarProfesor(sDni){
+        var oProfesor=null;
+        var bEncontrado=false;
+        var oProfesores=oXML.querySelectorAll("profesor");
+        for(var i=0;i<oProfesores.length && !bEncontrado;i++){
+            var oDni=oProfesores[i].querySelector("dni");
+            if(oDni.value==sDni){
+                oProfesor =  oProfesores[i];
+                bEncontrado=true;
+            }
+        }
+        return oProfesor;
+    }
     function validarFormAltaAlum(){
         var sMensajeError="";
         var todoOk=true;
@@ -456,3 +470,21 @@
         var tmp = getString.split('=')[1];
         return unescape(decodeURI(tmp));
     }
+    //Metodo para cargar un archivo XML
+    function loadXMLDoc(filename)
+    {
+        if (window.XMLHttpRequest)
+        {
+            xhttp=new XMLHttpRequest();
+        }
+        else // code for IE5 and IE6
+        {
+            xhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xhttp.open("GET",filename,false);
+
+        xhttp.send();
+
+        return xhttp.responseXML;
+    }
+

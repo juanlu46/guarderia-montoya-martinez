@@ -1,15 +1,6 @@
-function Guarderia(){
-    this.profesores=[];
-    this.alumnos=[];
-    this.actividadesExtra=[];
-    this.grupos=[];
-    this.matriculas=[];
-    this.expedientes=[];
-    this.bonosComedor=[];
-}
-function Profesor(sNombre,sApellido,sDni,iTelefono){
+function Profesor(sNombre,sApellidos,sDni,iTelefono){
     this.nombre=sNombre;
-    this.apellido=sApellido;
+    this.apellidos=sApellidos;
     this.dni=sDni;
     this.telefono=iTelefono;
 }
@@ -274,7 +265,6 @@ Guarderia.prototype.bajaBonoComedor=function(dni){
     }
     return sRes;
 };
-
 
 
 
