@@ -10,7 +10,24 @@
         </profesor>-->
     </profesores>
     <alumnos>
-
+        <alumno>
+        <nombre>Pepito</nombre>
+        <apellidos>Perez</apellidos>
+        <dni>47456796L</dni>
+        <edad>12</edad>
+        <contacto>954876345</contacto>
+        <direccion>calle falsa, 3</direccion>
+        <grupo>A</grupo>
+        </alumno>
+        <alumno>
+            <nombre>Maria</nombre>
+            <apellidos>Jimenez</apellidos>
+            <dni>34906772A</dni>
+            <edad>18</edad>
+            <contacto>673914877</contacto>
+            <direccion>calle falsa, 4</direccion>
+            <grupo>B</grupo>
+        </alumno>
     </alumnos>
     <actividades>
         <!--<actividad>

@@ -82,7 +82,7 @@
             //Borro el objeto
             oXML.querySelector("profesores").removeChild(oProfesor);
             //Buscamos dependencias del objeto borrado, las eliminamos y notificamos si existen
-            var oAsignaturas=oXML.querySelectorAll("asignatura");
+            var oAsignaturas=oXML.querySelectorAll("asignaturas");
             var bEncontrado=false;
             var oAsigAfectada;
             for(var i=0;i<oAsignaturas.length && !bEncontrado;i++){
@@ -102,7 +102,90 @@
                     ", debido a que dicho profesor se ha dado de baja";
         }
         else{
-            sRes="El profesor que inteta borrar, no existe por ese DNI";
+            sRes="El profesor que intenta borrar, no existe por ese DNI";
+        }
+        return sRes;
+    }
+    function borrarAlumno(sDni){
+        var sRes="Baja de alumno satisfactoria";
+        var oAlumno=buscarAlumno(sDni);
+        if(oAlumno!=null){
+            //Borro el objeto
+            oXML.querySelector("alumnos").removeChild(oAlumno);
+            //Buscamos dependencias del objeto borrado, las eliminamos y notificamos si existen
+            var oAsignaturas=oXML.querySelectorAll("asignaturas");
+            var bEncontrado=false;
+            var oAsigAfectada;
+            for(var i=0;i<oAsignaturas.length && !bEncontrado;i++){
+                //Cogemos el alumno de la asignatura
+                var oAlumnosAsignatura=oAsignaturas[i].querySelector("alumnos");
+                for(var j=0;j<oAlumnosAsignatura.length;j++){
+                    if(oAlumnosAsignatura[j].nodeValue==sDni) { //Si el valor de la etiqueta es igual al dni que pasamos por parametro
+                       //borramos el alumno de la lista de alumnos que hay en la asigatura
+                        oAsignaturas[i].removeChild(oAlumnosAsignatura[j]);
+                        bEncontrado = true;
+                    }
+                }
+            }
+            if(bEncontrado)
+                sRes+="\n-El alumno ha sido borrado de la asignatura"+oAsigAfectada;
+            //SUPONIENDO QUE EL ALUMNO PUEDE NO ESTAR EN NINGUNA ASIGNATURA CREO OTRO BUCLE PARA BORRARLO DEL EXPEDIENTE
+            var oExpedientes=oXML.querySelectorAll("expediente");
+            var bExpedienteEncontrado=false;
+            for(var i=0;i<oExpedientes.length && !bExpedienteEncontrado;i++) {
+                var oAlumnoExpediente=oExpedientes[i].querySelector("alumnoExp");
+                var idAlumnoExpediente=oAlumnoExpediente.getAttribute("id");
+                if (idAlumnoExpediente != null) {
+                    if(idAlumnoExpediente==sDni){
+                        // (NO SE SI PUEDO BORRARLO CON ESE METODO DIRECTAMENTE DESDE EL XML)
+                        oXML.removeChild(oExpedienteAlumno);
+                        bExpedienteEncontrado=true;
+                        sRes+="Alumno borrado del expediente";
+                    }
+                }
+                else{
+                    sRes+="Este alumno no tiene expediente";
+                }
+            }
+            //Busco si esta en una actividad
+            var oActividades=XML.querySelectorAll("actividad");
+            var bActividadEncontrada=false;
+            for(var i=0;i<oActividades.length && !bActividadEncontrada;i++) {
+                var oAlumnoActividad=oActividades[i].querySelector("id");
+                    if(oAlumnoActividad==sDni){
+                        oActividades[i].removeChild(oAlumnoActividad);
+                        bActividadEncontrada=true;
+                        sRes+="Alumno borrado de la actividad";
+                    }
+                else{
+                    sRes+="Este alumno no esta en ninguna actividad";
+                }
+            }
+
+            //busco si tiene algun bono
+            var oBonoAlumno=buscarBono(sDni);
+            if(oBonoAlumno!=null){
+                var oBonos=XML.querySelectorAll("bono");
+                var bBonoEncontrado=false;
+                for(var i=0;i<oBonos.length && !bBonoEncontrado;i++){
+                    var oAlumnoBono=oBonos[i].querySelector("alumno");
+                    if(alumnoActual.nodeValue==sDni){
+                        //MISMA DUDA DE ANTES (NO SE SI PUEDO BORRARLO ASI DIRECTAMENTE)
+                        XML.removeChild(oBonos[i]);
+                        bBonoEncontrado=true;
+                        sRes+="Bono de alumno borrado";
+                    }
+                }
+            }
+            else{
+                sRes+="Este alumno no tiene bono";
+            }
+
+
+
+        }
+        else{
+            sRes="El alumno que intenta borrar, no existe por ese DNI";
         }
         return sRes;
     }
@@ -174,7 +257,7 @@
     function buscarAlumno(sDni){
         var oAlumno=null;
         var bEncontrado=false;
-        var oAlumnos=oXML.querySelectorAll("alumnos");
+        var oAlumnos=oXML.querySelectorAll("alumno");
         for(var i=0;i<oAlumnos.length && !bEncontrado;i++){
             var oDni=oAlumnos[i].querySelector("dni");
             if(oDni.value==sDni){
@@ -188,7 +271,7 @@
     function buscarActividad(sId){
         var oActividad=null;
         var bEncontrado=false;
-        var oActividades=oXML.querySelectorAll("actividades");
+        var oActividades=oXML.querySelectorAll("actividad");
         for(var i=0;i<oActividades.length && !bEncontrado;i++){
             var oId=oActividades[i].querySelector("id");
             if(oId.value==sId){
@@ -202,7 +285,7 @@
     function buscarBono(sDni){
         var oBono=null;
         var bEncontrado=false;
-        var oBonos=oXML.querySelectorAll("bonos");
+        var oBonos=oXML.querySelectorAll("bono");
         for(var i=0;i<oBonos.length && !bEncontrado;i++){
             var alumno=oBonos[i].querySelector("alumno");
             if(alumno.value==sDni){
@@ -211,6 +294,18 @@
             }
         }
         return oBono;
+    }
+    function buscarExpediente(sDni){
+        var oExpediente=null;
+        var bEncontrado=false;
+        var oExpeditentes=oXML.querySelectorAll("expediente");
+        for(var i=0;i<oExpeditentes.length && !bEncontrado;i++){
+            if(oExpeditentes[i].getAttribute("id")==sDni){
+                oExpediente =  oExpeditentes[i];
+                bEncontrado=true;
+            }
+        }
+        return oExpediente;
     }
 
     function validarFormAltaAlum(){
@@ -570,11 +665,27 @@
         $("form").hide("normal");
         $("#form_altaAct").show("normal");
         document.getElementById("btnAltaAct").addEventListener("click",validarAltaAct,false);
+        cargarSelectAlumnos();
+    }
+    function cargarSelectAlumnos(){
+        var lugar=document.getElementById("select_alumnos");
+        var select=document.createElement("select");
+        var oAlumnos=XML.querySelectorAll("alumnos");
+        for(var i=0;i<oAlumnos.length;i++){
+            var opt=document.createElement("option");
+            opt.value=oAlumnos.dni;
+            var texto=document.createTextNode(oAlumnos.nombre);
+            opt.appendChild(texto);
+            select.appendChild(opt);
+        }
+        lugar.appendChild(opt);
+
     }
     function mostrarFormModAct(){
         $("form").hide("normal");
         $("#form_modAct").show("normal");
         document.getElementById("btnModAct").addEventListener("click",validarModAct,false);
+        cargarSelectAlumnos();
     }
     function mostrarFormBajAct(){
         $("form").hide("normal");

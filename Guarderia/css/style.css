@@ -27,3 +27,10 @@ body{
 .divFormularios{
     margin-right: 0.5px;
 }
+.dropdown ul{
+    background-color: #101010;
+
+}
+.dropdown-menu>li>a{
+    color:#9d9d9d;
+}

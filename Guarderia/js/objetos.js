@@ -6,14 +6,14 @@ function Profesor(sNombre,sApellidos,sDni,iTelefono){
     this.grupos=[];
 }
 
-function Alumno(sNombre,sApellidos,sDni,iEdad,iContacto,sDireccion){
+function Alumno(sNombre,sApellidos,sDni,iEdad,iContacto,sDireccion,sGrupo){
     this.nombre=sNombre;
     this.apellidos=sApellidos;
     this.dni=sDni;
     this.edad=iEdad;
     this.contacto=iContacto;
     this.direccion=sDireccion;
-    this.grupo;
+    this.grupo=sGrupo;
 }
 
 function ActividadExtra(iId,sNombre){
