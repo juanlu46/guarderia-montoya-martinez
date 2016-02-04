@@ -36,6 +36,18 @@
         }
         return sRes;
     }
+    function añadirAlumno(oAlumno){
+        var sRes="Alta de alumno satisfactoria";
+        if(buscarAlumno(oAlumno.querySelector("dni").nodeValue)==null) {
+            var oAlumnos = oXML.querySelector("alumnos");
+            oAlumnos.appendChild(oAlumno);
+        }
+        else
+        {
+            sRes="Alumno ya registrado";
+        }
+        return sRes;
+    }
 
     //Metodos borrar
     function borrarProfesor(sDni){
@@ -134,7 +146,19 @@
         }
         return oProfesor;
     }
-
+    function buscarAlumno(sDni){
+        var oAlumno=null;
+        var bEncontrado=false;
+        var oAlumnos=oXML.querySelectorAll("alumno");
+        for(var i=0;i<oAlumnos.length && !bEncontrado;i++){
+            var oDni=oAlumnos[i].querySelector("dni");
+            if(oDni.value==sDni){
+                oAlumno =  oAlumnos[i];
+                bEncontrado=true;
+            }
+        }
+        return oAlumno;
+    }
 
     function validarFormAltaAlum(){
         var sMensajeError="";
