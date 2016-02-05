@@ -32,22 +32,27 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Trámites<strong class="caret"></strong></a>
                                 <ul class="dropdown-menu">
                                     <li id="alumnos">
-                                        <a href="#">Alumnos</a>
+                                        <a href="formularios.html?tipo=alumno">Alumnos</a>
                                     </li>
                                     <li class="divider">
                                     </li>
                                     <li id="profesores">
-                                        <a href="#">Profesores</a>
+                                        <a href="formularios.html?tipo=profesor">Profesores</a>
                                     </li>
                                     <li class="divider">
                                     </li>
                                     <li id="actividades">
-                                        <a href="#">Actividades extraescolares</a>
+                                        <a href="formularios.html?tipo=actividades">Actividades extraescolares</a>
                                     </li>
                                     <li class="divider">
                                     </li>
                                     <li id="comedor">
-                                        <a href="#">Comedor</a>
+                                        <a href="formularios.html?tipo=comedor">Comedor</a>
+                                    </li>
+                                    <li class="divider">
+                                    </li>
+                                    <li id="expediente">
+                                        <a href="formularios.html?tipo=expediente">Expediente</a>
                                     </li>
                                 </ul>
                             </li>
@@ -382,9 +387,16 @@
                                     <input type="text" class="form-control" id="text_nombre" placeholder="Nombre"/>
                                 </div>
                             </div>
-                            <div class="form-group">
+
+                            <div class="form-group ">
                                 <label for="select_alumnos_act"  class="control-label col-sm-4">Alumnos</label>
-                                <select multiple id="select_alumnos_act" class="control-label col-sm-4"></select>
+                                <div class="input-group">
+                                <select multiple id="select_alumnos_act" class="form-control">
+                                </select>
+                                 <span class="input-group-btn">
+                                        <button class="btn btn-default botom" type="button">-</button>
+                                      </span>
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -397,6 +409,8 @@
                                     </div>
                                 </div>
                             </div>
+
+
 
 
                             <div class="form-group">
@@ -422,6 +436,29 @@
                                     <input type="text" class="form-control" id="text_nombre" placeholder="Nombre"/>
                                 </div>
                             </div>
+
+                            <div class="form-group ">
+                                <label for="select_alumnos_act"  class="control-label col-sm-4">Alumnos</label>
+                                <div class="input-group">
+                                    <select multiple id="select_alumnos_act" class="form-control">
+                                    </select>
+                                 <span class="input-group-btn">
+                                        <button class="btn btn-default botom" type="button">-</button>
+                                      </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-4" id="selectMas">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" >
+                                      <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">+</button>
+                                      </span>
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-xs-6">
@@ -489,13 +526,28 @@
                                         <input type="text" class="form-control" id="text_horario" placeholder="horario"/>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="text_alimentos" class="col-sm-4 control-label">Alimentos alérgicos</label>
-                                    <div class="col-xs-4">
-                                        <input type="text" class="form-control" id="text_alimentos" placeholder="alimento"/>
-                                        <textarea class="form-control" rows="6">Escriba aquí su texto.</textarea>
+                                <div class="form-group ">
+                                    <label for="select_alumnos_act"  class="control-label col-sm-4">Alimentos</label>
+                                    <div class="input-group">
+                                        <select multiple id="select_alimentos" class="form-control">
+                                        </select>
+                                 <span class="input-group-btn">
+                                        <button class="btn btn-default botom" type="button">-</button>
+                                      </span>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-4" id="selectMas">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" >
+                                      <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">+</button>
+                                      </span>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-xs-4">
                                         <button type="button" id="btnAltaBono" class="btn btn-info">Añadir</button>
@@ -519,11 +571,25 @@
                                         <input type="text" class="form-control" id="text_horario" placeholder="horario"/>
                                     </div>
                                 </div>
+                                <div class="form-group ">
+                                    <label for="select_alumnos_act"  class="control-label col-sm-4">Alimentos</label>
+                                    <div class="input-group">
+                                        <select multiple id="select_alimentos" class="form-control">
+                                        </select>
+                                 <span class="input-group-btn">
+                                        <button class="btn btn-default botom" type="button">-</button>
+                                      </span>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
-                                    <label for="text_alimentos" class="col-sm-4 control-label">Alimentos alérgicos</label>
-                                    <div class="col-xs-4">
-                                        <input type="text" class="form-control" id="text_alimentos" placeholder="alimento"/>
-                                        <textarea class="form-control" rows="6">Escriba aquí su texto.</textarea>
+                                    <div class="col-xs-4" id="selectMas">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" >
+                                      <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">+</button>
+                                      </span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -562,6 +628,139 @@
             </div>
         </div>
     </div>
+<!--FORMULARIO Expediente-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 oculto" id="menuExp">
+            <ul class="list-group" >
+                <li class="list-group-item" id="mostrarFormAltaExp">Alta de Expediente</li>
+                <li class="list-group-item" id="mostrarFormModExp">Modificación de Expediente</li>
+                <li class="list-group-item" id="mostrarFormBajExp">Baja de Expediente</li>
+            </ul>
+
+        </div>
+        <div class="col-md-9">
+            <div class="row contenido">
+                <div class="col-md-offset-2 col-md-8">
+                    <div class="formAltaBono" >
+                        <form name="form_altaExp" id="form_altaExp" class="form-horizontal oculto">
+                            <h3 class="text-primary">Alta Bono Comedor</h3>
+                            <div class="form-group">
+                                <label for="text_alumno" class="col-sm-4 control-label">Observaciones:</label>
+                                <div class="col-xs-4">
+                                    <textarea class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="select_expediente"  class="control-label col-sm-4">Asignaturas:</label>
+                                <div class="input-group">
+                                    <select multiple id="select_expediente" class="form-control">
+                                    </select>
+                                 <span class="input-group-btn">
+                                        <button class="btn btn-default botom" type="button">-</button>
+                                      </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-4" id="selectMas">
+                                    <div class="input-group">
+                                        <label   class="control-label col-sm-4">Nota:</label>
+                                        <input type="text" class="form-control" >
+                                      <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">+</button>
+                                      </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-xs-4">
+                                    <button type="button" id="btnAltaExp" class="btn btn-info">Añadir</button>
+                                    <button type="button" class="btn btn-danger">Cancelar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="formModExp">
+                        <form id="form_modExp" name="form_modExp"  class="form-horizontal oculto">
+                            <h3 class="text-primary">Modificación de Bono Comedor</h3>
+                            <div class="form-group">
+                                <label for="text_alumno" class="col-sm-4 control-label">Dni Alumno</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_alumno" placeholder="dni" disabled="true"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_horario" class="col-sm-4 control-label">Horario</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_horario" placeholder="horario"/>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="select_alumnos_act"  class="control-label col-sm-4">Alimentos</label>
+                                <div class="input-group">
+                                    <select multiple id="select_alimentos" class="form-control">
+                                    </select>
+                                 <span class="input-group-btn">
+                                        <button class="btn btn-default botom" type="button">-</button>
+                                      </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-4" id="selectMas">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" >
+                                      <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">+</button>
+                                      </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-xs-4">
+                                    <button type="button" id="btnModExp" class="btn btn-info">Añadir</button>
+                                    <button type="button" class="btn btn-danger">Cancelar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="formBajaBono">
+                        <form name="form_bajaExp" id="form_bajaExp" class="form-horizontal oculto">
+                            <h3 class="text-primary">Baja de Bono Comedor</h3>
+                            <div class="form-group">
+                                <label for="text_dni" class="col-sm-4 control-label">Dni</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_dni" placeholder="dni"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-xs-4">
+                                    <button type="button" id="btnBajaExp" class="btn btn-info">Eliminar</button>
+                                    <button type="button" class="btn btn-danger">Cancelar</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>

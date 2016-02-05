@@ -6,7 +6,8 @@
         document.getElementById("profesores").addEventListener("click",mostrarFormsProf,false);
         document.getElementById("actividades").addEventListener("click",mostrarFormsAct,false);
         document.getElementById("comedor").addEventListener("click",mostrarFormsComed,false);
-        oXML=loadXMLDoc("../xml/datosGuarderia.xml");
+        document.getElementById("expediente").addEventListener("click",mostrarFormsExp,false);
+        oXML=loadXMLDoc("xml/datosGuarderia.xml");
         switch(getGet()){
             case "alumno":
                 mostrarFormsAlumnos();
@@ -17,9 +18,11 @@
             case "actividades":
                 mostrarFormsAct();
                 break;
-            default:
+            case 'comedor':
                 mostrarFormsComed();
                 break;
+            default:
+                mostrarFormsExp();
         }
     }
 
@@ -233,6 +236,7 @@
         ocultar("menuProf");
         ocultar("menuAct");
         ocultar("menuComed");
+        ocultar("menuExp");
         $("form").hide("normal");
         document.getElementById("menuAlum").classList.remove("oculto");
         document.getElementById("mostrarFormAltaAlum").addEventListener("click",mostrarFormAltaAlum,false);
@@ -244,6 +248,7 @@
         ocultar("menuAlum");
         ocultar("menuAct");
         ocultar("menuComed");
+        ocultar("menuExp");
         $("form").hide("normal");
         document.getElementById("menuProf").classList.remove("oculto");
         document.getElementById("mostrarFormAltaProf").addEventListener("click", mostrarFormAltaProf, false);
@@ -254,6 +259,7 @@
         ocultar("menuProf");
         ocultar("menuAlum");
         ocultar("menuComed");
+        ocultar("menuExp");
         $("form").hide("normal");
         document.getElementById("menuAct").classList.remove("oculto");
         document.getElementById("mostrarFormAltaAct").addEventListener("click", mostrarFormAltaAct, false);
@@ -264,12 +270,29 @@
         ocultar("menuProf");
         ocultar("menuAlum");
         ocultar("menuAct");
+        ocultar("menuExp");
         $("form").hide("normal");
         document.getElementById("menuComed").classList.remove("oculto");
         document.getElementById("mostrarFormAltaComed").addEventListener("click", mostrarFormAltaComed, false);
         document.getElementById("mostrarFormModComed").addEventListener("click", mostrarFormModComed, false);
         document.getElementById("mostrarFormBajComed").addEventListener("click", mostrarFormBajComed, false);
     }
+    function mostrarFormsExp(){
+        ocultar("menuProf");
+        ocultar("menuAlum");
+        ocultar("menuAct");
+        ocultar("menuComed");
+        $("form").hide("normal");
+        document.getElementById("menuExp").classList.remove("oculto");
+        document.getElementById("mostrarFormAltaExp").addEventListener("click", mostrarFormAltaExp, false);
+        document.getElementById("mostrarFormModExp").addEventListener("click", mostrarFormModExp, false);
+        document.getElementById("mostrarFormBajExp").addEventListener("click", mostrarFormBajExp, false);
+
+
+    }
+
+
+
     function ocultar(elemento){
     document.getElementById(elemento).classList.add("oculto");
 }
@@ -636,6 +659,27 @@
         document.getElementById("btnAltaAct").addEventListener("click",validarAltaAct,false);
         cargarSelectAlumnos();
     }
+
+    function mostrarFormAltaExp(){
+        $("form").hide("normal");
+        $("#form_altaExp").show("normal");
+        //document.getElementById("btnAltaExp").addEventListener("click",validarFormAltaExp,false);
+    }
+    function mostrarFormModExp(){
+        $("form").hide("normal");
+        $("#form_modExp").show("normal");
+        //document.getElementById("btnModExp").addEventListener("click",validarFormModExp,false);
+    }
+    function mostrarFormBajExp(){
+        $("form").hide("normal");
+        $("#form_bajaExp").show("normal");
+        //document.getElementById("btnBajaExp").addEventListener("click",validarBajaExp,false);
+    }
+
+
+
+
+
     //Funciones recogida de select
     function getGruposFormProf(sForm){
         var oForm;

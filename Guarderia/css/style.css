@@ -42,3 +42,10 @@ body{
 #selectMas{
     margin-left: 33%;
 }
+#select_alumnos_act
+{    margin-left: 3%;
+    width: 97%;
+}
+.botom{
+    height: 84px;
+}
