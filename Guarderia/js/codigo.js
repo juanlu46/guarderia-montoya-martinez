@@ -532,11 +532,6 @@
             sMensajeError+="Introduzca el horario\n";
             todoOk=false;
         }
-       /* LO DEJAMOS SIN VALIDAR PARA QUE PUEDA DEJARLO EN BLANCO SI NO TIENE?*/
-        if(form_altaBono.text_alimentos.value==""){
-            sMensajeError+="Introduzca los alimentos a los que es alérgico. Si no tiene alergías introduzca ninguno \n";
-            todoOk=false;
-        }
         if(todoOk==false)
             alert(sMensajeError);
         else {
