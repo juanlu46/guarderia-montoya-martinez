@@ -535,10 +535,11 @@
         if(todoOk==false)
             alert(sMensajeError);
         else {
-            var oAlumno=guarderia.buscarAlumno(form_altaBono.text_alumno.value);
+            var oAlumno=buscarAlumno(form_altaBono.text_alumno.value);
             if(oAlumno!=null) {
-                oBonoActual = new BonoComedor(oAlumno, form_altaBono.text_horario.value);
-                alert(guarderia.altaBonoComedor(oBonoActual));
+                oBonoActual = newBonoComedor(oAlumno, form_altaBono.text_horario.value,
+                getAlumnosFormBono("alta"));
+                alert(añadirBono(oBonoActual));
                 form_altaBono.text_alumno.value = "";
                 form_altaBono.txt_horario.value = "";
                 form_altaBono.text_alimentos.value = "";
@@ -644,7 +645,6 @@
                 break;
             default:
                 oForm=document.getElementById("form_modProf");
-                break;
         }
         return oForm.querySelectorAll("option");
     }
@@ -656,9 +656,20 @@
                 break;
             default:
                 oForm=document.getElementById("form_modAct");
-                break;
         }
         var oSelect=oForm.getElementById("select_alumnos_act"); //Select Alumnos Seleccionado
+        return oSelect.querySelectorAll("option");
+    }
+    function getAlumnosFormBono(sForm){
+        var oForm;
+        switch(sForm){
+            case "alta":
+                oForm=document.getElementById("form_altaBono");
+                break;
+            default:
+                oForm=document.getElementById("form_modBono");
+        }
+        var oSelect=oForm.getElementById("select_alumnos_bono");
         return oSelect.querySelectorAll("option");
     }
     function cargarSelectAlumnos(){
@@ -743,18 +754,33 @@
     }
     //Constructor de objeto XML Actividad Extraescolar
     function newActividadExtra(sId,sNombre,oAlumnos){
-        var oActividadExtra=document.createElement("actividad")
+        var oActividadExtra=document.createElement("actividad");
         oActividadExtra.setAttribute("id",sId);
         var oNombre=document.createElement("nombre");
         addContenido(oNombre,sNombre);
         oActividadExtra.appendChild(oNombre);
         oActividadExtra.appendChild(document.createElement("alumnosAct"));
-        for(var i=0;i<oAlumnos;i++){
+        for(var i=0;i<oAlumnos.length;i++){
             var oAlumnoAux=document.createElement("alumnoAct");
             oAlumnoAux.setAttribute("dni",oAlumnos[i].value);
             oActividadExtra.querySelector("alumnosAct").appendChild(oAlumnoAux);
         }
         return oActividadExtra;
+    }
+    //Constructor de objeto XML Bono comedor
+    function newBonoComedor(sDni,sHorario,oAlimentosAlergico){
+        var oBonoComedor=document.createElement("bono");
+        oBonoComedor.setAttribute("id",sDni);
+        var oHorario=document.createElement("horario");
+        addContenido(oHorario,sHorario);
+        oBonoComedor.appendChild(oHorario);
+        oBonoComedor.appendChild(document.createElement("alimentosAlergico"));
+        for(var i=0;i<oAlimentosAlergico.length;i++){
+            var oAlimento=document.createElement("alimentoAlergico");
+            addContenido(oAlimento,oAlimentosAlergico[i].value);
+            oBonoComedor.querySelector("alimentosAlergico").appendChild(oAlimento);
+        }
+        return oBonoComedor;
     }
     //Metodo para añadir nodos de textos
     function addContenido(oNodo,sTexto){
