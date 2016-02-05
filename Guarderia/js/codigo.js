@@ -229,7 +229,30 @@
         var oProfAnterior = buscarProfesor(oProfesor.querySelector("dni").nodeValue);
         oXML.replaceChild(oProfesor,oProfAnterior);
     }
+    function modificarXMLAlumno(oAlumno)
+    {
+        var oAlumnoAnterior = buscarAlumno(oAlumno.getAttribute("dni"));
+        oXML.replaceChild(oAlumno,oAlumnoAnterior);
+    }
 
+    function modificarXMLActividad(oActividad)
+    {
+        var oActividadAnterior = buscarActividad(oActividad.getAttribute("id"));
+        oXML.replaceChild(oActividad,oActividadAnterior);
+    }
+
+
+    function modificarXMLComedor(oBono)
+    {
+        var oComedorAnterior = buscarBono(oBono.getAttribute("id"));
+        oXML.replaceChild(oBono,oComedorAnterior);
+    }
+
+    function modificarXMLExpediente(oExpediente)
+    {
+        var oExpedienteAnterior = buscarExpediente(oExpediente.getAttribute("id"));
+        oXML.replaceChild(oBono,oExpedienteAnterior);
+    }
 
     function mostrarFormsAlumnos(){
         ocultar("menuProf");
@@ -631,8 +654,14 @@
     function mostrarFormModProf(){
         $("form").hide("normal");
         $("#form_modProf").show("normal");
+        document.getElementById("sel_profesor_profesores_mod").addEventListener("change",mostrarRestoFormModProf,false);
+    }
+
+    function mostrarRestoFormModProf(){
+        document.getElementById("restoFormProf").classList.remove("oculto");
         document.getElementById("btnModProf").addEventListener("click",validarFormModProf,false);
     }
+
     function mostrarFormBajProf(){
         $("form").hide("normal");
         $("#form_bajaProf").show("normal");
@@ -647,8 +676,16 @@
     function mostrarFormModAlum(){
         $("form").hide("normal");
         $("#form_modAlum").show("normal");
+        document.getElementById("sel_alumno_alumnos_mod").addEventListener("change",mostrarRestoFormModAlum,false);
+        cargarSelectAlumnos("sel_alumno_alumnos_mod");
+    }
+
+    function mostrarRestoFormModAlum(){
+
+        document.getElementById("restoFormulario").classList.remove("oculto");
         document.getElementById("btnModAlum").addEventListener("click",validarFormModAlum,false);
     }
+
     function mostrarFormBajAlum(){
         $("form").hide("normal");
         $("#form_bajaAlum").show("normal");
@@ -729,7 +766,7 @@
     }
     function cargarSelectAlumnos(sIDSelect){
         var lugar=document.getElementById(sIDSelect);
-        var oAlumnos=oXML.querySelectorAll("alumnos");
+        var oAlumnos=oXML.querySelectorAll("alumno");
         for(var i=0;i<oAlumnos.length;i++){
             var opt=document.createElement("option");
             opt.value=oAlumnos[i].getAttribute("dni");
@@ -741,9 +778,17 @@
     function mostrarFormModAct(){
         $("form").hide("normal");
         $("#form_modAct").show("normal");
-        document.getElementById("btnModAct").addEventListener("click",validarModAct,false);
+        document.getElementById("sel_alumnos_actividad_mod").addEventListener("change",mostrarRestoFormModActi,false);
         cargarSelectAlumnos("sel_alumno_act_mod");
     }
+
+    function mostrarRestoFormModActi(){
+
+        document.getElementById("restoFormAct").classList.remove("oculto");
+        document.getElementById("btnModAct").addEventListener("click",validarModAct,false);
+    }
+
+
     function mostrarFormBajAct(){
         $("form").hide("normal");
         $("#form_bajaAct").show("normal");

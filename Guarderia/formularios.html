@@ -135,6 +135,18 @@
                     <div class="form_modProf">
                         <form id="form_modProf" name="form_modProf"  class="form-horizontal oculto">
                             <h3 class="text-primary">Modificación Profesor</h3>
+
+                            <div class="form-group">
+                                <div class="col-xs-4" id="selectMas">
+                                    <div class="input-group">
+                                        <select class="form-control" id="sel_profesor_profesores_mod">
+                                            <option value="">Selecciona un profesor</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="restoFormProf" class="oculto">
                             <div class="form-group">
                                 <label for="text_nombre" class="col-sm-4 control-label">Nombre</label>
                                 <div class="col-xs-4">
@@ -183,7 +195,7 @@
                                     <button type="button" class="btn btn-danger">Cancelar</button>
                                 </div>
                             </div>
-
+                            </div>
                         </form>
                     </div>
                     <div class="form_bajaProf">
@@ -284,6 +296,18 @@
                     <div class="form_modAlum">
                         <form name="form_modAlum" id="form_modAlum" class="form-horizontal oculto">
                             <h3 class="text-primary">Modificación Alumno</h3>
+
+                            <div class="form-group">
+                                <div class="col-xs-4" id="selectMas">
+                                    <div class="input-group">
+                                        <select class="form-control" id="sel_alumno_alumnos_mod">
+                                            <option value="">Selecciona un alumno</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <div  id="restoFormulario" class="oculto">
                             <div class="form-group">
                                 <label for="text_nombre" class="col-sm-4 control-label">Nombre</label>
                                 <div class="col-xs-4">
@@ -322,12 +346,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-md-offset-4 col-xs-4">
+                                <div class="col-md-offset-3 col-xs-6">
                                     <button type="button" id="btnModAlum" class="btn btn-info">Guardar Cambios</button>
                                     <button type="button" class="btn btn-danger">Cancelar</button>
                                 </div>
                             </div>
-
+                        </div>
                         </form>
                     </div>
                     <div class="form_bajaAlum" >
@@ -426,6 +450,19 @@
                     <div class="form_modAct">
                         <form id="form_modAct" name="form_modAct"  class="form-horizontal oculto">
                             <h3 class="text-primary">Modificación de Actividad</h3>
+
+
+                            <div class="form-group">
+                                <div class="col-xs-4" id="selectMas">
+                                    <div class="input-group">
+                                        <select class="form-control" id="sel_alumnos_actividad_mod">
+                                            <option value="">Selecciona un alumno</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="oculto" id="restoFormAct">
                             <div class="form-group">
                                 <label for="text_id" class="col-sm-4 control-label">ID</label>
                                 <div class="col-xs-4">
@@ -469,6 +506,7 @@
                                     <button type="button" id="btnModAct" class="btn btn-info">Guardar Cambios</button>
                                     <button type="button" class="btn btn-danger">Cancelar</button>
                                 </div>
+                            </div>
                             </div>
                         </form>
                     </div>
@@ -648,11 +686,17 @@
                 <div class="col-md-offset-2 col-md-8">
                     <div class="formAltaBono" >
                         <form name="form_altaExp" id="form_altaExp" class="form-horizontal oculto">
-                            <h3 class="text-primary">Alta Bono Comedor</h3>
+                            <h3 class="text-primary">Alta Expediente</h3>
                             <div class="form-group">
-                                <label for="text_alumno" class="col-sm-4 control-label">Observaciones:</label>
+                                <label for="text_alumno" class="col-sm-4 control-label">Alumno:</label>
                                 <div class="col-xs-4">
-                                    <textarea class="form-control" rows="3"></textarea>
+                                    <input type="text" class="form-control" id="text_AlumnoExp" placeholder="Nombre"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_observaciones" class="col-sm-4 control-label">Observaciones:</label>
+                                <div class="col-xs-4">
+                                    <textarea class="form-control" id="text_observaciones" rows="3"></textarea>
                                 </div>
                             </div>
                             <div class="form-group ">
@@ -667,9 +711,9 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-xs-4" id="selectMas">
+                                <label   class="control-label col-sm-4">Nota:</label>
+                                <div class="col-xs-4">
                                     <div class="input-group">
-                                        <label   class="control-label col-sm-4">Nota:</label>
                                         <input type="text" class="form-control" >
                                       <span class="input-group-btn">
                                         <button class="btn btn-default" type="button">+</button>
@@ -688,7 +732,7 @@
                     </div>
                     <div class="formModExp">
                         <form id="form_modExp" name="form_modExp"  class="form-horizontal oculto">
-                            <h3 class="text-primary">Modificación de Bono Comedor</h3>
+                            <h3 class="text-primary">Modificación de Expediente</h3>
                             <div class="form-group">
                                 <label for="text_alumno" class="col-sm-4 control-label">Dni Alumno</label>
                                 <div class="col-xs-4">
@@ -713,7 +757,8 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-xs-4" id="selectMas">
+                                <label   class="control-label col-sm-4">Nota:</label>
+                                <div class="col-xs-4">
                                     <div class="input-group">
                                         <input type="text" class="form-control" >
                                       <span class="input-group-btn">
@@ -732,7 +777,7 @@
                     </div>
                     <div class="formBajaBono">
                         <form name="form_bajaExp" id="form_bajaExp" class="form-horizontal oculto">
-                            <h3 class="text-primary">Baja de Bono Comedor</h3>
+                            <h3 class="text-primary">Baja de Expediente</h3>
                             <div class="form-group">
                                 <label for="text_dni" class="col-sm-4 control-label">Dni</label>
                                 <div class="col-xs-4">

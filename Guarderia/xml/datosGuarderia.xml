@@ -9,8 +9,8 @@
             </grupos>
         </profesor>-->
     </profesores>
-    <alumnos dni="48246278X">
-        <alumno>
+    <alumnos>
+        <alumno dni="34906772A">
         <nombre>Pepito</nombre>
         <apellidos>Perez</apellidos>
         <edad>12</edad>
@@ -18,10 +18,9 @@
         <direccion>calle falsa, 3</direccion>
         <grupo>A</grupo>
         </alumno>
-        <alumno>
+        <alumno dni="47457858l">
             <nombre>Maria</nombre>
             <apellidos>Jimenez</apellidos>
-            <dni>34906772A</dni>
             <edad>18</edad>
             <contacto>673914877</contacto>
             <direccion>calle falsa, 4</direccion>
