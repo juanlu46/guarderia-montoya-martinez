@@ -570,9 +570,11 @@
         if(todoOk==false)
             alert(sMensajeError);
         else {
-            var oAlumno=guarderia.buscarAlumno(form_modBono.text_alumno.value);
+            var oAlumno=buscarAlumno(form_modBono.text_alumno.value);
             if(oAlumno!=null) {
-               //FALTAAAA MODIFICAR BONO
+               oBonoActual=newBonoComedor(form_modBono.text_alumno.value,form_modBono.txt_horario.value,
+               getAlumnosFormBono("modificar"));
+                alert(modificarXMLBono(oBonoActual));
                 form_altaBono.text_alumno.value = "";
                 form_altaBono.txt_horario.value = "";
                 form_altaBono.text_alimentos.value = "";
@@ -593,11 +595,11 @@
         if(todoOk==false)
             alert(sMensajeError);
         else {
-            alert(guarderia.bajaBonoComedor(form_bajaBono.text_alumno.value));
+            alert(borrarBonoComedor(form_bajaBono.text_alumno.value));
             form_bajaAct.text_alumno.value="";
         }
     }
-    // Metodos de msotrar formularios
+    // Metodos de mostrar formularios
     function mostrarFormAltaProf(){
         $("form").hide("normal");
         $("#form_altaProf").show("normal");
@@ -781,6 +783,23 @@
             oBonoComedor.querySelector("alimentosAlergico").appendChild(oAlimento);
         }
         return oBonoComedor;
+    }
+    //Constructor de objeto XML Expediente
+    function newExpediente(sDni,oNotas,sObservaciones){
+        var oExpediente=document.createElement("expediente");
+        oExpediente.setAttribute("id",sDni);
+        var oObser=document.createElement("observaciones");
+        addContenido(oObser,sObservaciones);
+        oExpediente.appendChild(oObser);
+        oExpediente.appendChild(document.createElement("notas"));
+        for(var i=0;i<oNotas.length;i++){
+            var oValores=oNotas[i].split("-");
+            var oNota=document.createElement("notaAsig");
+            oNota.setAttribute("id",oValores[0]);
+            addContenido(oNota,oValores[1]);
+            oExpediente.querySelector("notas").appendChild(oNota);
+        }
+        return oExpediente;
     }
     //Metodo para añadir nodos de textos
     function addContenido(oNodo,sTexto){
