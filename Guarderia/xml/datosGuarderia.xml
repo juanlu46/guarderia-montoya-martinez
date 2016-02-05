@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <guarderia>
     <profesores>
-        <!--<profesor>
+        <!--<profesor dni=""48493737F>
             ...
             <grupos>
                 <grupo id="2A"/>
@@ -9,11 +9,10 @@
             </grupos>
         </profesor>-->
     </profesores>
-    <alumnos>
+    <alumnos dni="48246278X">
         <alumno>
         <nombre>Pepito</nombre>
         <apellidos>Perez</apellidos>
-        <dni>47456796L</dni>
         <edad>12</edad>
         <contacto>954876345</contacto>
         <direccion>calle falsa, 3</direccion>
@@ -30,8 +29,7 @@
         </alumno>
     </alumnos>
     <actividades>
-        <!--<actividad>
-            <id>jfshj</id>
+        <!--<actividad id="fdsgfd">
             <nombre>dfhshjk</nombre>
             <alumnosAct>
                 <alumnoAct id="454365X"/>
@@ -39,11 +37,16 @@
         </actividad>-->
     </actividades>
     <asignaturas>
-
+        <!--<asignatura id="dskak">
+                <nombre>Mates</nombre>
+                <profesorAsig>Pepe</profesorAsig>
+                <alumnosAsig>
+                    <alumnoAsig dni="3453566C"/>
+                <alumnosAsig>
+        </asignatura>-->
     </asignaturas>
     <expedientes>
-        <!--<expediente>
-            <alumnoExp id="23432A"/>
+        <!--<expediente id="437598983X" > el id es el dni del alumno
             <notas>
                 <nota>
                     <asignatura id="43">9,75</asignatura>
@@ -53,6 +56,11 @@
         </expediente>-->
     </expedientes>
     <bonos>
-
+        <!--<bono id="453533X"> el id es el dni del alumno
+                <horario>4:50</horario>
+                <alimentosAlergico>
+                    <alimento>Cacahuete</alimento>
+                </alimentosAlergico>
+        </bono>-->
     </bonos>
 </guarderia>
