@@ -1,5 +1,6 @@
     window.addEventListener('load',inicio,false);
     var oXML;
+    //holaa
     function inicio() {
         document.getElementById("alumnos").addEventListener("click",mostrarFormsAlumnos,false);
         document.getElementById("profesores").addEventListener("click",mostrarFormsProf,false);

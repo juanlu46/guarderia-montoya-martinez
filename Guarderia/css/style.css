@@ -34,3 +34,11 @@ body{
 .dropdown-menu>li>a{
     color:#9d9d9d;
 }
+#select_gruposProf{
+    width: 164px;
+    height: 50px;
+    margin-left: 15px;
+}
+#selectMas{
+    margin-left: 33%;
+}
