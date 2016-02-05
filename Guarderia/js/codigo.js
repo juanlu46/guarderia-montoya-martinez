@@ -90,7 +90,7 @@
         }
         return oExpediente;
     }
-    //Metodos Añadir
+    //Metodos Añadir al XML
     function añadirProfesor(oProfesor){
         var sRes="Alta de profesor satisfactoria";
         if(buscarProfesor(oProfesor.getAttribute("dni"))==null) {
