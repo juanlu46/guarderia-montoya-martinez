@@ -1,6 +1,5 @@
     window.addEventListener('load',inicio,false);
     var oXML;
-    //holaa
     function inicio() {
         document.getElementById("alumnos").addEventListener("click",mostrarFormsAlumnos,false);
         document.getElementById("profesores").addEventListener("click",mostrarFormsProf,false);
@@ -94,7 +93,7 @@
         }
         return oExpediente;
     }
-    //Metodos Añadir
+    //Metodos Añadir al XML
     function añadirProfesor(oProfesor){
         var sRes="Alta de profesor satisfactoria";
         if(buscarProfesor(oProfesor.getAttribute("dni"))==null) {
@@ -559,10 +558,11 @@
         if(todoOk==false)
             alert(sMensajeError);
         else {
-            var oAlumno=guarderia.buscarAlumno(form_altaBono.text_alumno.value);
+            var oAlumno=buscarAlumno(form_altaBono.text_alumno.value);
             if(oAlumno!=null) {
-                oBonoActual = new BonoComedor(oAlumno, form_altaBono.text_horario.value);
-                alert(guarderia.altaBonoComedor(oBonoActual));
+                oBonoActual = newBonoComedor(oAlumno, form_altaBono.text_horario.value,
+                getAlimentosFormBono("alta"));
+                alert(añadirBono(oBonoActual));
                 form_altaBono.text_alumno.value = "";
                 form_altaBono.txt_horario.value = "";
                 form_altaBono.text_alimentos.value = "";
@@ -593,9 +593,11 @@
         if(todoOk==false)
             alert(sMensajeError);
         else {
-            var oAlumno=guarderia.buscarAlumno(form_modBono.text_alumno.value);
+            var oAlumno=buscarAlumno(form_modBono.text_alumno.value);
             if(oAlumno!=null) {
-               //FALTAAAA MODIFICAR BONO
+               oBonoActual=newBonoComedor(form_modBono.text_alumno.value,form_modBono.txt_horario.value,
+               getAlimentosFormBono("modificar"));
+                alert(modificarXMLBono(oBonoActual));
                 form_altaBono.text_alumno.value = "";
                 form_altaBono.txt_horario.value = "";
                 form_altaBono.text_alimentos.value = "";
@@ -616,11 +618,11 @@
         if(todoOk==false)
             alert(sMensajeError);
         else {
-            alert(guarderia.bajaBonoComedor(form_bajaBono.text_alumno.value));
+            alert(borrarBonoComedor(form_bajaBono.text_alumno.value));
             form_bajaAct.text_alumno.value="";
         }
     }
-    // Metodos de msotrar formularios
+    // Metodos de mostrar formularios
     function mostrarFormAltaProf(){
         $("form").hide("normal");
         $("#form_altaProf").show("normal");
@@ -675,11 +677,20 @@
         $("#form_bajaExp").show("normal");
         //document.getElementById("btnBajaExp").addEventListener("click",validarBajaExp,false);
     }
-
-
-
-
-
+    //Funciones limpiar campos
+    function limpiarCampos(){
+        var oInputs=document.querySelectorAll("input[type='text']");
+        var oSelects=document.querySelectorAll("select");
+        var oTextArea=document.querySelector("textarea");
+        for(var i=0;i<oInputs.length;i++)
+            oInputs[i].value="";
+        for(var i=0;i<oSelects.length;i++){
+            var oOptions=oSelects[i].querySelectorAll("option");
+            for(var j=0;j<oOptions.length;j++)
+                oSelects[i].removeChild(oOptions[j]);
+        }
+        oTextArea.nodeValue="";
+    }
     //Funciones recogida de select
     function getGruposFormProf(sForm){
         var oForm;
@@ -689,7 +700,6 @@
                 break;
             default:
                 oForm=document.getElementById("form_modProf");
-                break;
         }
         return oForm.querySelectorAll("option");
     }
@@ -701,9 +711,20 @@
                 break;
             default:
                 oForm=document.getElementById("form_modAct");
-                break;
         }
         var oSelect=oForm.getElementById("select_alumnos_act"); //Select Alumnos Seleccionado
+        return oSelect.querySelectorAll("option");
+    }
+    function getAlimentosFormBono(sForm){
+        var oForm;
+        switch(sForm){
+            case "alta":
+                oForm=document.getElementById("form_altaBono");
+                break;
+            default:
+                oForm=document.getElementById("form_modBono");
+        }
+        var oSelect=oForm.getElementById("select_alimentos");
         return oSelect.querySelectorAll("option");
     }
     function cargarSelectAlumnos(){
@@ -788,18 +809,50 @@
     }
     //Constructor de objeto XML Actividad Extraescolar
     function newActividadExtra(sId,sNombre,oAlumnos){
-        var oActividadExtra=document.createElement("actividad")
+        var oActividadExtra=document.createElement("actividad");
         oActividadExtra.setAttribute("id",sId);
         var oNombre=document.createElement("nombre");
         addContenido(oNombre,sNombre);
         oActividadExtra.appendChild(oNombre);
         oActividadExtra.appendChild(document.createElement("alumnosAct"));
-        for(var i=0;i<oAlumnos;i++){
+        for(var i=0;i<oAlumnos.length;i++){
             var oAlumnoAux=document.createElement("alumnoAct");
             oAlumnoAux.setAttribute("dni",oAlumnos[i].value);
             oActividadExtra.querySelector("alumnosAct").appendChild(oAlumnoAux);
         }
         return oActividadExtra;
+    }
+    //Constructor de objeto XML Bono comedor
+    function newBonoComedor(sDni,sHorario,oAlimentosAlergico){
+        var oBonoComedor=document.createElement("bono");
+        oBonoComedor.setAttribute("id",sDni);
+        var oHorario=document.createElement("horario");
+        addContenido(oHorario,sHorario);
+        oBonoComedor.appendChild(oHorario);
+        oBonoComedor.appendChild(document.createElement("alimentosAlergico"));
+        for(var i=0;i<oAlimentosAlergico.length;i++){
+            var oAlimento=document.createElement("alimentoAlergico");
+            addContenido(oAlimento,oAlimentosAlergico[i].value);
+            oBonoComedor.querySelector("alimentosAlergico").appendChild(oAlimento);
+        }
+        return oBonoComedor;
+    }
+    //Constructor de objeto XML Expediente
+    function newExpediente(sDni,oNotas,sObservaciones){
+        var oExpediente=document.createElement("expediente");
+        oExpediente.setAttribute("id",sDni);
+        var oObser=document.createElement("observaciones");
+        addContenido(oObser,sObservaciones);
+        oExpediente.appendChild(oObser);
+        oExpediente.appendChild(document.createElement("notas"));
+        for(var i=0;i<oNotas.length;i++){
+            var oValores=oNotas[i].split("-");
+            var oNota=document.createElement("notaAsig");
+            oNota.setAttribute("id",oValores[0]);
+            addContenido(oNota,oValores[1]);
+            oExpediente.querySelector("notas").appendChild(oNota);
+        }
+        return oExpediente;
     }
     //Metodo para añadir nodos de textos
     function addContenido(oNodo,sTexto){

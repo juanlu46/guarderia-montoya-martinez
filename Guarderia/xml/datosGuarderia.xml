@@ -48,10 +48,8 @@
     <expedientes>
         <!--<expediente id="437598983X" > el id es el dni del alumno
             <notas>
-                <nota>
-                    <asignatura id="43">9,75</asignatura>
-                    <asignatura id="56">6,78</asignatura>
-                </nota>
+                <notaAsig id="43">9,75</notaAsig>
+                <notaAsig id="56">6,78</notaAsig>
             </notas>
         </expediente>-->
     </expedientes>
