@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <guarderia>
     <profesores>
-        <!--<profesor dni=""48493737F>
-            ...
+        <profesor dni="48493737F">
+            <nombre>Juan</nombre>
+            <apellidos>Vilches</apellidos>
+            <dni>47524691M</dni>
+            <telefono>954862514</telefono>
             <grupos>
                 <grupo id="2A"/>
                 <grupo id="1B"/>
             </grupos>
-        </profesor>-->
+        </profesor>
     </profesores>
     <alumnos>
         <alumno dni="34906772A">
@@ -50,6 +53,7 @@
                 <notaAsig id="43">9,75</notaAsig>
                 <notaAsig id="56">6,78</notaAsig>
             </notas>
+            <observaciones></observaciones>
         </expediente>-->
     </expedientes>
     <bonos>

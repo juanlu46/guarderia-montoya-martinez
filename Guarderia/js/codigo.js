@@ -144,6 +144,19 @@
         return sRes;
     }
 
+    function añadirExpediente(oExpediente){
+        var sRes="Alta de expediente satisfactoria";
+        if(buscarExpediente(oExpediente.getAttribute("id"))==null) {
+            var oExpedientes = oXML.querySelector("expediente");
+            oExpedientes.appendChild(oExpediente);
+        }
+        else
+        {
+            sRes="Expediente ya registrado";
+        }
+        return sRes;
+    }
+
     //Metodos borrar
     function borrarProfesor(sDni){
         var sRes="Baja de profesor satisfactoria";
@@ -645,11 +658,103 @@
             form_bajaAct.text_alumno.value="";
         }
     }
+
+
+    function validarFormAltaExp(){
+
+        var sMensajeError="";
+        var todoOk=true;
+        var oExpedienteActual=null;
+
+        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_altaExp.text_AlumnoExp.value)){
+            sMensajeError="Dni incorrecto\n";
+            todoOk=false;
+        }
+        if(form_altaExp.text_observaciones.value==""){
+            sMensajeError+="Introduzca alguna observación\n";
+            todoOk=false;
+        }
+        if(!/^\d{1,2}(\.\d{1,2})?$/.test(form_altaExp.text_nota.value)){
+            sMensajeError+="Nota incorrecta\n";
+            todoOk=false;
+        }
+
+
+        if(todoOk==false)
+            alert(sMensajeError);
+        else {
+            var oAlumno=buscarAlumno(form_altaExp.text_AlumnoExp.value);
+            if(oAlumno!=null) {
+                //NO SE COMO PASARTE LAS NOTAS Y LAS ASIGNATURAS AL METODO DE NEWEXPEDIENTE.
+                var sObservaciones = form_altaExp.text_observaciones.value;
+
+                oExpedienteActual = newExpediente(form_altaExp.text_AlumnoExp.value,form_altaExp.text_nota.value,form_altaExp.text_observaciones.value);
+                alert(añadirExpediente(oExpedienteActual));
+               limpiarCampos();
+            }
+            else
+                alert("Este alumno no existe");
+        }
+    }
+    function validarFormModExp(){
+
+        var sMensajeError="";
+        var todoOk=true;
+        var oExpedienteActual=null;
+
+        if(form_modExp.text_observaciones.value==""){
+            sMensajeError+="Introduzca alguna observación\n";
+            todoOk=false;
+        }
+        if(!/^\d{1,2}(\.\d{1,2})?$/.test(form_modExp.text_nota.value)){
+            sMensajeError+="Nota incorrecta\n";
+            todoOk=false;
+        }
+
+
+        if(todoOk==false)
+            alert(sMensajeError);
+        else {
+            var oAlumno=buscarAlumno(form_modExp.text_AlumnoExp.value);
+            if(oAlumno!=null) {
+
+
+                oExpedienteActual = newExpediente(form_modExp.text_AlumnoExp.value,form_modExp.text_nota.value,form_modExp.text_observaciones.value);
+                alert(modificarXMLExpediente(oExpedienteActual));
+                limpiarCampos();
+            }
+            else
+                alert("Este alumno no existe");
+        }
+    }
+
+
     // Metodos de mostrar formularios
     function mostrarFormAltaProf(){
         $("form").hide("normal");
         $("#form_altaProf").show("normal");
+        cargarSelectProfesores("sel_profesor_profesores_mod");
         document.getElementById("btnAltaProf").addEventListener("click", validarFormProf, false);
+        document.getElementById("btnCancelar").addEventListener("click", cancelar, false);
+        document.getElementById("btnanadirCurso").addEventListener("click",anadirCursoProf,false);
+    }
+    function anadirCursoProf(){
+        var curso=form_altaProf.cursoProf.value;
+        if(curso==""){
+            alert("No puedes agregar un curso vacio");
+        }
+        else{
+            var opt=document.createElement("option");
+            var texto=document.createTextNode(curso);
+            opt.appendChild(texto);
+            form_altaProf.select_gruposProf.appendChild(opt);
+
+        }
+    }
+
+    function cancelar(){
+        $("form").hide("normal");
+        limpiarCampos();
     }
     function mostrarFormModProf(){
         $("form").hide("normal");
@@ -660,59 +765,136 @@
     function mostrarRestoFormModProf(){
         document.getElementById("restoFormProf").classList.remove("oculto");
         document.getElementById("btnModProf").addEventListener("click",validarFormModProf,false);
+        document.getElementById("btnCancelarModProf").addEventListener("click", cancelar, false);
+        document.getElementById("anadirGrupoModProf").addEventListener("click",anadirCursoModProf,false);
     }
+    function anadirCursoModProf(){
+        var curso=form_modProf.grupoNuevo.value;
+        if(curso==""){
+            alert("No puedes agregar un curso vacio");
+        }
+        else{
+            var opt=document.createElement("option");
+            var texto=document.createTextNode(curso);
+            opt.appendChild(texto);
+            form_modProf.select_gruposProf.appendChild(opt);
 
+        }
+    }
     function mostrarFormBajProf(){
         $("form").hide("normal");
         $("#form_bajaProf").show("normal");
         document.getElementById("btnBajaProf").addEventListener("click",validarFormBajaProf,false);
+        document.getElementById("btnCancelarBajaProf").addEventListener("click", cancelar, false);
     }
 
     function mostrarFormAltaAlum(){
         $("form").hide("normal");
         $("#form_altaAlum").show("normal");
         document.getElementById("btnAltaAlum").addEventListener("click",validarFormAltaAlum,false);
+        document.getElementById("btnCancelarAltaAlum").addEventListener("click", cancelar, false);
     }
     function mostrarFormModAlum(){
         $("form").hide("normal");
         $("#form_modAlum").show("normal");
         document.getElementById("sel_alumno_alumnos_mod").addEventListener("change",mostrarRestoFormModAlum,false);
+        if(document.getElementById("sel_alumno_alumnos_mod").length==1)
         cargarSelectAlumnos("sel_alumno_alumnos_mod");
     }
 
     function mostrarRestoFormModAlum(){
-
         document.getElementById("restoFormulario").classList.remove("oculto");
         document.getElementById("btnModAlum").addEventListener("click",validarFormModAlum,false);
+        document.getElementById("btnCancelarModAlum").addEventListener("click", cancelar, false);
     }
 
     function mostrarFormBajAlum(){
         $("form").hide("normal");
         $("#form_bajaAlum").show("normal");
-    document.getElementById("btnBajaAlum").addEventListener("click",validarBajaAlum,false);
+        document.getElementById("btnBajaAlum").addEventListener("click",validarBajaAlum,false);
+        document.getElementById("btnCancelarBajaAlum").addEventListener("click", cancelar, false);
 }
 
     function mostrarFormAltaAct(){
         $("form").hide("normal");
         $("#form_altaAct").show("normal");
         document.getElementById("btnAltaAct").addEventListener("click",validarAltaAct,false);
+        if(document.getElementById("sel_alumno_act_alta").length==1)
         cargarSelectAlumnos("sel_alumno_act_alta");
+
+        document.getElementById("btnCancelarAltaAct").addEventListener("click", cancelar, false);
     }
+    function mostrarFormModAct(){
+        $("form").hide("normal");
+        $("#form_modAct").show("normal");
+        document.getElementById("sel_alumnos_actividad_mod").addEventListener("change",mostrarRestoFormModActi,false);
+        if(document.getElementById("sel_alumno_act_mod").length==1)
+        cargarSelectAlumnos("sel_alumno_act_mod");
+    }
+
+    function mostrarRestoFormModActi(){
+        document.getElementById("restoFormAct").classList.remove("oculto");
+        document.getElementById("btnModAct").addEventListener("click",validarModAct,false);
+        document.getElementById("btnCancelarModAct").addEventListener("click", cancelar, false);
+    }
+
+
+    function mostrarFormBajAct(){
+        $("form").hide("normal");
+        $("#form_bajaAct").show("normal");
+        document.getElementById("btnBajaAct").addEventListener("click",validarBajaAct,false);
+        document.getElementById("btnCancelarBajaAct").addEventListener("click", cancelar, false);
+    }
+
+    function mostrarFormAltaComed(){
+        $("form").hide("normal");
+        $("#form_altaBono").show("normal");
+        document.getElementById("btnAltaBono").addEventListener("click",validarAltaBono,false);
+        document.getElementById("btnCancelarAltaBono").addEventListener("click", cancelar, false);
+    }
+    function mostrarFormModComed(){
+        $("form").hide("normal");
+        $("#form_modBono").show("normal");
+        document.getElementById("sel_alimentos_comedor_mod").addEventListener("change",mostrarRestoFormModComedor,false);
+    }
+
+    function mostrarRestoFormModComedor(){
+        document.getElementById("restoFormComedor").classList.remove("oculto");
+        document.getElementById("btnModBono").addEventListener("click",validarModBono,false);
+        document.getElementById("btnCancelarModBono").addEventListener("click", cancelar, false);
+    }
+    function mostrarFormBajComed(){
+        $("form").hide("normal");
+        $("#form_bajaBono").show("normal");
+        document.getElementById("btnBajaBono").addEventListener("click",validarBajaBono,false);
+        document.getElementById("btnCancelarBajaBono").addEventListener("click", cancelar, false);
+    }
+
 
     function mostrarFormAltaExp(){
         $("form").hide("normal");
         $("#form_altaExp").show("normal");
-        //document.getElementById("btnAltaExp").addEventListener("click",validarFormAltaExp,false);
+        document.getElementById("btnAltaExp").addEventListener("click",validarFormAltaExp,false);
+        document.getElementById("btnCancelarAltaExp").addEventListener("click", cancelar, false);
     }
     function mostrarFormModExp(){
         $("form").hide("normal");
         $("#form_modExp").show("normal");
-        //document.getElementById("btnModExp").addEventListener("click",validarFormModExp,false);
+        document.getElementById("sel_alumnos_expediente_mod").addEventListener("change",mostrarRestoFormModExp,false);
+        //Si no lo carga varias veces y tienes alumnos repetidos
+        if(document.getElementById("sel_alumnos_expediente_mod").length==1)
+        cargarSelectAlumnos("sel_alumnos_expediente_mod");
+    }
+    function mostrarRestoFormModExp(){
+        document.getElementById("restoFormExp").classList.remove("oculto");
+        document.getElementById("btnModExp").addEventListener("click",validarFormModExp,false);
+        document.getElementById("btnCancelarModExp").addEventListener("click", cancelar, false);
     }
     function mostrarFormBajExp(){
         $("form").hide("normal");
         $("#form_bajaExp").show("normal");
-        //document.getElementById("btnBajaExp").addEventListener("click",validarBajaExp,false);
+        document.getElementById("btnBajaExp").addEventListener("click",validarBajaExp,false);
+        document.getElementById("btnCancelarBajaExp").addEventListener("click", cancelar, false);
     }
     //Funciones limpiar campos
     function limpiarCampos(){
@@ -775,40 +957,16 @@
         }
         lugar.appendChild(opt);
     }
-    function mostrarFormModAct(){
-        $("form").hide("normal");
-        $("#form_modAct").show("normal");
-        document.getElementById("sel_alumnos_actividad_mod").addEventListener("change",mostrarRestoFormModActi,false);
-        cargarSelectAlumnos("sel_alumno_act_mod");
-    }
-
-    function mostrarRestoFormModActi(){
-
-        document.getElementById("restoFormAct").classList.remove("oculto");
-        document.getElementById("btnModAct").addEventListener("click",validarModAct,false);
-    }
-
-
-    function mostrarFormBajAct(){
-        $("form").hide("normal");
-        $("#form_bajaAct").show("normal");
-        document.getElementById("btnBajaAct").addEventListener("click",validarBajaAct,false);
-    }
-
-    function mostrarFormAltaComed(){
-        $("form").hide("normal");
-        $("#form_altaBono").show("normal");
-        document.getElementById("btnAltaBono").addEventListener("click",validarAltaBono,false);
-    }
-    function mostrarFormModComed(){
-        $("form").hide("normal");
-        $("#form_modBono").show("normal");
-        document.getElementById("btnModBono").addEventListener("click",validarModBono,false);
-    }
-    function mostrarFormBajComed(){
-        $("form").hide("normal");
-        $("#form_bajaBono").show("normal");
-        document.getElementById("btnBajaBono").addEventListener("click",validarBajaBono,false);
+    function cargarSelectProfesores(sIDSelect){
+        var lugar=document.getElementById(sIDSelect);
+        var oProfesores=oXML.querySelectorAll("profesor");
+        for(var i=0;i<oProfesores.length;i++){
+            var opt=document.createElement("option");
+            opt.value=oProfesores[i].getAttribute("dni");
+            addContenido(opt,oProfesores[i].getAttribute("dni"));
+            lugar.appendChild(opt);
+        }
+        lugar.appendChild(opt);
     }
 
     /* METODOS AUXILIARES*/
