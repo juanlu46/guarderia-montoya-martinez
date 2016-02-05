@@ -1,6 +1,5 @@
     window.addEventListener('load',inicio,false);
     var oXML;
-    //holaa
     function inicio() {
         document.getElementById("alumnos").addEventListener("click",mostrarFormsAlumnos,false);
         document.getElementById("profesores").addEventListener("click",mostrarFormsProf,false);
@@ -539,7 +538,7 @@
             var oAlumno=buscarAlumno(form_altaBono.text_alumno.value);
             if(oAlumno!=null) {
                 oBonoActual = newBonoComedor(oAlumno, form_altaBono.text_horario.value,
-                getAlumnosFormBono("alta"));
+                getAlimentosFormBono("alta"));
                 alert(añadirBono(oBonoActual));
                 form_altaBono.text_alumno.value = "";
                 form_altaBono.txt_horario.value = "";
@@ -574,7 +573,7 @@
             var oAlumno=buscarAlumno(form_modBono.text_alumno.value);
             if(oAlumno!=null) {
                oBonoActual=newBonoComedor(form_modBono.text_alumno.value,form_modBono.txt_horario.value,
-               getAlumnosFormBono("modificar"));
+               getAlimentosFormBono("modificar"));
                 alert(modificarXMLBono(oBonoActual));
                 form_altaBono.text_alumno.value = "";
                 form_altaBono.txt_horario.value = "";
@@ -639,6 +638,20 @@
         document.getElementById("btnAltaAct").addEventListener("click",validarAltaAct,false);
         cargarSelectAlumnos();
     }
+    //Funciones limpiar campos
+    function limpiarCampos(){
+        var oInputs=document.querySelectorAll("input[type='text']");
+        var oSelects=document.querySelectorAll("select");
+        var oTextArea=document.querySelector("textarea");
+        for(var i=0;i<oInputs.length;i++)
+            oInputs[i].value="";
+        for(var i=0;i<oSelects.length;i++){
+            var oOptions=oSelects[i].querySelectorAll("option");
+            for(var j=0;j<oOptions.length;j++)
+                oSelects[i].removeChild(oOptions[j]);
+        }
+        oTextArea.nodeValue="";
+    }
     //Funciones recogida de select
     function getGruposFormProf(sForm){
         var oForm;
@@ -663,7 +676,7 @@
         var oSelect=oForm.getElementById("select_alumnos_act"); //Select Alumnos Seleccionado
         return oSelect.querySelectorAll("option");
     }
-    function getAlumnosFormBono(sForm){
+    function getAlimentosFormBono(sForm){
         var oForm;
         switch(sForm){
             case "alta":
@@ -672,7 +685,7 @@
             default:
                 oForm=document.getElementById("form_modBono");
         }
-        var oSelect=oForm.getElementById("select_alumnos_bono");
+        var oSelect=oForm.getElementById("select_alimentos");
         return oSelect.querySelectorAll("option");
     }
     function cargarSelectAlumnos(){
