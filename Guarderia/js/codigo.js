@@ -659,7 +659,7 @@
         $("form").hide("normal");
         $("#form_altaAct").show("normal");
         document.getElementById("btnAltaAct").addEventListener("click",validarAltaAct,false);
-        cargarSelectAlumnos();
+        cargarSelectAlumnos("sel_alumno_act_alta");
     }
 
     function mostrarFormAltaExp(){
@@ -727,25 +727,22 @@
         var oSelect=oForm.getElementById("select_alimentos");
         return oSelect.querySelectorAll("option");
     }
-    function cargarSelectAlumnos(){
-        var lugar=document.getElementById("select_alumnos");
-        var select=document.createElement("select");
-        var oAlumnos=XML.querySelectorAll("alumnos");
+    function cargarSelectAlumnos(sIDSelect){
+        var lugar=document.getElementById(sIDSelect);
+        var oAlumnos=oXML.querySelectorAll("alumnos");
         for(var i=0;i<oAlumnos.length;i++){
             var opt=document.createElement("option");
-            opt.value=oAlumnos.dni;
-            var texto=document.createTextNode(oAlumnos.nombre);
-            opt.appendChild(texto);
-            select.appendChild(opt);
+            opt.value=oAlumnos[i].getAttribute("dni");
+            addContenido(opt,oAlumnos[i].getAttribute("dni"));
+            lugar.appendChild(opt);
         }
         lugar.appendChild(opt);
-
     }
     function mostrarFormModAct(){
         $("form").hide("normal");
         $("#form_modAct").show("normal");
         document.getElementById("btnModAct").addEventListener("click",validarModAct,false);
-        cargarSelectAlumnos();
+        cargarSelectAlumnos("sel_alumno_act_mod");
     }
     function mostrarFormBajAct(){
         $("form").hide("normal");
