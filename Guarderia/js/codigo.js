@@ -277,7 +277,7 @@
     function validarFormAltaAlum(){
         var sMensajeError="";
         var todoOk=true;
-        var oAlumno=document.createElement("alumno");
+        var oAlumno=null;
 
        if(!/^[a-z\d_]{2,15}$/.test(form_altaAlum.text_nombre.value)){
            sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
@@ -310,8 +310,8 @@
             alert(sMensajeError);
         }
         else {
-            alumnoActual=new Alumno(form_altaAlum.text_nombre.value,form_altaAlum.text_apellido.value,form_altaAlum.text_dni.value,form_altaAlum.text_edad.value,form_altaAlum.text_tlfn.value,form_altaAlum.text_direccion.value);
-                alert(guarderia.altaAlumno(alumnoActual));
+            oAlumno=newAlumno(form_altaAlum.text_nombre.value,form_altaAlum.text_apellido.value,form_altaAlum.text_dni.value,form_altaAlum.text_edad.value,form_altaAlum.text_tlfn.value,form_altaAlum.text_direccion.value,form_altaAlum.text_grupo.value);
+                alert(añadirAlumno(oAlumno));
                 form_altaAlum.text_nombre.value="";
                 form_altaAlum.text_apellido.value="";
                 form_altaAlum.text_dni.value="";
@@ -333,10 +333,6 @@
             sMensajeError+="Apellido incorrecto, el apellido debe tener entre 4 y 15 caracteres\n";
             todoOk=false;
         }
-        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_modAlum.text_dni.value)){
-            sMensajeError+="Dni incorrecto\n";
-            todoOk=false;
-        }
         if(form_modAlum.text_edad.value<1 || form_modAlum.text_edad.value>=99 ){
             sMensajeError+="Edad incorrecto\n";
             todoOk=false;
@@ -349,10 +345,16 @@
             sMensajeError+="Dirección incorrecto\n";
             todoOk=false;
         }
+        //FALTA VALIDACION DEL CMAPO GRUPO (una sola letra)
         if(todoOk==false){
             alert(sMensajeError);
         }
-    //FALTA MODIFICAR ALUMNO
+        else{
+            var oAlumnoMod=newAlumno(form_modAlum.txt_nombre.value,form_modAlum.txt_apellido.value,
+            form_modAlum.text_dni.value,form_modAlum.txt_edad.value,form_modAlum.txt_tlfn.value,
+            form_modAlum.txt_direccion.value,form_modAlum.txt_grupo.value);
+            alert(modificarXMLAlumno(oAlumnoMod));
+        }
     }
 
     function validarBajaAlum(){
@@ -366,7 +368,7 @@
         if(todoOk==false)
             alert(sMensajeError);
         else
-        guarderia.bajaAlumno(form_bajaAlum.text_dni.value);
+            alert(borrarAlumno(form_bajaAlum.txt_dni.value));
     }
 
 
@@ -397,7 +399,8 @@
             alert(sMensajeError);
         }
         else{
-            profesorActual=new Profesor(form_altaProf.text_nombre.value,form_altaProf.text_apellido.value,form_altaProf.text_dni.value,form_altaProf.text_tlfn.value);
+            oProfesor=newProfesor(form_altaProf.text_nombre.value,form_altaProf.text_apellido.value,
+                form_altaProf.text_dni.value,form_altaProf.text_tlfn.value,getGruposFormProf("alta"));
             alert(guarderia.altaProfesor(profesorActual));
             form_altaProf.text_nombre.value="";
             form_altaProf.text_apellido.value="";
@@ -444,7 +447,7 @@
     if(todoOk==false)
         alert(sMensajeError);
     else
-        guarderia.bajaProfesor(form_bajaProf.text_dni.value);
+        alert(borrarProfesor(form_bajaProf.text_dni.value));
 }
 
 
@@ -466,8 +469,9 @@
             alert(sMensajeError);
         }
         else{
-            actividadActual=new ActividadExtra(form_altaAct.text_id.value,form_altaAct.text_nombre.value);
-            alert(guarderia.altaActividadExtra(actividadActual));
+            actividadActual=newActividadExtra(form_altaAct.text_id.value,form_altaAct.text_nombre.value,
+            getAlumnosFormAct("alta"));
+            alert(añadirActividad(actividadActual));
             form_altaAct.text_id.value="";
             form_altaAct.text_nombre.value="";
         }
@@ -478,6 +482,7 @@
     function validarModAct(){
         var sMensajeError="";
         var todoOk=true;
+        var actividadActual=null;
 
         if(isNaN(form_modAct.text_id.value) || form_modAct.text_id.value==""){
             sMensajeError+="ID incorrecto\n";
@@ -492,7 +497,9 @@
             alert(sMensajeError);
         }
         else {
-            //FALTA MODIFICAR ACTIVIDAD
+            actividadActual=newActividadExtra(form_modAct.text_id.value,form_modAct.text_nombre.value,
+            getAlumnosFormAct("modificar"));
+            alert(modificarXMLActividadExtra(actividadActual));
         }
 }
 
@@ -507,7 +514,7 @@
     if(todoOk==false)
         alert(sMensajeError);
     else {
-            alert(guarderia.bajaActividadExtra(form_bajaAct.text_id.value));
+            alert(borrarActividadExtra());
             form_bajaAct.text_id.value="";
         }
 }
@@ -594,7 +601,7 @@
             form_bajaAct.text_alumno.value="";
         }
     }
-
+    // Metodos de msotrar formularios
     function mostrarFormAltaProf(){
         $("form").hide("normal");
         $("#form_altaProf").show("normal");
@@ -632,6 +639,32 @@
         $("#form_altaAct").show("normal");
         document.getElementById("btnAltaAct").addEventListener("click",validarAltaAct,false);
         cargarSelectAlumnos();
+    }
+    //Funciones recogida de select
+    function getGruposFormProf(sForm){
+        var oForm;
+        switch(sForm){
+            case "alta":
+                oForm=document.getElementById("form_altaProf");
+                break;
+            default:
+                oForm=document.getElementById("form_modProf");
+                break;
+        }
+        return oForm.querySelectorAll("option");
+    }
+    function getAlumnosFormAct(sForm){
+        var oForm;
+        switch(sForm){
+            case "alta":
+                oForm=document.getElementById("form_altaAct");
+                break;
+            default:
+                oForm=document.getElementById("form_modAct");
+                break;
+        }
+        var oSelect=oForm.getElementById("select_alumnos_act"); //Select Alumnos Seleccionado
+        return oSelect.querySelectorAll("option");
     }
     function cargarSelectAlumnos(){
         var lugar=document.getElementById("select_alumnos");
@@ -678,33 +711,56 @@
     /* METODOS AUXILIARES*/
     //Constructor de objeto XML, alumno
     function newAlumno(sNombre,sApellidos,sDni,iEdad,iContacto,sDireccion,sGrupo){
-        var oTags=["nombre","apellidos","dni","edad","contacto","direccion","grupo"];
+        var oTags=["nombre","apellidos","edad","contacto","direccion","grupo"];
         var oNodos=[];
         var oAlumno=document.createElement("alumno");
         for(var i=0;i<oTags.length;i++)
-            oNodos.push(document.createTextNode(oTags[i]));
+            oNodos.push(document.createElement(oTags[i]));
         var oTagsValues=[sNombre,sApellidos,sDni,iEdad,iContacto,sDireccion,sGrupo];
         for(var i=0;i<oTags.length;i++) {
             addContenido(oNodos[i], oTagsValues[i]);
             oAlumno.appendChild(oNodos[i]);
         }
+        oAlumno.setAttribute("dni",sDni);
         return oAlumno;
     }
     //Constructor de objeto XML, profesor.
-    function newProfesor(sNombre,sApellidos,sDni,iTelefono,sGrupo){
-        var oTags=["nombre","apellidos","dni","telefono","grupo"];
+    function newProfesor(sNombre,sApellidos,sDni,iTelefono,oGrupos){
+        var oTags=["nombre","apellidos","telefono"];
         var oNodos=[];
         var oProfesor=document.createElement("profesor");
         for(var i=0;i<oTags.length;i++)
-            oNodos.push(document.createTextNode(oTags[i]));
-        var oTagsValues=[sNombre,sApellidos,sDni,iTelefono,sGrupo];
-        for(var i=0;i<oTags.length;i++) {
+            oNodos.push(document.createElement(oTags[i]));
+        var oTagsValues=[sNombre,sApellidos,sDni,iTelefono];
+        for(var i=0;i<oTagsValues.length;i++) {
             addContenido(oNodos[i], oTagsValues[i]);
             oProfesor.appendChild(oNodos[i]);
         }
+        oProfesor.appendChild(document.createElement("grupos"));
+        for(var i=0;i<oGrupos.length;i++) {
+            var sGrupo=oGrupos.value;
+            var oGrupoAux=document.createElement("grupo");
+            addContenido(oGrupoAux,sGrupo);
+            oProfesor.querySelector("grupos").appendChild(oGrupoAux);
+        }
+        oProfesor.setAttribute("dni",sDni);
         return oProfesor;
     }
-
+    //Constructor de objeto XML Actividad Extraescolar
+    function newActividadExtra(sId,sNombre,oAlumnos){
+        var oActividadExtra=document.createElement("actividad")
+        oActividadExtra.setAttribute("id",sId);
+        var oNombre=document.createElement("nombre");
+        addContenido(oNombre,sNombre);
+        oActividadExtra.appendChild(oNombre);
+        oActividadExtra.appendChild(document.createElement("alumnosAct"));
+        for(var i=0;i<oAlumnos;i++){
+            var oAlumnoAux=document.createElement("alumnoAct");
+            oAlumnoAux.setAttribute("dni",oAlumnos[i].value);
+            oActividadExtra.querySelector("alumnosAct").appendChild(oAlumnoAux);
+        }
+        return oActividadExtra;
+    }
     //Metodo para añadir nodos de textos
     function addContenido(oNodo,sTexto){
         var oTexto=document.createTextNode(sTexto);
