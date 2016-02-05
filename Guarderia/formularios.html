@@ -104,16 +104,19 @@
 
                             <div class="form-group">
                                 <label for="text_grupo"  class="control-label col-sm-4">Grupos</label>
-                                <select id="select_gruposProf" class="control-label col-sm-4"></select>
+                                <select multiple id="select_gruposProf" class="control-label col-sm-4"></select>
                              </div>
-                            <div class="form-group">
-                                <div class="col-xs-4">
-                                    <input type="text" class="form-control col-sm-4" id="text_grupo" placeholder="Grupo"/>
-                                    <button type="button" id="btnAñadirGrupoProf" class="btn btn-success">Añadir</button>
 
+                            <div class="form-group">
+                                <div class="col-xs-4" id="selectMas">
+                                    <div class="input-group">
+                                      <input type="text" class="form-control" >
+                                      <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">+</button>
+                                      </span>
+                                    </div>
                                 </div>
                             </div>
-
 
                             <div class="form-group">
                                 <div class="col-md-offset-4 col-xs-4">
@@ -152,6 +155,23 @@
                                     <input type="text" class="form-control" id="text_tlfn" placeholder="Teléfono"/>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label for="text_grupo"  class="control-label col-sm-4">Grupos</label>
+                                <select multiple id="select_gruposProf" class="control-label col-sm-4"></select>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-4" id="grupoNuevo">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" >
+                                      <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">+</button>
+                                      </span>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-xs-6">
                                     <button type="button" id="btnModProf" class="btn btn-info">Guardar Cambios</button>
@@ -363,11 +383,18 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="select_alumnos" class="col-sm-4 control-label">Alumnos</label>
-                                <div class="col-xs-4" id="select_alumnos">
+                                <label for="select_alumnos_act"  class="control-label col-sm-4">Alumnos</label>
+                                <select multiple id="select_alumnos_act" class="control-label col-sm-4"></select>
+                            </div>
 
-
-                                    <textarea class="form-control" rows="6">Alumnos</textarea>
+                            <div class="form-group">
+                                <div class="col-xs-4" id="selectMas">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" >
+                                      <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">+</button>
+                                      </span>
+                                    </div>
                                 </div>
                             </div>
 

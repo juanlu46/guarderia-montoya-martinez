@@ -36,6 +36,9 @@ body{
 }
 #select_gruposProf{
     width: 164px;
-    height: 34px;
+    height: 50px;
     margin-left: 15px;
+}
+#selectMas{
+    margin-left: 33%;
 }
