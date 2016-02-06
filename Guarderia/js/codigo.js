@@ -1260,6 +1260,7 @@
         document.getElementById("sel_asignaturas_asig_mod").addEventListener("change",mostrarRestoFormModAsig,false);
     }
     function mostrarRestoFormModAsig(){
+        rellenaCamposAsignatura(this.options[this.selectedIndex].value);
         document.getElementById("mostrarRestoFormModAsig").classList.remove("oculto");
         document.getElementById("añadirAlum_mod_asig").addEventListener("click",anadirAlumnoModAsig,false);
         document.getElementById("quitarAlum_mod_asig").addEventListener("click",eliminarAlumnoAsigMod,false);
@@ -1469,7 +1470,23 @@ function mostrarFormBajAsig(){
         }
     }
     function rellenaCamposAsignatura(sID){
-        var oAsignatura=buscarAsginatura(sID);
+        var oAsignatura=buscarAsignatura(sID);
+        form_modAsig.text_id.value=sID;
+        form_modAsig.text_nombre.valule=oAsignatura.querySelector("nombre").textContent;
+        var oSelectProfesor=form_modAsig.sel_profesor_asig_mod;
+        for(var i=0;i<oSelectProfesor.options.length;i++){
+            if(oSelectProfesor.options[i].value==oAsignatura.querySelector("profesorAsig").textContent)
+                oSelectProfesor.selectedIndex=""+i;
+        }
+        var oAlumnos=oAsignatura.querySelectorAll("alumnoAsig");
+        var oSelectAlumnos=form_modAsig.select_alumnos;
+        for(var i=0;i<oAlumnos.length;i++){
+            var oOption=document.createElement("option");
+            var sValor=oAlumnos[i].getAttribute("dni");
+            oOption.value=sValor;
+            oOption.textContent=sValor;
+            oSelectAlumnos.appendChild(oOption);
+        }
     }
 
     /* METODOS AUXILIARES*/
