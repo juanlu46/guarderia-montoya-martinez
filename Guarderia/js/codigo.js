@@ -1100,7 +1100,7 @@
         var oSelect=form_modAct.select_alumnos_act;
         for(var i=0;i<oAlumnos.length;i++){
             var oOption=document.createElement("option");
-            var sValor=oAlumnos[i].getAttribute("dni");
+            var sValor=oAlumnos[i].getAttribute("id");
             oOption.value=sValor;
             oOption.textContent=sValor;
             oSelect.appendChild(oOption);
