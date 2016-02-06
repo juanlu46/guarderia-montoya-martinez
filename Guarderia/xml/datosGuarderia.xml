@@ -31,12 +31,13 @@
         </alumno>
     </alumnos>
     <actividades>
-        <!--<actividad id="fdsgfd">
-            <nombre>dfhshjk</nombre>
+        <actividad id="1234">
+            <nombre>Pintura</nombre>
             <alumnosAct>
-                <alumnoAct id="454365X"/>
+                <alumnoAct id="34906772A"/>
+                <alumnoAct id="47457858l"/>
             </alumnosAct>
-        </actividad>-->
+        </actividad>
     </actividades>
     <asignaturas>
         <!--<asignatura id="dskak">
