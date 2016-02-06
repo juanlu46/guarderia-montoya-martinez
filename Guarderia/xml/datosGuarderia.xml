@@ -39,22 +39,23 @@
         </actividad>
     </actividades>
     <asignaturas>
-        <!--<asignatura id="dskak">
-                <nombre>Mates</nombre>
-                <profesorAsig>Pepe</profesorAsig>
-                <alumnosAsig>
-                    <alumnoAsig dni="3453566C"/>
-                <alumnosAsig>
-        </asignatura>-->
+        <asignatura id="dskak">
+            <nombre>Mates</nombre>
+            <profesorAsig>Pepe</profesorAsig>
+            <alumnosAsig>
+                <alumnoAsig dni="47457858l"/>
+                <alumnoAsig dni="34906772A"/>
+            </alumnosAsig>
+        </asignatura>
     </asignaturas>
     <expedientes>
-        <!--<expediente id="437598983X" > el id es el dni del alumno
+        <expediente id="437598983X" > el id es el dni del alumno
             <notas>
                 <notaAsig id="43">9,75</notaAsig>
                 <notaAsig id="56">6,78</notaAsig>
             </notas>
-            <observaciones></observaciones>
-        </expediente>-->
+            <observaciones>DJDJVJK</observaciones>
+        </expediente>
     </expedientes>
     <bonos>
         <bono id="453533X"> el id es el dni del alumno

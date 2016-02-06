@@ -786,14 +786,22 @@
     function mostrarFormAltaProf(){
         $("form").hide("normal");
         $("#form_altaProf").show("normal");
+        form_modProf.sel_profesor_profesores_mod.selectedIndex="0";
         document.getElementById("btnAltaProf").addEventListener("click", validarFormProf, false);
         document.getElementById("btnCancelar").addEventListener("click", cancelar, false);
         document.getElementById("btnanadirCurso").addEventListener("click",anadirCursoProf,false);
     }
     function anadirCursoProf(){
         var curso=form_altaProf.cursoProf.value;
+        var expReg=/([a-z]|[A-Z]){1}/;
         if(curso==""){
             alert("No puedes agregar un curso vacio");
+        }
+        else if(!expReg.test(curso)){
+            alert("El grupo es solo un caracter alfabético");
+        }
+        else if(buscarRepeSelect(form_altaProf.select_gruposProf.options,curso)){
+            alert("No puede introducir grupos repetidos");
         }
         else{
             var opt=document.createElement("option");
@@ -803,6 +811,15 @@
             form_altaProf.select_gruposProf.appendChild(opt);
 
         }
+    }
+
+    function buscarRepeSelect(oOptions,sValor){
+        var bEncontrado=false;
+        for(var i=0; i<oOptions.length && !bEncontrado;i++){
+            if(oOptions[i].textContent.localeCompare(sValor)==0)
+                bEncontrado=true;
+        }
+        return bEncontrado;
     }
 
     function cancelar(){
@@ -817,10 +834,18 @@
         document.getElementById("btnCancelarModProf").addEventListener("click", cancelar, false);
         document.getElementById("anadirGrupoModProf").addEventListener("click",anadirCursoModProf,false);
     }
+    // Metodos añadir select multiple
     function anadirCursoModProf(){
         var curso=form_modProf.grupoNuevo.value;
+        var expReg=/([a-z]|[A-Z]){1}/;
         if(curso==""){
             alert("No puedes agregar un curso vacio");
+        }
+        else if(!expReg.test(curso)){
+            alert("El grupo es solo un caracter alfabético");
+        }
+        else if(buscarRepeSelect(form_modProf.select_gruposProf.options,curso)){
+            alert("No puede introducir grupos repetidos");
         }
         else{
             var opt=document.createElement("option");
@@ -835,6 +860,10 @@
     function anadirAlumnosAltaAct(){
         if(sel_alumno_act_alta.selectedIndex==0)
             alert('No hay opción seleccionada');
+        else if(buscarRepeSelect(form_altaAct.select_alumnos_act.options,
+                sel_alumno_act_alta.options[sel_alumno_act_alta.selectedIndex].value)) {
+            alert("No puede introducir alumnos repetidos");
+        }
         else{
             var opt=document.createElement("option");
             var texto=document.createTextNode(sel_alumno_act_alta.options[sel_alumno_act_alta.selectedIndex].value);
@@ -843,6 +872,84 @@
             form_altaAct.select_alumnos_act.appendChild(opt);
         }
     }
+    function anadirAlumnosModAct(){
+        if(sel_alumno_act_mod.selectedIndex==0)
+            alert('No hay opción seleccionada');
+        else if(buscarRepeSelect(form_modAct.select_alumnos_act.options,
+                sel_alumno_act_mod.options[sel_alumno_act_mod.selectedIndex].value)) {
+            alert("No puede introducir alumnos repetidos");
+        }
+        else{
+            var opt=document.createElement("option");
+            var texto=document.createTextNode(sel_alumno_act_mod.options[sel_alumno_act_mod.selectedIndex].value);
+            opt.value=sel_alumno_act_mod.options[sel_alumno_act_mod.selectedIndex].value;
+            opt.appendChild(texto);
+            form_modAct.select_alumnos_act.appendChild(opt);
+        }
+    }
+    function añadirAlimentosAlta(){
+        if(form_altaBono.alimento_alta.value=="")
+            alert('No puede dejar el campo vacio');
+        else if(buscarRepeSelect(form_altaBono.select_alimentos.options,
+                form_altaBono.alimento_alta.value)) {
+            alert("No puede introducir alimentos repetidos");
+        }
+        else{
+            var opt=document.createElement("option");
+            addContenido(opt,form_altaBono.alimento_alta.value);
+            opt.value=form_altaBono.alimento_alta.value;
+            form_altaBono.select_alimentos.appendChild(opt);
+        }
+    }
+    function añadirAlimentosMod(){
+        if(form_modBono.alimento_mod.value=="")
+            alert('No puede dejar el campo vacio');
+        else if(buscarRepeSelect(form_modBono.select_alimentos.options,
+                form_modBono.alimento_mod.value)) {
+            alert("No puede introducir alimentos repetidos");
+        }
+        else{
+            var opt=document.createElement("option");
+            addContenido(opt,form_modBono.alimento_mod.value);
+            opt.value=form_modBono.alimento_mod.value;
+            form_modBono.select_alimentos.appendChild(opt);
+        }
+    }
+    function añadirNotaAlta(){
+        if(form_altaExp.text_nota.vallue==""){
+            alert("No puede dejar la nota vacia");
+        }
+        else if(!(/([0-9]{1,2})|([0-9]{1,2}\.[0-9]{1,2})/.test(form_altaExp.text_nota.value))){
+            alert("La nota debe de tener 2 enteros y 2 decimales como mucho, separados por un punto");
+        }
+        else{
+            var opt=document.createElement("option");
+            addContenido(opt,
+                "ID: "+form_altaExp.sel_asig_exp_alta.options[form_altaExp.sel_asig_exp_alta.selectedIndex].value+
+                " - Nota: "+form_altaExp.text_nota.value);
+            opt.value=form_altaExp.sel_asig_exp_alta.options[form_altaExp.sel_asig_exp_alta.selectedIndex].value+
+                "-"+form_altaExp.text_nota.value;
+            form_altaExp.select_expediente.appendChild(opt);
+        }
+    }
+    function añadirNotaMod(){
+        if(form_modExp.text_nota.vallue==""){
+            alert("No puede dejar la nota vacia");
+        }
+        else if(!(/([0-9]{1,2})|([0-9]{1,2}\.[0-9]{1,2})/.test(form_modExp.text_nota.value))){
+            alert("La nota debe de tener 2 enteros y 2 decimales como mucho, separados por un punto");
+        }
+        else{
+            var opt=document.createElement("option");
+            addContenido(opt,
+                "ID: "+form_modExp.sel_asig_exp_mod.options[form_modExp.sel_asig_exp_mod.selectedIndex].value+
+                " - Nota: "+form_modExp.text_nota.value);
+            opt.value=form_modExp.sel_asig_exp_mod.options[form_modExp.sel_asig_exp_mod.selectedIndex].value+
+                "-"+form_modExp.text_nota.value;
+            form_modExp.select_expediente.appendChild(opt);
+        }
+    }
+
     function mostrarFormModProf(){
         $("form").hide("normal");
         $("#form_modProf").show("normal");
@@ -854,6 +961,7 @@
     function mostrarFormBajProf(){
         $("form").hide("normal");
         $("#form_bajaProf").show("normal");
+        form_modProf.sel_profesor_profesores_mod.selectedIndex="0";
         document.getElementById("btnBajaProf").addEventListener("click",validarFormBajaProf,false);
         document.getElementById("btnCancelarBajaProf").addEventListener("click", cancelar, false);
     }
@@ -861,6 +969,7 @@
     function mostrarFormAltaAlum(){
         $("form").hide("normal");
         $("#form_altaAlum").show("normal");
+        form_modAlum.sel_alumno_alumnos_mod.selectedIndex="0";
         document.getElementById("btnAltaAlum").addEventListener("click",validarFormAltaAlum,false);
         document.getElementById("btnCancelarAltaAlum").addEventListener("click", cancelar, false);
     }
@@ -883,6 +992,7 @@
     function mostrarFormBajAlum(){
         $("form").hide("normal");
         $("#form_bajaAlum").show("normal");
+        form_modAlum.sel_alumno_alumnos_mod.selectedIndex="0";
         document.getElementById("btnBajaAlum").addEventListener("click",validarBajaAlum,false);
         document.getElementById("btnCancelarBajaAlum").addEventListener("click", cancelar, false);
 }
@@ -890,6 +1000,7 @@
     function mostrarFormAltaAct(){
         $("form").hide("normal");
         $("#form_altaAct").show("normal");
+        form_modAct.sel_actividades_act_mod.selectedIndex="0";
         document.getElementById("btnAltaAct").addEventListener("click",validarAltaAct,false);
         if(document.getElementById("sel_alumno_act_alta").length==1)
         cargarSelectAlumnos("sel_alumno_act_alta");
@@ -905,20 +1016,22 @@
         if(document.getElementById("sel_actividades_act_mod").length==1)
             cargarSelectActividades("sel_actividades_act_mod");
         document.getElementById("restoFormAct").classList.add("oculto");
-
     }
 
     function mostrarRestoFormModActi(){
         rellenaCamposActividad(this.options[this.selectedIndex].value);
+        cargarSelectAlumnos("sel_alumno_act_mod");
         document.getElementById("restoFormAct").classList.remove("oculto");
         document.getElementById("btnModAct").addEventListener("click",validarModAct,false);
         document.getElementById("btnCancelarModAct").addEventListener("click", cancelar, false);
+        document.getElementById("añadirAlumnosAct_mod").addEventListener("click", anadirAlumnosModAct, false);
     }
 
 
     function mostrarFormBajAct(){
         $("form").hide("normal");
         $("#form_bajaAct").show("normal");
+        orm_modAct.sel_actividades_act_mod.selectedIndex="0";
         document.getElementById("btnBajaAct").addEventListener("click",validarBajaAct,false);
         document.getElementById("btnCancelarBajaAct").addEventListener("click", cancelar, false);
     }
@@ -926,8 +1039,10 @@
     function mostrarFormAltaComed(){
         $("form").hide("normal");
         $("#form_altaBono").show("normal");
+        form_modBono.sel_alimentos_comedor_mod.selectedIndex="0";
         document.getElementById("btnAltaBono").addEventListener("click",validarAltaBono,false);
         document.getElementById("btnCancelarAltaBono").addEventListener("click", cancelar, false);
+        document.getElementById("añadirAlimentos_alta").addEventListener("click",añadirAlimentosAlta, false);
     }
     function mostrarFormModComed(){
         $("form").hide("normal");
@@ -943,10 +1058,12 @@
         document.getElementById("restoFormComedor").classList.remove("oculto");
         document.getElementById("btnModBono").addEventListener("click",validarModBono,false);
         document.getElementById("btnCancelarModBono").addEventListener("click", cancelar, false);
+        document.getElementById("añadirAlimento_mod").addEventListener("click",añadirAlimentosMod, false);
     }
     function mostrarFormBajComed(){
         $("form").hide("normal");
         $("#form_bajaBono").show("normal");
+        form_modBono.sel_alimentos_comedor_mod.selectedIndex="0";
         document.getElementById("btnBajaBono").addEventListener("click",validarBajaBono,false);
         document.getElementById("btnCancelarBajaBono").addEventListener("click", cancelar, false);
     }
@@ -955,16 +1072,19 @@
     function mostrarFormAltaExp(){
         $("form").hide("normal");
         $("#form_altaExp").show("normal");
+        form_modExp.sel_alumnos_expediente_mod.selectedIndex="0";
+        cargarSelectAsignatura("sel_asig_exp_alta");
         document.getElementById("btnAltaExp").addEventListener("click",validarFormAltaExp,false);
         document.getElementById("btnCancelarAltaExp").addEventListener("click", cancelar, false);
+        document.getElementById("añadirNota_alta").addEventListener("click", añadirNotaAlta, false);
     }
     function mostrarFormModExp(){
         $("form").hide("normal");
         $("#form_modExp").show("normal");
         document.getElementById("sel_alumnos_expediente_mod").addEventListener("change",mostrarRestoFormModExp,false);
-        //Si no lo carga varias veces y tienes alumnos repetidos
+        cargarSelectAsignatura("sel_asig_exp_mod");
         if(document.getElementById("sel_alumnos_expediente_mod").length==1)
-        cargarSelectAlumnos("sel_alumnos_expediente_mod");
+        cargarSelectExpediente("sel_alumnos_expediente_mod");
         document.getElementById("restoFormExp").classList.add("oculto");
     }
     function mostrarRestoFormModExp(){
@@ -972,10 +1092,12 @@
         document.getElementById("restoFormExp").classList.remove("oculto");
         document.getElementById("btnModExp").addEventListener("click",validarFormModExp,false);
         document.getElementById("btnCancelarModExp").addEventListener("click", cancelar, false);
+        document.getElementById("añadirNota_mod").addEventListener("click", añadirNotaMod, false);
     }
     function mostrarFormBajExp(){
         $("form").hide("normal");
         $("#form_bajaExp").show("normal");
+        form_modExp.sel_alumnos_expediente_mod.selectedIndex="0";
         document.getElementById("btnBajaExp").addEventListener("click",validarBajaExp,false);
         document.getElementById("btnCancelarBajaExp").addEventListener("click", cancelar, false);
     }
@@ -1074,6 +1196,28 @@
 
     }
 
+    function cargarSelectExpediente(sIDSelect){
+        var lugar=document.getElementById(sIDSelect);
+        var oExpedientes=oXML.querySelectorAll("expediente");
+        for(var i=0;i<oExpedientes.length;i++){
+            var opt=document.createElement("option");
+            opt.value=oExpedientes[i].getAttribute("id");
+            addContenido(opt,oExpedientes[i].getAttribute("id"));
+            lugar.appendChild(opt);
+        }
+    }
+
+    function cargarSelectAsignatura(sIDSelect){
+        var lugar=document.getElementById(sIDSelect);
+        var oAsignaturas=oXML.querySelectorAll("asignatura");
+        for(var i=0;i<oAsignaturas.length;i++){
+            var opt=document.createElement("option");
+            opt.value=oAsignaturas[i].getAttribute("id");
+            addContenido(opt,oAsignaturas[i].getAttribute("id"));
+            lugar.appendChild(opt);
+        }
+    }
+
     //Metodos rellena campos
     function rellenaCamposAlumno(sDni){
         var oAlumno=buscarAlumno(sDni);
@@ -1138,9 +1282,10 @@
         var oSelect=form_modExp.select_expediente;
         for(var i=0;i<oNotas.length;i++){
             var oOption=document.createElement("option");
-            var sValor=oNotas[i].getAttribute("id");
-            oOption.value=sValor;
-            oOption.textContent=sValor;
+            var sAsig=oNotas[i].getAttribute("id");
+            var sNota=oNotas[i].textContent;
+            oOption.value=sAsig+"-"+sNota;
+            oOption.textContent="ID: "+sAsig+" - Nota: "+sNota;
             oSelect.appendChild(oOption);
         }
     }
