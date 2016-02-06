@@ -782,15 +782,22 @@
         }
     }
 
-    // Metodos de mostrar formularios
-    function mostrarFormAltaProf(){
-        $("form").hide("normal");
-        $("#form_altaProf").show("normal");
-        form_modProf.sel_profesor_profesores_mod.selectedIndex="0";
-        document.getElementById("btnAltaProf").addEventListener("click", validarFormProf, false);
-        document.getElementById("btnCancelar").addEventListener("click", cancelar, false);
-        document.getElementById("btnanadirCurso").addEventListener("click",anadirCursoProf,false);
+    function buscarRepeSelect(oOptions,sValor){
+        var bEncontrado=false;
+        for(var i=0; i<oOptions.length && !bEncontrado;i++){
+            if(oOptions[i].textContent.localeCompare(sValor)==0)
+                bEncontrado=true;
+        }
+        return bEncontrado;
     }
+
+    function cancelar(){
+        $("form").hide("normal");
+        limpiarCampos();
+    }
+
+
+    // Metodos añadir select multiple
     function anadirCursoProf(){
         var curso=form_altaProf.cursoProf.value;
         var expReg=/([a-z]|[A-Z]){1}/;
@@ -812,29 +819,6 @@
 
         }
     }
-
-    function buscarRepeSelect(oOptions,sValor){
-        var bEncontrado=false;
-        for(var i=0; i<oOptions.length && !bEncontrado;i++){
-            if(oOptions[i].textContent.localeCompare(sValor)==0)
-                bEncontrado=true;
-        }
-        return bEncontrado;
-    }
-
-    function cancelar(){
-        $("form").hide("normal");
-        limpiarCampos();
-    }
-
-    function mostrarRestoFormModProf(){
-        rellenaCamposProfesor(this.options[this.selectedIndex].value);
-        document.getElementById("restoFormProf").classList.remove("oculto");
-        document.getElementById("btnModProf").addEventListener("click",validarFormModProf,false);
-        document.getElementById("btnCancelarModProf").addEventListener("click", cancelar, false);
-        document.getElementById("anadirGrupoModProf").addEventListener("click",anadirCursoModProf,false);
-    }
-    // Metodos añadir select multiple
     function anadirCursoModProf(){
         var curso=form_modProf.grupoNuevo.value;
         var expReg=/([a-z]|[A-Z]){1}/;
@@ -856,7 +840,6 @@
 
         }
     }
-
     function anadirAlumnosAltaAct(){
         if(sel_alumno_act_alta.selectedIndex==0)
             alert('No hay opción seleccionada');
@@ -950,6 +933,15 @@
         }
     }
 
+    // Metodos de mostrar formularios
+    function mostrarFormAltaProf(){
+        $("form").hide("normal");
+        $("#form_altaProf").show("normal");
+        form_modProf.sel_profesor_profesores_mod.selectedIndex="0";
+        document.getElementById("btnAltaProf").addEventListener("click", validarFormProf, false);
+        document.getElementById("btnCancelar").addEventListener("click", cancelar, false);
+        document.getElementById("btnanadirCurso").addEventListener("click",anadirCursoProf,false);
+    }
     function mostrarFormModProf(){
         $("form").hide("normal");
         $("#form_modProf").show("normal");
@@ -957,7 +949,13 @@
         document.getElementById("sel_profesor_profesores_mod").addEventListener("change",mostrarRestoFormModProf,false);
         document.getElementById("restoFormProf").classList.add("oculto");
     }
-
+    function mostrarRestoFormModProf(){
+        rellenaCamposProfesor(this.options[this.selectedIndex].value);
+        document.getElementById("restoFormProf").classList.remove("oculto");
+        document.getElementById("btnModProf").addEventListener("click",validarFormModProf,false);
+        document.getElementById("btnCancelarModProf").addEventListener("click", cancelar, false);
+        document.getElementById("anadirGrupoModProf").addEventListener("click",anadirCursoModProf,false);
+    }
     function mostrarFormBajProf(){
         $("form").hide("normal");
         $("#form_bajaProf").show("normal");
