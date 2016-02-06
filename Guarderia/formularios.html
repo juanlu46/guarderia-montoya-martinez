@@ -54,6 +54,11 @@
                                     <li id="expediente">
                                         <a href="formularios.html?tipo=expediente">Expediente</a>
                                     </li>
+                                    <li class="divider">
+                                    </li>
+                                    <li id="asignatura">
+                                        <a href="formularios.html?tipo=asignatura">Asignatura</a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
@@ -860,7 +865,170 @@
 </div>
 
 
+<!--FORMULARIO ASIGNATURA-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 oculto" id="menuAsig">
+            <ul class="list-group" >
+                <li class="list-group-item" id="mostrarFormAltaAsig">Alta de Asignatura</li>
+                <li class="list-group-item" id="mostrarFormModAsig">Modificación de Asignatura</li>
+                <li class="list-group-item" id="mostrarFormBajAsig">Baja de Asignatura</li>
+            </ul>
 
+        </div>
+        <div class="col-md-9">
+            <div class="row contenido">
+                <div class="col-md-offset-2 col-md-8">
+                    <div class="formAltaAsig" >
+                        <form name="form_altaAsig" id="form_altaAsig" class="form-horizontal oculto">
+                            <h3 class="text-primary">Alta Asignatura</h3>
+                            <div class="form-group">
+                                <label for="text_id" class="col-sm-4 control-label">Id:</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_id" placeholder="Id"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_nombre" class="col-sm-4 control-label">Nombre:</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_nombre" placeholder="Nombre"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="sel_profesores_asig_alta"   class="col-sm-4 control-label">Profesor:</label>
+                                <div class="col-xs-4">
+                                    <div class="input-group">
+                                        <select class="form-control" id="sel_profesores_asig_alta">
+                                            <option value="">Selecciona un profesor</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <label for="select_alumnos"  class="control-label col-sm-4">Alumnos:</label>
+                                <div class="input-group">
+                                    <select multiple id="select_alumnos" class="form-control">
+                                    </select>
+                                 <span class="input-group-btn">
+                                        <button class="btn btn-default botom" id="quitarAlum_alta_asig" type="button">-</button>
+                                      </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-sm-offset-4 col-xs-4">
+                                    <div class="input-group">
+                                        <select class="form-control" id="sel_alum_asig_alta">
+                                            <option value="">Selecciona un alumno</option>
+                                        </select>
+                                      <span class="input-group-btn">
+                                        <button class="btn btn-default" id="añadirAlum_alta_Asig" type="button">+</button>
+                                      </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-xs-4">
+                                    <button type="button" id="btnAltaAsig" class="btn btn-info">Añadir</button>
+                                    <button type="button" id="btnCancelarAltaAsig" class="btn btn-danger">Cancelar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="formAModAsig" >
+                        <form name="form_modAsig" id="form_modAsig" class="form-horizontal oculto">
+                            <h3 class="text-primary">Modificación de Asignatura</h3>
+                            <div class="form-group">
+                                <label for="text_id" class="col-sm-4 control-label">Id:</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_id" placeholder="Id"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_nombre" class="col-sm-4 control-label">Nombre:</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_nombre" placeholder="Nombre"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="sel_profesores_asig_alta"   class="col-sm-4 control-label">Profesor:</label>
+                                <div class="col-xs-4">
+                                    <div class="input-group">
+                                        <select class="form-control" id="sel_profesores_asig_mod">
+                                            <option value="">Selecciona un profesor</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <label for="select_alumnos"  class="control-label col-sm-4">Alumnos:</label>
+                                <div class="input-group">
+                                    <select multiple id="select_alumnos" class="form-control">
+                                    </select>
+                                 <span class="input-group-btn">
+                                        <button class="btn btn-default botom" id="quitarAlum_alta_mod" type="button">-</button>
+                                      </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-sm-offset-4 col-xs-4">
+                                    <div class="input-group">
+                                        <select class="form-control" id="sel_alum_asig_mod">
+                                            <option value="">Selecciona un alumno</option>
+                                        </select>
+                                      <span class="input-group-btn">
+                                        <button class="btn btn-default" id="añadirAlum_mod_Asig" type="button">+</button>
+                                      </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-xs-4">
+                                    <button type="button" id="btnmODAsig" class="btn btn-info">Añadir</button>
+                                    <button type="button" id="btnCancelarModAsig" class="btn btn-danger">Cancelar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="formABajaAsig" >
+                        <form name="form_bajaAsig" id="form_bajaAsig" class="form-horizontal oculto">
+                            <h3 class="text-primary">Baja de Asignatura</h3>
+                            <div class="form-group">
+                                <label for="text_id" class="col-sm-4 control-label">Id:</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_id" placeholder="Id"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-xs-4">
+                                    <button type="button" id="btnBajaAsig" class="btn btn-info">Eliminar</button>
+                                    <button type="button" id="btnCancelarBajaAsig" class="btn btn-danger">Cancelar</button>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
 
