@@ -491,6 +491,11 @@
             todoOk=false;
         }
 
+        if(!/^[a-z\d_]{1}$/i.test(form_altaProf.cursoProf.value) ){
+            sMensajeError+="Grupo incorrecto\n";
+            todoOk=false;
+        }
+
         if(todoOk==false){
             alert(sMensajeError);
         }
@@ -515,6 +520,10 @@
         }
         if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_modProf.text_dni.value)){
             sMensajeError+="Dni incorrecto\n";
+            todoOk=false;
+        }
+        if(!/^[a-z\d_]{1}$/i.test(form_modProf.cursoProf.value) ){
+            sMensajeError+="Grupo incorrecto\n";
             todoOk=false;
         }
 
@@ -1253,12 +1262,42 @@
     }
 
 function listadoAlumnos(){
+    var pestana = open("","","");
+    pestana.document.title="Listado Clientes";
+
     var alumnos=oXML.querySelectorAll("alumno");
     var tabla=document.createElement("table");
     var titulo=document.createElement("caption");
     titulo.appendChild(document.createTextNode("Listado de Alumnos"));
     tabla.appendChild(titulo);
+    var cabecera=document.createElement("thead");
+    var tr=document.createElement("tr");
+    var th=document.createElement("th");
+    th.appendChild(document.createTextNode("Nombre"));
+    tr.appendChild(th);
+    tabla.style.marginRight="5px";
+    th.appendChild(document.createTextNode("Apellidos"));
+    tr.appendChild(th);
+
+    th.appendChild(document.createTextNode("Dni"));
+    tr.appendChild(th);
+
+    th.appendChild(document.createTextNode("Edad"));
+    tr.appendChild(th);
+
+    th.appendChild(document.createTextNode("Grupo"));
+    tr.appendChild(th);
+
+    th.appendChild(document.createTextNode("Teléfono"));
+    tr.appendChild(th);
+    th.appendChild(document.createTextNode("Dirección"));
+    tr.appendChild(th);
+
+    cabecera.appendChild(tr);
+    tabla.appendChild(cabecera);
 
 
+
+    pestana.document.body.appendChild(tabla);
 
 }
