@@ -379,7 +379,7 @@
         document.getElementById("menuAsig").classList.remove("oculto");
         document.getElementById("mostrarFormAltaAsig").addEventListener("click", mostrarFormAltaAsig, false);
         document.getElementById("mostrarFormModAsig").addEventListener("click", mostrarFormModAsig, false);
-        //document.getElementById("mostrarFormBajAsig").addEventListener("click", mostrarFormBajAsig, false);
+        document.getElementById("mostrarFormBajAsig").addEventListener("click", mostrarFormBajAsig, false);
     }
 
 
@@ -966,6 +966,17 @@
             form_altaAsig.select_alumnos.appendChild(opt);
         }
     }
+    function anadirAlumnoModAsig(){
+        if(form_modAsig.sel_alum_asig_mod.selectedIndex=='0'){
+            alert("Debe elegir un alumno");
+        }
+        else{
+            var opt=document.createElement("option");
+            addContenido(opt,form_modAsig.sel_alum_asig_mod.options[sel_alum_asig_mod.selectedIndex].value );
+            opt.value=form_modAsig.sel_alum_asig_mod.options[sel_alum_asig_mod.selectedIndex].value;
+            form_modAsig.select_alumnos.appendChild(opt);
+        }
+    }
 
     // Metodos de mostrar formularios
     function mostrarFormAltaProf(){
@@ -1152,11 +1163,17 @@
         form_modAsig.sel_alum_asig_alta.selectedIndex="0";
         cargarSelectProfesores("sel_profesores_asig_alta");
         cargarSelectAlumnos("sel_alum_asig_alta");
-        document.getElementById("añadirAlum_alta_Asig").addEventListener("click",anadirAlumnoAsig,false);
-        document.getElementById("quitarAlum_alta_asig").addEventListener("click",quitarAlumnoAsig,false);
-        // document.getElementById("btnAltaAsig").addEventListener("click",validarFormAltaAsig,false);
+        document.getElementById("añadirAlum_alta_Asig").addEventListener("click",anadirAlumnoModAsig,false);
+        document.getElementById("quitarAlum_alta_asig").addEventListener("click",quitarAlumnoModAsig,false);
+        // document.getElementById("btnModAsig").addEventListener("click",validarFormModAsig,false);
         document.getElementById("btnCancelarAltaAsig").addEventListener("click", cancelar, false);
     }
+function mostrarFormBajAsig(){
+    $("form").hide("normal");
+    $("#form_bajaAsig").show("normal");
+    document.getElementById("btnBajaAsig").addEventListener("click",validarBajaAsig,false);
+    document.getElementById("btnCancelarBajaAsig").addEventListener("click", cancelar, false);
+}
 
 
 
