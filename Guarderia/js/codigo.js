@@ -800,12 +800,6 @@
         $("form").hide("normal");
         limpiarCampos();
     }
-    function mostrarFormModProf(){
-        $("form").hide("normal");
-        $("#form_modProf").show("normal");
-        cargarSelectProfesores("sel_profesor_profesores_mod");
-        document.getElementById("sel_profesor_profesores_mod").addEventListener("change",mostrarRestoFormModProf,false);
-    }
 
     function mostrarRestoFormModProf(){
         rellenaCamposProfesor(this.options[this.selectedIndex].value);
@@ -843,15 +837,9 @@
     function mostrarFormModProf(){
         $("form").hide("normal");
         $("#form_modProf").show("normal");
+        cargarSelectProfesores("sel_profesor_profesores_mod");
         document.getElementById("sel_profesor_profesores_mod").addEventListener("change",mostrarRestoFormModProf,false);
         document.getElementById("restoFormProf").classList.add("oculto");
-    }
-
-    function mostrarRestoFormModProf(){
-        document.getElementById("restoFormProf").classList.remove("oculto");
-        document.getElementById("btnModProf").addEventListener("click",validarFormModProf,false);
-        document.getElementById("btnCancelarModProf").addEventListener("click", cancelar, false);
-        document.getElementById("anadirGrupoModProf").addEventListener("click",anadirCursoModProf,false);
     }
 
     function mostrarFormBajProf(){
@@ -1054,7 +1042,6 @@
         }
     }
 
-    }
     function cargarSelectActividades(sIDSelect){
         var oLugar=document.getElementById(sIDSelect);
         var oActividades = oXML.querySelectorAll("actividad");
