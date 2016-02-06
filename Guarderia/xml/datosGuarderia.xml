@@ -4,11 +4,10 @@
         <profesor dni="48493737F">
             <nombre>Juan</nombre>
             <apellidos>Vilches</apellidos>
-            <dni>47524691M</dni>
             <telefono>954862514</telefono>
             <grupos>
-                <grupo id="2A"/>
-                <grupo id="1B"/>
+                <grupo id="A"/>
+                <grupo id="B"/>
             </grupos>
         </profesor>
     </profesores>
@@ -31,12 +30,13 @@
         </alumno>
     </alumnos>
     <actividades>
-        <!--<actividad id="fdsgfd">
+        <actividad id="fdsgfd">
             <nombre>dfhshjk</nombre>
             <alumnosAct>
                 <alumnoAct id="454365X"/>
+                <alumnoAct id="4583883B"/>
             </alumnosAct>
-        </actividad>-->
+        </actividad>
     </actividades>
     <asignaturas>
         <!--<asignatura id="dskak">

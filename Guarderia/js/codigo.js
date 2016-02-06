@@ -780,7 +780,6 @@
     function mostrarFormAltaProf(){
         $("form").hide("normal");
         $("#form_altaProf").show("normal");
-        cargarSelectProfesores("sel_profesor_profesores_mod");
         document.getElementById("btnAltaProf").addEventListener("click", validarFormProf, false);
         document.getElementById("btnCancelar").addEventListener("click", cancelar, false);
         document.getElementById("btnanadirCurso").addEventListener("click",anadirCursoProf,false);
@@ -807,6 +806,7 @@
     function mostrarFormModProf(){
         $("form").hide("normal");
         $("#form_modProf").show("normal");
+        cargarSelectProfesores("sel_profesor_profesores_mod");
         document.getElementById("sel_profesor_profesores_mod").addEventListener("change",mostrarRestoFormModProf,false);
     }
 
@@ -1010,7 +1010,6 @@
             addContenido(opt,oAlumnos[i].getAttribute("dni"));
             lugar.appendChild(opt);
         }
-        lugar.appendChild(opt);
     }
     function cargarSelectProfesores(sIDSelect){
         var lugar=document.getElementById(sIDSelect);
@@ -1021,7 +1020,6 @@
             addContenido(opt,oProfesores[i].getAttribute("dni"));
             lugar.appendChild(opt);
         }
-        lugar.appendChild(opt);
     }
 
     //Metodos rellena campos
@@ -1039,7 +1037,7 @@
         var oProfesor=buscarProfesor(sDni);
         form_modProf.text_dni.value=sDni;
         form_modProf.text_nombre.value=oProfesor.querySelector("nombre").textContent;
-        form_modProf.text_apellido.value=oProfesor.querySelector("apellido").textContent;
+        form_modProf.text_apellido.value=oProfesor.querySelector("apellidos").textContent;
         form_modProf.text_tlfn.value=oProfesor.querySelector("telefono").textContent;
         var oGrupos=oProfesor.querySelectorAll("grupo");
         var oSelect=form_modProf.select_gruposProf;
