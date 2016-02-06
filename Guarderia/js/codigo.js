@@ -6,6 +6,7 @@
         document.getElementById("actividades").addEventListener("click",mostrarFormsAct,false);
         document.getElementById("comedor").addEventListener("click",mostrarFormsComed,false);
         document.getElementById("expediente").addEventListener("click",mostrarFormsExp,false);
+        document.getElementById("asignatura").addEventListener("click",mostrarFormsAsig,false);
 
         //eventos para los listados
         document.getElementById("listadoAlumnos").addEventListener("click",listadoAlumnos,false);
@@ -23,8 +24,11 @@
             case 'comedor':
                 mostrarFormsComed();
                 break;
-            default:
+            case 'expediente':
                 mostrarFormsExp();
+                break;
+            default:
+                mostrarFormsAsig();
         }
     }
 
@@ -309,6 +313,7 @@
         ocultar("menuAct");
         ocultar("menuComed");
         ocultar("menuExp");
+        ocultar("menuAsig");
         $("form").hide("normal");
         document.getElementById("menuAlum").classList.remove("oculto");
         document.getElementById("mostrarFormAltaAlum").addEventListener("click",mostrarFormAltaAlum,false);
@@ -321,6 +326,7 @@
         ocultar("menuAct");
         ocultar("menuComed");
         ocultar("menuExp");
+        ocultar("menuAsig");
         $("form").hide("normal");
         document.getElementById("menuProf").classList.remove("oculto");
         document.getElementById("mostrarFormAltaProf").addEventListener("click", mostrarFormAltaProf, false);
@@ -332,6 +338,7 @@
         ocultar("menuAlum");
         ocultar("menuComed");
         ocultar("menuExp");
+        ocultar("menuAsig");
         $("form").hide("normal");
         document.getElementById("menuAct").classList.remove("oculto");
         document.getElementById("mostrarFormAltaAct").addEventListener("click", mostrarFormAltaAct, false);
@@ -343,6 +350,7 @@
         ocultar("menuAlum");
         ocultar("menuAct");
         ocultar("menuExp");
+        ocultar("menuAsig");
         $("form").hide("normal");
         document.getElementById("menuComed").classList.remove("oculto");
         document.getElementById("mostrarFormAltaComed").addEventListener("click", mostrarFormAltaComed, false);
@@ -354,14 +362,28 @@
         ocultar("menuAlum");
         ocultar("menuAct");
         ocultar("menuComed");
+        ocultar("menuAsig");
         $("form").hide("normal");
         document.getElementById("menuExp").classList.remove("oculto");
         document.getElementById("mostrarFormAltaExp").addEventListener("click", mostrarFormAltaExp, false);
         document.getElementById("mostrarFormModExp").addEventListener("click", mostrarFormModExp, false);
         document.getElementById("mostrarFormBajExp").addEventListener("click", mostrarFormBajExp, false);
-
-
     }
+    function mostrarFormsAsig(){
+        ocultar("menuProf");
+        ocultar("menuAlum");
+        ocultar("menuAct");
+        ocultar("menuComed");
+        ocultar("menuExp");
+        $("form").hide("normal");
+        document.getElementById("menuAsig").classList.remove("oculto");
+        document.getElementById("mostrarFormAltaAsig").addEventListener("click", mostrarFormAltaAsig, false);
+        document.getElementById("mostrarFormModAsig").addEventListener("click", mostrarFormModAsig, false);
+        //document.getElementById("mostrarFormBajAsig").addEventListener("click", mostrarFormBajAsig, false);
+    }
+
+
+
 
     function ocultar(elemento){
     document.getElementById(elemento).classList.add("oculto");
@@ -899,7 +921,7 @@
         }
     }
     function añadirNotaAlta(){
-        if(form_altaExp.text_nota.vallue==""){
+        if(form_altaExp.text_nota.value==""){
             alert("No puede dejar la nota vacia");
         }
         else if(!(/([0-9]{1,2})|([0-9]{1,2}\.[0-9]{1,2})/.test(form_altaExp.text_nota.value))){
@@ -916,7 +938,7 @@
         }
     }
     function añadirNotaMod(){
-        if(form_modExp.text_nota.vallue==""){
+        if(form_modExp.text_nota.value==""){
             alert("No puede dejar la nota vacia");
         }
         else if(!(/([0-9]{1,2})|([0-9]{1,2}\.[0-9]{1,2})/.test(form_modExp.text_nota.value))){
@@ -930,6 +952,18 @@
             opt.value=form_modExp.sel_asig_exp_mod.options[form_modExp.sel_asig_exp_mod.selectedIndex].value+
                 "-"+form_modExp.text_nota.value;
             form_modExp.select_expediente.appendChild(opt);
+        }
+    }
+
+    function anadirAlumnoAsig(){
+        if(form_altaAsig.sel_alum_asig_alta.selectedIndex=='0'){
+            alert("Debe elegir un alumno");
+        }
+        else{
+            var opt=document.createElement("option");
+            addContenido(opt,form_altaAsig.sel_alum_asig_alta.options[sel_alum_asig_alta.selectedIndex].value );
+            opt.value=form_altaAsig.sel_alum_asig_alta.options[sel_alum_asig_alta.selectedIndex].value;
+            form_altaAsig.select_alumnos.appendChild(opt);
         }
     }
 
@@ -1099,6 +1133,34 @@
         document.getElementById("btnBajaExp").addEventListener("click",validarBajaExp,false);
         document.getElementById("btnCancelarBajaExp").addEventListener("click", cancelar, false);
     }
+    function mostrarFormAltaAsig(){
+        $("form").hide("normal");
+        $("#form_altaAsig").show("normal");
+        form_altaAsig.sel_profesores_asig_mod.selectedIndex="0";
+        form_altaAsig.sel_alum_asig_mod.selectedIndex="0";
+        cargarSelectProfesores("sel_profesores_asig_mod");
+        cargarSelectAlumnos("sel_alum_asig_mod");
+        document.getElementById("añadirAlum_alta_Asig").addEventListener("click",anadirAlumnoAsig,false);
+       // document.getElementById("quitarAlum_alta_asig").addEventListener("click",quitarAlumnoAsig,false);
+       // document.getElementById("btnAltaAsig").addEventListener("click",validarFormAltaAsig,false);
+        document.getElementById("btnCancelarAltaAsig").addEventListener("click", cancelar, false);
+    }
+    function mostrarFormModAsig(){
+        $("form").hide("normal");
+        $("#form_modAsig").show("normal");
+        form_modAsig.sel_profesores_asig_alta.selectedIndex="0";
+        form_modAsig.sel_alum_asig_alta.selectedIndex="0";
+        cargarSelectProfesores("sel_profesores_asig_alta");
+        cargarSelectAlumnos("sel_alum_asig_alta");
+        document.getElementById("añadirAlum_alta_Asig").addEventListener("click",anadirAlumnoAsig,false);
+        document.getElementById("quitarAlum_alta_asig").addEventListener("click",quitarAlumnoAsig,false);
+        // document.getElementById("btnAltaAsig").addEventListener("click",validarFormAltaAsig,false);
+        document.getElementById("btnCancelarAltaAsig").addEventListener("click", cancelar, false);
+    }
+
+
+
+
     //Funciones limpiar campos
     function limpiarCampos(){
         var oInputs=document.querySelectorAll("input[type='text']");
