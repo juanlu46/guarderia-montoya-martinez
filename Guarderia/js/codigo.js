@@ -1222,17 +1222,22 @@
         document.getElementById("btnCancelarAltaAsig").addEventListener("click", cancelar, false);
     }
     function mostrarFormModAsig(){
-        $("form").hide("normal");
+        $("form").hide("normal")
         $("#form_modAsig").show("normal");
-        form_modAsig.sel_profesores_asig_alta.selectedIndex="0";
-        form_modAsig.sel_alum_asig_alta.selectedIndex="0";
-        cargarSelectProfesores("sel_profesores_asig_alta");
-        cargarSelectAlumnos("sel_alum_asig_alta");
+        cargarSelectAsignatura("sel_asignaturas_asig_mod");
+        document.getElementById("sel_asignaturas_asig_mod").addEventListener("change",mostrarRestoFormModAsig,false);
+    }
+    function mostrarRestoFormModAsig(){
+        document.getElementById("mostrarRestoFormModAsig").classList.remove("oculto");
         document.getElementById("añadirAlum_alta_Asig").addEventListener("click",anadirAlumnoModAsig,false);
         document.getElementById("quitarAlum_alta_asig").addEventListener("click",quitarAlumnoModAsig,false);
+
+        form_modAsig.sel_profesores_asig_alta.selectedIndex="0";
+        form_modAsig.sel_alum_asig_alta.selectedIndex="0";
         // document.getElementById("btnModAsig").addEventListener("click",validarFormModAsig,false);
         document.getElementById("btnCancelarAltaAsig").addEventListener("click", cancelar, false);
     }
+
 function mostrarFormBajAsig(){
     $("form").hide("normal");
     $("#form_bajaAsig").show("normal");

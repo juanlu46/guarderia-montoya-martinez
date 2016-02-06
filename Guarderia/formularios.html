@@ -942,14 +942,25 @@
                     <div class="formAModAsig" >
                         <form name="form_modAsig" id="form_modAsig" class="form-horizontal oculto">
                             <h3 class="text-primary">Modificación de Asignatura</h3>
+
                             <div class="form-group">
-                                <label for="text_id" class="col-sm-4 control-label">Id:</label>
+                                <label for="sel_asignaturas_asig_mod"   class="col-sm-4 control-label">Asignatura:</label>
                                 <div class="col-xs-4">
-                                    <input type="text" class="form-control" id="text_id" placeholder="Id"/>
+                                    <div class="input-group">
+                                        <select class="form-control" id="sel_asignaturas_asig_mod">
+                                            <option value="">Selecciona una asignatura</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
-
+                            <div class="oculto" id="mostrarRestoFormModAsig">
+                            <div class="form-group">
+                                <label for="text_id" class="col-sm-4 control-label">Id:</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="text_id" placeholder="Id" disabled="true"/>
+                                </div>
+                            </div>
 
                             <div class="form-group">
                                 <label for="text_nombre" class="col-sm-4 control-label">Nombre:</label>
@@ -998,6 +1009,7 @@
                                     <button type="button" id="btnmODAsig" class="btn btn-info">Añadir</button>
                                     <button type="button" id="btnCancelarModAsig" class="btn btn-danger">Cancelar</button>
                                 </div>
+                            </div>
                             </div>
                         </form>
                     </div>
