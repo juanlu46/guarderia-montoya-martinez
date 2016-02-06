@@ -363,12 +363,9 @@
 
     }
 
-
-
     function ocultar(elemento){
     document.getElementById(elemento).classList.add("oculto");
 }
-
 
     function validarFormAltaAlum(){
         var sMensajeError="";
@@ -831,6 +828,32 @@
 
         }
     }
+
+    function anadirAlumnosAltaAct(){
+        if(sel_alumno_act_alta.selectedIndex==0)
+            alert('No hay opción seleccionada');
+        else{
+            var opt=document.createElement("option");
+            var texto=document.createTextNode(sel_alumno_act_alta.options[sel_alumno_act_alta.selectedIndex].value);
+            opt.value=sel_alumno_act_alta.options[sel_alumno_act_alta.selectedIndex].value;
+            opt.appendChild(texto);
+            form_altaAct.select_alumnos_act.appendChild(opt);
+        }
+    }
+    function mostrarFormModProf(){
+        $("form").hide("normal");
+        $("#form_modProf").show("normal");
+        document.getElementById("sel_profesor_profesores_mod").addEventListener("change",mostrarRestoFormModProf,false);
+        document.getElementById("restoFormProf").classList.add("oculto");
+    }
+
+    function mostrarRestoFormModProf(){
+        document.getElementById("restoFormProf").classList.remove("oculto");
+        document.getElementById("btnModProf").addEventListener("click",validarFormModProf,false);
+        document.getElementById("btnCancelarModProf").addEventListener("click", cancelar, false);
+        document.getElementById("anadirGrupoModProf").addEventListener("click",anadirCursoModProf,false);
+    }
+
     function mostrarFormBajProf(){
         $("form").hide("normal");
         $("#form_bajaProf").show("normal");
@@ -850,6 +873,7 @@
         document.getElementById("sel_alumno_alumnos_mod").addEventListener("change",mostrarRestoFormModAlum,false);
         if(document.getElementById("sel_alumno_alumnos_mod").length==1)
         cargarSelectAlumnos("sel_alumno_alumnos_mod");
+        document.getElementById("restoFormulario").classList.add("oculto");
     }
 
     function mostrarRestoFormModAlum(){
@@ -874,13 +898,17 @@
         cargarSelectAlumnos("sel_alumno_act_alta");
 
         document.getElementById("btnCancelarAltaAct").addEventListener("click", cancelar, false);
+        document.getElementById("anadirAlumnosAct").addEventListener("click", anadirAlumnosAltaAct, false);
+
     }
     function mostrarFormModAct(){
         $("form").hide("normal");
         $("#form_modAct").show("normal");
-        document.getElementById("sel_alumnos_actividad_mod").addEventListener("change",mostrarRestoFormModActi,false);
-        if(document.getElementById("sel_alumno_act_mod").length==1)
-        cargarSelectAlumnos("sel_alumno_act_mod");
+        document.getElementById("sel_actividades_act_mod").addEventListener("change",mostrarRestoFormModActi,false);
+        if(document.getElementById("sel_actividades_act_mod").length==1)
+            cargarSelectActividades("sel_actividades_act_mod");
+        document.getElementById("restoFormAct").classList.add("oculto");
+
     }
 
     function mostrarRestoFormModActi(){
@@ -908,6 +936,9 @@
         $("form").hide("normal");
         $("#form_modBono").show("normal");
         document.getElementById("sel_alimentos_comedor_mod").addEventListener("change",mostrarRestoFormModComedor,false);
+        if(document.getElementById("sel_alimentos_comedor_mod").length==1)
+            cargarSelectComedor("sel_alimentos_comedor_mod");
+        document.getElementById("restoFormComedor").classList.add("oculto");
     }
 
     function mostrarRestoFormModComedor(){
@@ -937,6 +968,7 @@
         //Si no lo carga varias veces y tienes alumnos repetidos
         if(document.getElementById("sel_alumnos_expediente_mod").length==1)
         cargarSelectAlumnos("sel_alumnos_expediente_mod");
+        document.getElementById("restoFormExp").classList.add("oculto");
     }
     function mostrarRestoFormModExp(){
         rellenaCamposExpediente(this.options[this.selectedIndex].value);
@@ -1020,6 +1052,30 @@
             addContenido(opt,oProfesores[i].getAttribute("dni"));
             lugar.appendChild(opt);
         }
+    }
+
+    }
+    function cargarSelectActividades(sIDSelect){
+        var oLugar=document.getElementById(sIDSelect);
+        var oActividades = oXML.querySelectorAll("actividad");
+        for(var i=0;i<oActividades.length;i++){
+            var opt=document.createElement("option");
+            opt.value=oActividades[i].getAttribute("id");
+            addContenido(opt,oActividades[i].getAttribute("id"));
+            oLugar.appendChild(opt);
+        }
+    }
+
+    function cargarSelectComedor(sIDSelect){
+        var lugar=document.getElementById(sIDSelect);
+        var oAlumnosConComedor=oXML.querySelectorAll("bono");
+        for(var i=0;i<oAlumnosConComedor.length;i++){
+            var opt=document.createElement("option");
+            opt.value=oAlumnosConComedor[i].getAttribute("id");
+            addContenido(opt,oAlumnosConComedor[i].getAttribute("id"));
+            lugar.appendChild(opt);
+        }
+
     }
 
     //Metodos rellena campos
