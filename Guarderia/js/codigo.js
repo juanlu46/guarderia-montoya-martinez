@@ -6,6 +6,9 @@
         document.getElementById("actividades").addEventListener("click",mostrarFormsAct,false);
         document.getElementById("comedor").addEventListener("click",mostrarFormsComed,false);
         document.getElementById("expediente").addEventListener("click",mostrarFormsExp,false);
+
+        //eventos para los listados
+        document.getElementById("listadoAlumnos").addEventListener("click",listadoAlumnos,false);
         oXML=loadXMLDoc("xml/datosGuarderia.xml");
         switch(getGet()){
             case "alumno":
@@ -236,6 +239,40 @@
         return sRes;
     }
 
+    function borrarActividad(sId){
+        var sRes="Baja de actividad satisfactoria";
+        var oActividad=buscarActividad(sId);
+        if(oActividad!=null){
+            oXML.querySelector("actividades").removeChild(oActividad);
+        }
+        else{
+            sRes="La actividad que intenta borrar no existe con ese Id";
+        }
+        return sRes;
+    }
+    function borrarComedor(sDni){
+        var sRes="Baja de Bono Comedor satisfactoria";
+        var oBono=buscarBono(sDni);
+        if(oBono!=null){
+            oXML.querySelector("bonos").removeChild(oBono);
+        }
+        else{
+            sRes="El Bono Comedor que intenta borrar no existe con ese Dni";
+        }
+        return sRes;
+    }
+    function borrarExpediente(sDni){
+        var sRes="Baja de Expediente satisfactoria";
+        var oExpediente=buscarExpediente(sDni);
+        if(oExpediente!=null){
+            oXML.querySelector("expedientes").removeChild(oExpediente);
+        }
+        else{
+            sRes="El Expediente que intenta borrar no existe con ese Dni";
+        }
+        return sRes;
+    }
+
     //Metodos de modificar
     function modificarXMLProfesor(oProfesor)
     {
@@ -338,11 +375,11 @@
         var todoOk=true;
         var oAlumno=null;
 
-       if(!/^[a-z\d_]{2,15}$/.test(form_altaAlum.text_nombre.value)){
+       if(!/^[a-z\d_]{2,15}$/i.test(form_altaAlum.text_nombre.value)){
            sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
            todoOk=false;
        }
-        if(!/^[a-z\d_]{4,15}$/.test(form_altaAlum.text_apellido.value)){
+        if(!/^[a-z\d_]{4,15}$/i.test(form_altaAlum.text_apellido.value)){
             sMensajeError+="Apellido incorrecto, el apellido debe tener entre 4 y 15 caracteres\n";
             todoOk=false;
         }
@@ -354,6 +391,10 @@
             sMensajeError+="Edad incorrecto\n";
             todoOk=false;
         }
+        if(!/^[a-z\d_]{1}$/i.test(form_altaAlum.text_grupo.value) ){
+            sMensajeError+="Grupo incorrecto\n";
+            todoOk=false;
+        }
         if(!/^[9|6|7][0-9]{8}$/.test(form_altaAlum.text_tlfn.value)){
             sMensajeError+="Teléfono incorrecto\n";
             todoOk=false;
@@ -361,7 +402,6 @@
         if(form_altaAlum.text_direccion.value==""){
             sMensajeError+="Dirección incorrecto\n";
             todoOk=false;
-            form_altaAlum.text_nombre.style.borderColor="red";
         }
 
 
@@ -384,16 +424,20 @@
         var sMensajeError="";
         var todoOk=true;
 
-        if(!/^[a-z\d_]{2,15}$/.test(form_modAlum.text_nombre.value)){
+        if(!/^[a-z\d_]{2,15}$/i.test(form_modAlum.text_nombre.value)){
             sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
             todoOk=false;
         }
-        if(!/^[a-z\d_]{4,15}$/.test(form_modAlum.text_apellido.value)){
+        if(!/^[a-z\d_]{4,15}$/i.test(form_modAlum.text_apellido.value)){
             sMensajeError+="Apellido incorrecto, el apellido debe tener entre 4 y 15 caracteres\n";
             todoOk=false;
         }
         if(form_modAlum.text_edad.value<1 || form_modAlum.text_edad.value>=99 ){
             sMensajeError+="Edad incorrecto\n";
+            todoOk=false;
+        }
+        if(!/^[a-z\d_]{1}$/i.test(form_modAlum.text_grupo.value) ){
+            sMensajeError+="Grupo incorrecto\n";
             todoOk=false;
         }
         if(!/^[9|6|7][0-9]{8}$/.test(form_modAlum.text_tlfn.value)){
@@ -436,11 +480,11 @@
         var todoOk=true;
         var profesorActual=null;
 
-        if(!/^[a-z\d_]{2,15}$/.test(form_altaProf.text_nombre.value)){
+        if(!/^[a-z\d_]{2,15}$/i.test(form_altaProf.text_nombre.value)){
             sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
             todoOk=false;
         }
-        if(!/^[a-z\d_]{4,15}$/.test(form_altaProf.text_apellido.value)){
+        if(!/^[a-z\d_]{4,15}$/i.test(form_altaProf.text_apellido.value)){
             sMensajeError+="Apellido incorrecto, el apellido debe tener entre 4 y 15 caracteres\n";
             todoOk=false;
         }
@@ -472,11 +516,11 @@
         var sMensajeError="";
         var todoOk=true;
 
-        if(!/^[a-z\d_]{2,15}$/.test(form_modProf.text_nombre.value)){
+        if(!/^[a-z\d_]{2,15}$/i.test(form_modProf.text_nombre.value)){
             sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
             todoOk=false;
         }
-        if(!/^[a-z\d_]{4,15}$/.test(form_modProf.text_apellido.value)){
+        if(!/^[a-z\d_]{4,15}$/i.test(form_modProf.text_apellido.value)){
             sMensajeError+="Apellido incorrecto, el apellido debe tener entre 4 y 15 caracteres\n";
             todoOk=false;
         }
@@ -519,7 +563,7 @@
             sMensajeError+="ID incorrecto\n";
             todoOk=false;
         }
-        if(!/^[a-z\d_]{2,15}$/.test(form_altaAct.text_nombre.value)){
+        if(!/^[a-z\d_]{2,15}$/i.test(form_altaAct.text_nombre.value)){
             sMensajeError+="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
             todoOk=false;
         }
@@ -547,7 +591,7 @@
             sMensajeError+="ID incorrecto\n";
             todoOk=false;
         }
-        if(!/^[a-z\d_]{2,15}$/.test(form_modAct.text_nombre.value)){
+        if(!/^[a-z\d_]{2,15}$/i.test(form_modAct.text_nombre.value)){
             sMensajeError+="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
             todoOk=false;
         }
@@ -696,6 +740,7 @@
                 alert("Este alumno no existe");
         }
     }
+
     function validarFormModExp(){
 
         var sMensajeError="";
@@ -728,6 +773,21 @@
         }
     }
 
+    function validarBajaExp(){
+        var sMensajeError="";
+        var todoOk=true;
+
+        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_bajaExp.text_dni.value)){
+            sMensajeError="Dni incorrecto\n";
+            todoOk=false;
+        }
+        if(todoOk==false)
+            alert(sMensajeError);
+        else {
+            alert(borrarExpediente(form_bajaExp.text_dni.value));
+            limpiarCampos();
+        }
+    }
 
     // Metodos de mostrar formularios
     function mostrarFormAltaProf(){
@@ -746,6 +806,7 @@
         else{
             var opt=document.createElement("option");
             var texto=document.createTextNode(curso);
+            opt.value=form_altaProf.cursoProf.value;
             opt.appendChild(texto);
             form_altaProf.select_gruposProf.appendChild(opt);
 
@@ -776,6 +837,7 @@
         else{
             var opt=document.createElement("option");
             var texto=document.createTextNode(curso);
+            opt.value=form_modProf.grupoNuevo.value;
             opt.appendChild(texto);
             form_modProf.select_gruposProf.appendChild(opt);
 
@@ -1085,3 +1147,13 @@
         return xhttp.responseXML;
     }
 
+function listadoAlumnos(){
+    var alumnos=oXML.querySelectorAll("alumno");
+    var tabla=document.createElement("table");
+    var titulo=document.createElement("caption");
+    titulo.appendChild(document.createTextNode("Listado de Alumnos"));
+    tabla.appendChild(titulo);
+
+
+
+}
