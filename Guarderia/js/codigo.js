@@ -1027,8 +1027,14 @@
         for(var i=0;i<oOptionSel.length;i++)
             oSelect.removeChild(oOptionSel[i]);
     }
-    function eliminarNotaMod(){
-        var oSelect=form_modExp.select_expediente;
+    function eliminarAlumnoAsigAlta(){
+        var oSelect=form_altaAsig.select_alumnos;
+        var oOptionSel=getSelecteditems(oSelect);
+        for(var i=0;i<oOptionSel.length;i++)
+            oSelect.removeChild(oOptionSel[i]);
+    }
+    function eliminarAlumnoAsigMod(){
+        var oSelect=form_modAsig.select_alumnos;
         var oOptionSel=getSelecteditems(oSelect);
         for(var i=0;i<oOptionSel.length;i++)
             oSelect.removeChild(oOptionSel[i]);
