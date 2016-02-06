@@ -982,6 +982,12 @@
         for(var i=0;i<oOptionSel.length;i++)
             oSelect.removeChild(oOptionSel[i]);
     }
+    function eliminarNotaMod(){
+        var oSelect=form_modExp.select_expediente;
+        var oOptionSel=getSelecteditems(oSelect);
+        for(var i=0;i<oOptionSel.length;i++)
+            oSelect.removeChild(oOptionSel[i]);
+    }
 
     // Metodos de mostrar formularios
     function mostrarFormAltaProf(){
