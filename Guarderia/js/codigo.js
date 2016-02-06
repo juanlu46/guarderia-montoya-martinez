@@ -933,6 +933,56 @@
         }
     }
 
+    // Metodos de elminar de la select multiple
+    function eliminarCursoProfAlta(){
+        var oSelect=form_altaProf.select_gruposProf;
+        var oOptionSel=getSelecteditems(oSelect);
+        for(var i=0;i<oOptionSel.length;i++)
+            oSelect.removeChild(oOptionSel[i]);
+    }
+    function eliminarCursoProfMod(){
+        var oSelect=form_modProf.select_gruposProf;
+        var oOptionSel=getSelecteditems(oSelect);
+        for(var i=0;i<oOptionSel.length;i++)
+            oSelect.removeChild(oOptionSel[i]);
+    }
+    function eliminarAlumnoActAlta(){
+        var oSelect=form_altaAct.select_alumnos_act;
+        var oOptionSel=getSelecteditems(oSelect);
+        for(var i=0;i<oOptionSel.length;i++)
+            oSelect.removeChild(oOptionSel[i]);
+    }
+    function eliminarAlumnoActMod(){
+        var oSelect=form_modAct.select_alumnos_act;
+        var oOptionSel=getSelecteditems(oSelect);
+        for(var i=0;i<oOptionSel.length;i++)
+            oSelect.removeChild(oOptionSel[i]);
+    }
+    function eliminarAlimentoAlta(){
+        var oSelect=form_altaBono.select_alimentos;
+        var oOptionSel=getSelecteditems(oSelect);
+        for(var i=0;i<oOptionSel.length;i++)
+            oSelect.removeChild(oOptionSel[i]);
+    }
+    function eliminarAlimentoMod(){
+        var oSelect=form_modBono.select_alimentos;
+        var oOptionSel=getSelecteditems(oSelect);
+        for(var i=0;i<oOptionSel.length;i++)
+            oSelect.removeChild(oOptionSel[i]);
+    }
+    function eliminarNotaAlta(){
+        var oSelect=form_altaExp.select_expediente;
+        var oOptionSel=getSelecteditems(oSelect);
+        for(var i=0;i<oOptionSel.length;i++)
+            oSelect.removeChild(oOptionSel[i]);
+    }
+    function eliminarNotaMod(){
+        var oSelect=form_modExp.select_expediente;
+        var oOptionSel=getSelecteditems(oSelect);
+        for(var i=0;i<oOptionSel.length;i++)
+            oSelect.removeChild(oOptionSel[i]);
+    }
+
     // Metodos de mostrar formularios
     function mostrarFormAltaProf(){
         $("form").hide("normal");
@@ -941,6 +991,7 @@
         document.getElementById("btnAltaProf").addEventListener("click", validarFormProf, false);
         document.getElementById("btnCancelar").addEventListener("click", cancelar, false);
         document.getElementById("btnanadirCurso").addEventListener("click",anadirCursoProf,false);
+        document.getElementById("btnEliminarGrupo").addEventListener("click",eliminarCursoProfAlta,false);
     }
     function mostrarFormModProf(){
         $("form").hide("normal");
@@ -955,6 +1006,7 @@
         document.getElementById("btnModProf").addEventListener("click",validarFormModProf,false);
         document.getElementById("btnCancelarModProf").addEventListener("click", cancelar, false);
         document.getElementById("anadirGrupoModProf").addEventListener("click",anadirCursoModProf,false);
+        document.getElementById("btnEliminarGrupo_mod").addEventListener("click",eliminarCursoProfMod,false);
     }
     function mostrarFormBajProf(){
         $("form").hide("normal");
@@ -1002,9 +1054,9 @@
         document.getElementById("btnAltaAct").addEventListener("click",validarAltaAct,false);
         if(document.getElementById("sel_alumno_act_alta").length==1)
         cargarSelectAlumnos("sel_alumno_act_alta");
-
         document.getElementById("btnCancelarAltaAct").addEventListener("click", cancelar, false);
         document.getElementById("anadirAlumnosAct").addEventListener("click", anadirAlumnosAltaAct, false);
+        document.getElementById("btnEliminarAlumno_act").addEventListener("click", eliminarAlumnoActAlta, false);
 
     }
     function mostrarFormModAct(){
@@ -1023,6 +1075,8 @@
         document.getElementById("btnModAct").addEventListener("click",validarModAct,false);
         document.getElementById("btnCancelarModAct").addEventListener("click", cancelar, false);
         document.getElementById("añadirAlumnosAct_mod").addEventListener("click", anadirAlumnosModAct, false);
+        document.getElementById("btnEliminarAlumno_act_mod").addEventListener("click", eliminarAlumnoActMod, false);
+
     }
 
 
@@ -1041,6 +1095,7 @@
         document.getElementById("btnAltaBono").addEventListener("click",validarAltaBono,false);
         document.getElementById("btnCancelarAltaBono").addEventListener("click", cancelar, false);
         document.getElementById("añadirAlimentos_alta").addEventListener("click",añadirAlimentosAlta, false);
+        document.getElementById("btnEliminarAlimento").addEventListener("click",eliminarAlimentoAlta, false);
     }
     function mostrarFormModComed(){
         $("form").hide("normal");
@@ -1057,6 +1112,7 @@
         document.getElementById("btnModBono").addEventListener("click",validarModBono,false);
         document.getElementById("btnCancelarModBono").addEventListener("click", cancelar, false);
         document.getElementById("añadirAlimento_mod").addEventListener("click",añadirAlimentosMod, false);
+        document.getElementById("btnEliminarAlimento_mod").addEventListener("click",eliminarAlimentoMod, false);
     }
     function mostrarFormBajComed(){
         $("form").hide("normal");
@@ -1075,6 +1131,7 @@
         document.getElementById("btnAltaExp").addEventListener("click",validarFormAltaExp,false);
         document.getElementById("btnCancelarAltaExp").addEventListener("click", cancelar, false);
         document.getElementById("añadirNota_alta").addEventListener("click", añadirNotaAlta, false);
+        document.getElementById("btnEliminarNota").addEventListener("click", eliminarNotaAlta, false);
     }
     function mostrarFormModExp(){
         $("form").hide("normal");
@@ -1091,6 +1148,7 @@
         document.getElementById("btnModExp").addEventListener("click",validarFormModExp,false);
         document.getElementById("btnCancelarModExp").addEventListener("click", cancelar, false);
         document.getElementById("añadirNota_mod").addEventListener("click", añadirNotaMod, false);
+        document.getElementById("btnEliminarNota_mod").addEventListener("click", eliminarNotaMod, false);
     }
     function mostrarFormBajExp(){
         $("form").hide("normal");
@@ -1289,6 +1347,16 @@
     }
 
     /* METODOS AUXILIARES*/
+    //Devuelve los objetos seleccionados de un select multiple
+    function getSelecteditems(oSelect){
+        var oOptions=[];
+        for(var i=0;i<oSelect.options.length;i++){
+            if(oSelect.options[i].selected)
+                oOptions.push(oSelect.options[i]);
+        }
+        return oOptions;
+    }
+
     //Constructor de objeto XML, alumno
     function newAlumno(sNombre,sApellidos,sDni,iEdad,iContacto,sDireccion,sGrupo){
         var oTags=["nombre","apellidos","edad","contacto","direccion","grupo"];
