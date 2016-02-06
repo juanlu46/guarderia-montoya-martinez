@@ -49,3 +49,12 @@ body{
 .botom{
     height: 84px;
 }
+
+#select_gruposProf
+{    margin-left: 3%;
+    width: 97%;
+}
+#btnEliminarGrupo
+{
+    height: 50px;
+}
