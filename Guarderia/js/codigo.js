@@ -100,6 +100,19 @@
         }
         return oExpediente;
     }
+    function buscarAsignatura(sId){
+        var oAsignatura=null;
+        var bEncontrado=false;
+        var oAsignaturas=oXML.querySelectorAll("asignatura");
+        for(var i=0;i<oAsignaturas.length && !bEncontrado;i++){
+            if(oAsignaturas[i].getAttribute("id")==sId){
+                oAsignatura =  oAsignaturas[i];
+                bEncontrado=true;
+            }
+        }
+        return oAsignatura;
+    }
+
     //Metodos Añadir al XML
     function añadirProfesor(oProfesor){
         var sRes="Alta de profesor satisfactoria";
@@ -160,6 +173,19 @@
         else
         {
             sRes="Expediente ya registrado";
+        }
+        return sRes;
+    }
+
+    function añadirAsignatura(oAsignatura){
+        var sRes="Alta de asignatura satisfactoria";
+        if(buscarAsignatura(oAsignatura.getAttribute("id"))==null) {
+            var oAsignaturas = oXML.querySelector("expediente");
+            oAsignaturas.appendChild(oAsignatura);
+        }
+        else
+        {
+            sRes="Asignatura ya registrado";
         }
         return sRes;
     }
@@ -1240,7 +1266,7 @@
 
         form_modAsig.sel_profesores_asig_alta.selectedIndex="0";
         form_modAsig.sel_alum_asig_alta.selectedIndex="0";
-        // document.getElementById("btnModAsig").addEventListener("click",validarFormModAsig,false);
+        document.getElementById("btnModAsig").addEventListener("click",validarFormModAsig,false);
         document.getElementById("btnCancelarAltaAsig").addEventListener("click", cancelar, false);
     }
 
