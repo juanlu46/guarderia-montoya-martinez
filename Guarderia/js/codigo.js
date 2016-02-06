@@ -49,7 +49,7 @@
         var oAlumnos=oXML.querySelectorAll("alumno");
         for(var i=0;i<oAlumnos.length && !bEncontrado;i++){
             var sDniAlum=oAlumnos[i].getAttribute("dni");
-            if(sDniAlum.nodeValue==sDni){
+            if(sDniAlum==sDni){
                 oAlumno =  oAlumnos[i];
                 bEncontrado=true;
             }
@@ -173,12 +173,12 @@
             var oAsigAfectada;
             for(var i=0;i<oAsignaturas.length && !bEncontrado;i++){
                 //Cogemos el profesor de la asignatura
-                var oProfesorAsig=oAsignaturas[i].querySelector("profesor");
-                if(oProfesorAsig.nodeValue==sDni) { //Si el valor de la etiqueta es igual al dni que pasamos por parametro
+                var oProfesorAsig=oAsignaturas[i].querySelector("profesorAsig");
+                if(oProfesorAsig.textContent==sDni) { //Si el valor de la etiqueta es igual al dni que pasamos por parametro
                     //Modificamos el valor, dicienod que no hay ninguno asignado
-                    oProfesorAsig.nodeValue = "No asignado";
+                    oProfesorAsig.textContent = "No asignado";
                     //Guardamos el id de la asignatura, para notificar que no tiene profesor asignado
-                    oAsigAfectada=oAsignaturas.querySelector("id").nodeValue;
+                    oAsigAfectada=oAsignaturas.getAttribute("id");
                     //salimos del bucle
                     bEncontrado = true;
                 }
@@ -276,7 +276,7 @@
     //Metodos de modificar
     function modificarXMLProfesor(oProfesor)
     {
-        var oProfAnterior = buscarProfesor(oProfesor.querySelector("dni").nodeValue);
+        var oProfAnterior = buscarProfesor(oProfesor.getAttribute("dni"));
         oXML.replaceChild(oProfesor,oProfAnterior);
     }
     function modificarXMLAlumno(oAlumno)
@@ -811,6 +811,7 @@
     }
 
     function mostrarRestoFormModProf(){
+        rellenaCamposProfesor(this.options[this.selectedIndex].value);
         document.getElementById("restoFormProf").classList.remove("oculto");
         document.getElementById("btnModProf").addEventListener("click",validarFormModProf,false);
         document.getElementById("btnCancelarModProf").addEventListener("click", cancelar, false);
@@ -852,6 +853,7 @@
     }
 
     function mostrarRestoFormModAlum(){
+        rellenaCamposAlumno(this.options[this.selectedIndex].value);
         document.getElementById("restoFormulario").classList.remove("oculto");
         document.getElementById("btnModAlum").addEventListener("click",validarFormModAlum,false);
         document.getElementById("btnCancelarModAlum").addEventListener("click", cancelar, false);
@@ -882,6 +884,7 @@
     }
 
     function mostrarRestoFormModActi(){
+        rellenaCamposActividad(this.options[this.selectedIndex].value);
         document.getElementById("restoFormAct").classList.remove("oculto");
         document.getElementById("btnModAct").addEventListener("click",validarModAct,false);
         document.getElementById("btnCancelarModAct").addEventListener("click", cancelar, false);
@@ -908,6 +911,7 @@
     }
 
     function mostrarRestoFormModComedor(){
+        rellenaCamposComedor(this.options[this.selectedIndex].value);
         document.getElementById("restoFormComedor").classList.remove("oculto");
         document.getElementById("btnModBono").addEventListener("click",validarModBono,false);
         document.getElementById("btnCancelarModBono").addEventListener("click", cancelar, false);
@@ -935,6 +939,7 @@
         cargarSelectAlumnos("sel_alumnos_expediente_mod");
     }
     function mostrarRestoFormModExp(){
+        rellenaCamposExpediente(this.options[this.selectedIndex].value);
         document.getElementById("restoFormExp").classList.remove("oculto");
         document.getElementById("btnModExp").addEventListener("click",validarFormModExp,false);
         document.getElementById("btnCancelarModExp").addEventListener("click", cancelar, false);
@@ -957,7 +962,7 @@
             for(var j=0;j<oOptions.length;j++)
                 oSelects[i].removeChild(oOptions[j]);
         }
-        oTextArea.nodeValue="";
+        oTextArea.textContent="";
     }
     //Funciones recogida de select
     function getGruposFormProf(sForm){
@@ -1023,31 +1028,71 @@
     function rellenaCamposAlumno(sDni){
         var oAlumno=buscarAlumno(sDni);
         form_modAlum.text_dni.value=sDni;
-        form_modAlum.text_nombre.value=oAlumno.querySelector("nombre").nodeValue;
-        form_modAlum.text_apellido.value=oAlumno.querySelector("apellidos").nodeValue;
-        form_modAlum.text_edad.value=oAlumno.querySelector("edad").nodeValue;
-        form_modAlum.text_grupo.value=oAlumno.querySelector("grupo").nodeValue;
-        form_modAlum.text_tlfn.value=oAlumno.querySelector("contacto").nodeValue;
-        form_modAlum.text_direccion.value=oAlumno.querySelector("direccion").nodeValue;
+        form_modAlum.text_nombre.value=oAlumno.querySelector("nombre").textContent;
+        form_modAlum.text_apellido.value=oAlumno.querySelector("apellidos").textContent;
+        form_modAlum.text_edad.value=oAlumno.querySelector("edad").textContent;
+        form_modAlum.text_grupo.value=oAlumno.querySelector("grupo").textContent;
+        form_modAlum.text_tlfn.value=oAlumno.querySelector("contacto").textContent;
+        form_modAlum.text_direccion.value=oAlumno.querySelector("direccion").textContent;
     }
     function rellenaCamposProfesor(sDni){
         var oProfesor=buscarProfesor(sDni);
         form_modProf.text_dni.value=sDni;
-        form_modProf.text_nombre.value=oProfesor.querySelector("nombre").nodeValue;
-        form_modProf.text_apellido.value=oProfesor.querySelector("apellido").nodeValue;
-        form_modProf.text_tlfn.value=oProfesor.querySelector("telefono").nodeValue;
+        form_modProf.text_nombre.value=oProfesor.querySelector("nombre").textContent;
+        form_modProf.text_apellido.value=oProfesor.querySelector("apellido").textContent;
+        form_modProf.text_tlfn.value=oProfesor.querySelector("telefono").textContent;
         var oGrupos=oProfesor.querySelectorAll("grupo");
         var oSelect=form_modProf.select_gruposProf;
         for(var i=0;i<oGrupos.length;i++){
             var oOption=document.createElement("option");
             var sValor=oGrupos[i].getAttribute("id");
             oOption.value=sValor;
-            oOption.nodeValue=sValor;
+            oOption.textContent=sValor;
             oSelect.appendChild(oOption);
         }
     }
     function rellenaCamposActividad(sId){
         var oActividad=buscarActividad(sId);
+        form_modAct.text_id.value=sId;
+        form_modAct.text_nombre.value=oActividad.querySelector("nombre").textContent;
+        var oAlumnos=oActividad.querySelectorAll("alumnoAct");
+        var oSelect=form_modAct.select_alumnos_act;
+        for(var i=0;i<oAlumnos.length;i++){
+            var oOption=document.createElement("option");
+            var sValor=oAlumnos[i].getAttribute("dni");
+            oOption.value=sValor;
+            oOption.textContent=sValor;
+            oSelect.appendChild(oOption);
+        }
+
+    }
+    function rellenaCamposComedor(sDni){
+        var oBono=buscarBono(sDni);
+        form_modBono.text_alumno.value=oBono.getAttribute("id");
+        form_modBono.text_horario.value=oBono.querySelector("horario").textContent;
+        var oAlimentos=oBono.querySelectorAll("alimentoAlergico");
+        var oSelect=form_modBono.select_alimentos;
+        for(var i=0;i<oAlimentos.length;i++){
+            var oOption=document.createElement("option");
+            var sValor=oAlimentos[i].textContent;
+            oOption.value=sValor;
+            oOption.textContent=sValor;
+            oSelect.appendChild(oOption);
+        }
+    }
+    function rellenaCamposExpediente(sDni){
+        var oExpediente=buscarExpediente(sDni);
+        form_modExp.text_AlumnoExp.value=sDni;
+        form_modExp.text_observaciones.value=oExpediente.querySelector("observaciones").textContent;
+        var oNotas=oExpediente.querySelectorAll("notaAsig");
+        var oSelect=form_modExp.select_expediente;
+        for(var i=0;i<oNotas.length;i++){
+            var oOption=document.createElement("option");
+            var sValor=oNotas[i].getAttribute("id");
+            oOption.value=sValor;
+            oOption.textContent=sValor;
+            oSelect.appendChild(oOption);
+        }
     }
 
     /* METODOS AUXILIARES*/

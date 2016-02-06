@@ -60,7 +60,7 @@
         <!--<bono id="453533X"> el id es el dni del alumno
                 <horario>4:50</horario>
                 <alimentosAlergico>
-                    <alimento>Cacahuete</alimento>
+                    <alimentoAlergico>Cacahuete</alimentoAlergico>
                 </alimentosAlergico>
         </bono>-->
     </bonos>
