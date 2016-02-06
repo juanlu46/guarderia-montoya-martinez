@@ -800,18 +800,6 @@
         $("form").hide("normal");
         limpiarCampos();
     }
-    function mostrarFormModProf(){
-        $("form").hide("normal");
-        $("#form_modProf").show("normal");
-        document.getElementById("sel_profesor_profesores_mod").addEventListener("change",mostrarRestoFormModProf,false);
-    }
-
-    function mostrarRestoFormModProf(){
-        document.getElementById("restoFormProf").classList.remove("oculto");
-        document.getElementById("btnModProf").addEventListener("click",validarFormModProf,false);
-        document.getElementById("btnCancelarModProf").addEventListener("click", cancelar, false);
-        document.getElementById("anadirGrupoModProf").addEventListener("click",anadirCursoModProf,false);
-    }
     function anadirCursoModProf(){
         var curso=form_modProf.grupoNuevo.value;
         if(curso==""){
@@ -838,6 +826,19 @@
             form_altaAct.select_alumnos_act.appendChild(opt);
         }
     }
+    function mostrarFormModProf(){
+        $("form").hide("normal");
+        $("#form_modProf").show("normal");
+        document.getElementById("sel_profesor_profesores_mod").addEventListener("change",mostrarRestoFormModProf,false);
+        document.getElementById("restoFormProf").classList.add("oculto");
+    }
+
+    function mostrarRestoFormModProf(){
+        document.getElementById("restoFormProf").classList.remove("oculto");
+        document.getElementById("btnModProf").addEventListener("click",validarFormModProf,false);
+        document.getElementById("btnCancelarModProf").addEventListener("click", cancelar, false);
+        document.getElementById("anadirGrupoModProf").addEventListener("click",anadirCursoModProf,false);
+    }
 
     function mostrarFormBajProf(){
         $("form").hide("normal");
@@ -859,6 +860,7 @@
         document.getElementById("sel_alumno_alumnos_mod").addEventListener("change",mostrarRestoFormModAlum,false);
         if(document.getElementById("sel_alumno_alumnos_mod").length==1)
         cargarSelectAlumnos("sel_alumno_alumnos_mod");
+        document.getElementById("restoFormulario").classList.add("oculto");
     }
 
     function mostrarRestoFormModAlum(){
@@ -887,9 +889,11 @@
     function mostrarFormModAct(){
         $("form").hide("normal");
         $("#form_modAct").show("normal");
-        document.getElementById("sel_alumnos_actividad_mod").addEventListener("change",mostrarRestoFormModActi,false);
+        document.getElementById("sel_actividades_act_mod").addEventListener("change",mostrarRestoFormModActi,false);
+        if(document.getElementById("sel_actividades_act_mod").length==1)
+            cargarSelectActividades("sel_actividades_act_mod");
+        document.getElementById("restoFormAct").classList.add("oculto");
 
-        cargarSelectActividades("sel_actividades_act_mod");
     }
 
     function mostrarRestoFormModActi(){
@@ -916,6 +920,9 @@
         $("form").hide("normal");
         $("#form_modBono").show("normal");
         document.getElementById("sel_alimentos_comedor_mod").addEventListener("change",mostrarRestoFormModComedor,false);
+        if(document.getElementById("sel_alimentos_comedor_mod").length==1)
+            cargarSelectComedor("sel_alimentos_comedor_mod");
+        document.getElementById("restoFormComedor").classList.add("oculto");
     }
 
     function mostrarRestoFormModComedor(){
@@ -930,7 +937,6 @@
         document.getElementById("btnCancelarBajaBono").addEventListener("click", cancelar, false);
     }
 
-
     function mostrarFormAltaExp(){
         $("form").hide("normal");
         $("#form_altaExp").show("normal");
@@ -944,6 +950,7 @@
         //Si no lo carga varias veces y tienes alumnos repetidos
         if(document.getElementById("sel_alumnos_expediente_mod").length==1)
         cargarSelectAlumnos("sel_alumnos_expediente_mod");
+        document.getElementById("restoFormExp").classList.add("oculto");
     }
     function mostrarRestoFormModExp(){
         document.getElementById("restoFormExp").classList.remove("oculto");
@@ -1016,7 +1023,7 @@
             addContenido(opt,oAlumnos[i].getAttribute("dni"));
             lugar.appendChild(opt);
         }
-        lugar.appendChild(opt);
+
     }
     function cargarSelectProfesores(sIDSelect){
         var lugar=document.getElementById(sIDSelect);
@@ -1027,7 +1034,7 @@
             addContenido(opt,oProfesores[i].getAttribute("dni"));
             lugar.appendChild(opt);
         }
-        lugar.appendChild(opt);
+
     }
     function cargarSelectActividades(sIDSelect){
         var oLugar=document.getElementById(sIDSelect);
@@ -1038,8 +1045,17 @@
             addContenido(opt,oActividades[i].getAttribute("id"));
             oLugar.appendChild(opt);
         }
-        oLugar.appendChild(opt);
+    }
 
+    function cargarSelectComedor(sIDSelect){
+        var lugar=document.getElementById(sIDSelect);
+        var oAlumnosConComedor=oXML.querySelectorAll("bono");
+        for(var i=0;i<oAlumnosConComedor.length;i++){
+            var opt=document.createElement("option");
+            opt.value=oAlumnosConComedor[i].getAttribute("id");
+            addContenido(opt,oAlumnosConComedor[i].getAttribute("id"));
+            lugar.appendChild(opt);
+        }
 
     }
 
