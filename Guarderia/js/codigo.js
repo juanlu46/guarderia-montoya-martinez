@@ -298,7 +298,8 @@
         var sRes="Baja de Expediente satisfactoria";
         var oExpediente=buscarExpediente(sDni);
         if(oExpediente!=null){
-            oXML.querySelector("expedientes").removeChild(oExpediente);
+            var expedientes=oXML.querySelector("expedientes");
+            expedientes.removeChild(oExpediente);
         }
         else{
             sRes="El Expediente que intenta borrar no existe con ese Dni";
@@ -589,7 +590,7 @@
             sMensajeError+="Dni incorrecto\n";
             todoOk=false;
         }
-        if(!/^[a-z\d_]{1}$/i.test(form_modProf.cursoProf.value) ){
+        if(!/^[a-z\d_]{1}$/i.test(form_modProf.grupoNuevo.value) ){
             sMensajeError+="Grupo incorrecto\n";
             todoOk=false;
         }
@@ -644,6 +645,7 @@
             actividadActual=newActividadExtra(form_altaAct.text_id.value,form_altaAct.text_nombre.value,
             getAlumnosFormAct("alta"));
             alert(añadirActividad(actividadActual));
+            limpiarCampos();
         }
 
 
@@ -654,10 +656,6 @@
         var todoOk=true;
         var actividadActual=null;
 
-        if(isNaN(form_modAct.text_id.value) || form_modAct.text_id.value==""){
-            sMensajeError+="ID incorrecto\n";
-            todoOk=false;
-        }
         if(!/^[a-z\d_]{2,15}$/i.test(form_modAct.text_nombre.value)){
             sMensajeError+="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
             todoOk=false;
@@ -706,7 +704,7 @@
         else {
             var oAlumno=buscarAlumno(form_altaBono.text_alumno.value);
             if(oAlumno!=null) {
-                oBonoActual = newBonoComedor(oAlumno, form_altaBono.text_horario.value,
+                oBonoActual = newBonoComedor(oAlumno.getAttribute("dni"), form_altaBono.text_horario.value,
                 getAlimentosFormBono("alta"));
                 alert(añadirBono(oBonoActual));
             }
@@ -752,15 +750,15 @@
         var sMensajeError="";
         var todoOk=true;
 
-        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_bajaBono.text_alumno.value)){
+        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_bajaBono.text_dni.value)){
             sMensajeError="Dni incorrecto\n";
             todoOk=false;
         }
         if(todoOk==false)
             alert(sMensajeError);
         else {
-            alert(borrarComedor(form_bajaBono.text_alumno.value));
-            form_bajaAct.text_alumno.value="";
+            alert(borrarComedor(form_bajaBono.text_dni.value));
+            limpiarCampos();
         }
     }
 
@@ -1186,7 +1184,7 @@
     function mostrarFormBajAct(){
         $("form").hide("normal");
         $("#form_bajaAct").show("normal");
-        orm_modAct.sel_actividades_act_mod.selectedIndex="0";
+        form_modAct.sel_actividades_act_mod.selectedIndex="0";
         document.getElementById("btnBajaAct").addEventListener("click",validarBajaAct,false);
         document.getElementById("btnCancelarBajaAct").addEventListener("click", cancelar, false);
     }
@@ -1335,7 +1333,7 @@ function mostrarFormBajAsig(){
             default:
                 oForm=document.getElementById("form_modAct");
         }
-        var oSelect=oForm.getElementById("select_alumnos_act"); //Select Alumnos Seleccionado
+        var oSelect=oForm.select_alumnos_act; //Select Alumnos Seleccionado
         return oSelect.querySelectorAll("option");
     }
     function getAlimentosFormBono(sForm){
@@ -1347,7 +1345,7 @@ function mostrarFormBajAsig(){
             default:
                 oForm=document.getElementById("form_modBono");
         }
-        var oSelect=oForm.getElementById("select_alimentos");
+        var oSelect=oForm.select_alimentos;
         return oSelect.querySelectorAll("option");
     }
     //  Metodos rellena Select
@@ -1543,19 +1541,21 @@ function mostrarFormBajAsig(){
         var oProfesor=document.createElement("profesor");
         for(var i=0;i<oTags.length;i++)
             oNodos.push(document.createElement(oTags[i]));
-        var oTagsValues=[sNombre,sApellidos,sDni,iTelefono];
+        var oTagsValues=[sNombre,sApellidos,iTelefono];
+        oProfesor.setAttribute("dni",sDni);
         for(var i=0;i<oTagsValues.length;i++) {
             addContenido(oNodos[i], oTagsValues[i]);
             oProfesor.appendChild(oNodos[i]);
         }
         oProfesor.appendChild(document.createElement("grupos"));
         for(var i=0;i<oGrupos.length;i++) {
-            var sGrupo=oGrupos.value;
+            var sGrupo=oGrupos[i].value;
             var oGrupoAux=document.createElement("grupo");
+            oGrupoAux.setAttribute("id",sGrupo);
             addContenido(oGrupoAux,sGrupo);
             oProfesor.querySelector("grupos").appendChild(oGrupoAux);
+
         }
-        oProfesor.setAttribute("dni",sDni);
         return oProfesor;
     }
     //Constructor de objeto XML Actividad Extraescolar
