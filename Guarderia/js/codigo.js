@@ -9,8 +9,9 @@
         document.getElementById("btnAsignatura").addEventListener("click",mostrarFormsAsig,false);
 
         //eventos para los listados
-
-
+        document.getElementById("btnListarAlum").addEventListener("click",listadoAlumnos,false);
+        document.getElementById("btnListarProf").addEventListener("click",listadoProfesores,false);
+        document.getElementById("btnListarAsig").addEventListener("click",listadoAsignaturas,false);
         oXML=loadXMLDoc("xml/datosGuarderia.xml");
         switch(getGet()){
             case "alumno":
