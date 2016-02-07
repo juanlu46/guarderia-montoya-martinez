@@ -10,6 +10,9 @@
 
         //eventos para los listados
         document.getElementById("listadoAlumnos").addEventListener("click",listadoAlumnos,false);
+        document.getElementById("listadoProfesores").addEventListener("click",listadoProfesores,false);
+        document.getElementById("listadoAsignaturas").addEventListener("click",listadoAsignaturas,false);
+
         oXML=loadXMLDoc("xml/datosGuarderia.xml");
         switch(getGet()){
             case "alumno":
@@ -303,6 +306,18 @@
         return sRes;
     }
 
+    function borrarAsignatura(sId){
+        var sRes="Baja de Asignatura satisfactoria";
+        var oAsignatura=buscarAsignatura(sId);
+        if(oAsignatura!=null){
+            oXML.querySelector("asignaturas").removeChild(oAsignatura);
+        }
+        else{
+            sRes="La Asignatura que intenta borrar no existe con ese Id";
+        }
+        return sRes;
+    }
+
     //Metodos de modificar
     function modificarXMLProfesor(oProfesor)
     {
@@ -332,6 +347,11 @@
     {
         var oExpedienteAnterior = buscarExpediente(oExpediente.getAttribute("id"));
         oXML.replaceChild(oExpediente,oExpedienteAnterior);
+    }
+    function modificarXMLAsignatura(oAsignatura)
+    {
+        var oAsignaturaAnterior = buscarAsignatura(oAsignatura.getAttribute("id"));
+        oXML.replaceChild(oAsignatura,oAsignaturaAnterior);
     }
 
     function mostrarFormsAlumnos(){
@@ -1617,41 +1637,150 @@ function mostrarFormBajAsig(){
 
 function listadoAlumnos(){
     var pestana = open("","","");
-    pestana.document.title="Listado Clientes";
+    pestana.document.title="Listado Alumnos";
 
-    var alumnos=oXML.querySelectorAll("alumno");
     var tabla=document.createElement("table");
     var titulo=document.createElement("caption");
     titulo.appendChild(document.createTextNode("Listado de Alumnos"));
     tabla.appendChild(titulo);
     var cabecera=document.createElement("thead");
-    var tr=document.createElement("tr");
-    var th=document.createElement("th");
-    th.appendChild(document.createTextNode("Nombre"));
-    tr.appendChild(th);
-    tabla.style.marginRight="5px";
-    th.appendChild(document.createTextNode("Apellidos"));
-    tr.appendChild(th);
 
-    th.appendChild(document.createTextNode("Dni"));
-    tr.appendChild(th);
+    var datosCabecera=new Array(8);
+    datosCabecera[0] = "Nombre";
+    datosCabecera[1]= "Apellidos";
+    datosCabecera[2]= "Dni";
+    datosCabecera[3]= "Edad";
+    datosCabecera[4]= "Grupo";
+    datosCabecera[5]= "Teléfono";
+    datosCabecera[6]= "Dirección";
+    datosCabecera[7]= "Bono Comedor";
 
-    th.appendChild(document.createTextNode("Edad"));
-    tr.appendChild(th);
-
-    th.appendChild(document.createTextNode("Grupo"));
-    tr.appendChild(th);
-
-    th.appendChild(document.createTextNode("Teléfono"));
-    tr.appendChild(th);
-    th.appendChild(document.createTextNode("Dirección"));
-    tr.appendChild(th);
-
-    cabecera.appendChild(tr);
+    cabecera.appendChild(crearCabeceraTabla(datosCabecera));
     tabla.appendChild(cabecera);
 
+    var alumnos=oXML.querySelectorAll("alumno");
+    var datos=new Array(8);
+    var bodyTabla=document.createElement("tbody");
+    for(var i=0;i<alumnos.length;i++) {
+            datos[0] = alumnos[i].getElementsByTagName("nombre")[0].textContent;
+            datos[1]= alumnos[i].getElementsByTagName("apellidos")[0].textContent;
+            datos[2]= alumnos[i].getAttribute("dni");
+            datos[3]= alumnos[i].getElementsByTagName("edad")[0].textContent;
+            datos[4]= alumnos[i].getElementsByTagName("grupo")[0].textContent;
+            datos[5]= alumnos[i].getElementsByTagName("contacto")[0].textContent;
+            datos[6]= alumnos[i].getElementsByTagName("direccion")[0].textContent;
+        if(buscarBono(alumnos[i].getAttribute("dni")) == null)
+           datos[7]="No";
+        else
+            datos[7]="Sí";
 
+
+        bodyTabla.appendChild(crearFilaTabla(datos));
+    }
+
+    tabla.appendChild(bodyTabla);
 
     pestana.document.body.appendChild(tabla);
 
 }
+    function listadoProfesores(){
+        var pestana = open("","","");
+        pestana.document.title="Listado Profesores";
+
+        var tabla=document.createElement("table");
+        var titulo=document.createElement("caption");
+        titulo.appendChild(document.createTextNode("Listado de Profesores"));
+        tabla.appendChild(titulo);
+        var cabecera=document.createElement("thead");
+
+        var datosCabecera=new Array(5);
+        datosCabecera[0] = "Nombre";
+        datosCabecera[1]= "Apellidos";
+        datosCabecera[2]= "Dni";
+        datosCabecera[3]= "Teléfono";
+        datosCabecera[4]= "Grupos";
+
+        cabecera.appendChild(crearCabeceraTabla(datosCabecera));
+        tabla.appendChild(cabecera);
+
+        var oProfesores=oXML.querySelectorAll("profesor");
+        var datos=new Array(5);
+        var bodyTabla=document.createElement("tbody");
+        for(var i=0;i<oProfesores.length;i++) {
+            datos[0] = oProfesores[i].getElementsByTagName("nombre")[0].textContent;
+            datos[1]= oProfesores[i].getElementsByTagName("apellidos")[0].textContent;
+            datos[2]= oProfesores[i].getAttribute("dni");
+            datos[3]= oProfesores[i].getElementsByTagName("telefono")[0].textContent;
+            datos[4]="";
+            var gruposProfesorActual=oProfesores[i].getElementsByTagName("grupo");
+
+            for(var j=0;j<gruposProfesorActual.length;j++){
+                datos[4]+=gruposProfesorActual[j].getAttribute("id")+" ";
+            }
+            bodyTabla.appendChild(crearFilaTabla(datos));
+        }
+        tabla.appendChild(bodyTabla);
+        pestana.document.body.appendChild(tabla);
+    }
+
+    function listadoAsignaturas(){
+        var pestana = open("","","");
+        pestana.document.title="Listado Asignaturas";
+
+        var tabla=document.createElement("table");
+        var titulo=document.createElement("caption");
+        titulo.appendChild(document.createTextNode("Listado de Asignaturas"));
+        tabla.appendChild(titulo);
+        var cabecera=document.createElement("thead");
+
+        var datosCabecera=new Array(4);
+        datosCabecera[0]= "Id";
+        datosCabecera[1] = "Nombre";
+        datosCabecera[2]= "Profesor";
+        datosCabecera[3]= "Nº Alumnos";
+
+
+
+        cabecera.appendChild(crearCabeceraTabla(datosCabecera));
+        tabla.appendChild(cabecera);
+
+        var oAsignaturas=oXML.querySelectorAll("asignatura");
+        var datos=new Array(4);
+        var bodyTabla=document.createElement("tbody");
+        for(var i=0;i<oAsignaturas.length;i++) {
+            datos[0]= oAsignaturas[i].getAttribute("id");
+            datos[1] = oAsignaturas[i].getElementsByTagName("nombre")[0].textContent;
+            datos[2]= oAsignaturas[i].getElementsByTagName("profesorAsig")[0].textContent;
+
+            datos[3]= oAsignaturas[i].getElementsByTagName("alumnoAsig").length;
+
+            bodyTabla.appendChild(crearFilaTabla(datos));
+        }
+        tabla.appendChild(bodyTabla);
+        pestana.document.body.appendChild(tabla);
+    }
+
+
+
+
+    function crearFilaTabla(datos){
+        var tr=document.createElement("tr");
+
+        for(var i=0;i<datos.length;i++){
+            var td=document.createElement("td");
+            td.appendChild(document.createTextNode(datos[i]));
+            tr.appendChild(td);
+        }
+        return tr;
+    }
+
+    function crearCabeceraTabla(datos){
+        var tr=document.createElement("tr");
+
+        for(var i=0;i<datos.length;i++){
+            var td=document.createElement("th");
+            td.appendChild(document.createTextNode(datos[i]));
+            tr.appendChild(td);
+        }
+        return tr;
+    }
