@@ -563,16 +563,6 @@
             todoOk=false;
         }
 
-        if(!/^[9|6|7][0-9]{8}$/.test(form_altaProf.text_tlfn.value)){
-            sMensajeError+="Teléfono incorrecto\n";
-            todoOk=false;
-        }
-
-        if(!/^[a-z\d_]{1}$/i.test(form_altaProf.cursoProf.value) ){
-            sMensajeError+="Grupo incorrecto\n";
-            todoOk=false;
-        }
-
         if(todoOk==false){
             alert(sMensajeError);
         }
