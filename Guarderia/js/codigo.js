@@ -30,8 +30,17 @@
             case 'expediente':
                 mostrarFormsExp();
                 break;
-            default:
+            case 'asignatura':
                 mostrarFormsAsig();
+                break;
+            case 'listadoAlumnos':
+                listadoAlumnos();
+                break;
+            case 'listadoProfesores':
+                listadoProfesores();
+                break;
+            default:
+                listadoAsignaturas();
         }
     }
 
