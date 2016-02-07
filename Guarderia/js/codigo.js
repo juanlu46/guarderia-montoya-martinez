@@ -249,12 +249,12 @@
             if(oExpediente!=null)
                 oXML.querySelector("expedientes").removeChild(oExpediente);
             //Busco si esta en una actividad
-            var oActividades=XML.querySelectorAll("actividad");
+            var oActividades=oXML.querySelectorAll("actividad");
             var bActividadEncontrada=false;
             for(var i=0;i<oActividades.length && !bActividadEncontrada;i++) {
                 var oAlumnos=oActividades[i].querySelectorAll("alumnoAct");
                 for(var j=0;j<oAlumnos.length;j++) {
-                    if (oAlumnos.getAttribute("dni") == sDni) {
+                    if (oAlumnos[j].getAttribute("dni") == sDni) {
                         oActividades[i].removeChild(oAlumnos[i]);
                         bActividadEncontrada = true;
                     }
