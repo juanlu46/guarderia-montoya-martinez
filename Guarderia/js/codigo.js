@@ -716,6 +716,7 @@
                 oBonoActual = newBonoComedor(oAlumno.getAttribute("dni"), form_altaBono.text_horario.value,
                 getAlimentosFormBono("alta"));
                 alert(añadirBono(oBonoActual));
+                limpiarCampos();
             }
             else
                 alert("Este alumno no existe");
@@ -1188,6 +1189,12 @@
     function mostrarFormModProf(){
         $("form").hide("normal");
         $("#form_modProf").show("normal");
+        if(document.getElementById("sel_profesor_profesores_mod").length==0){
+            var opt=document.createElement("option");
+            opt.value="";
+            addContenido(opt,"Seleccione un profesor");
+            document.getElementById("sel_profesor_profesores_mod").appendChild(opt);
+        }
         cargarSelectProfesores("sel_profesor_profesores_mod");
         document.getElementById("sel_profesor_profesores_mod").addEventListener("change",mostrarRestoFormModProf,false);
         document.getElementById("restoFormProf").classList.add("oculto");
@@ -1219,6 +1226,12 @@
         $("form").hide("normal");
         $("#form_modAlum").show("normal");
         document.getElementById("sel_alumno_alumnos_mod").addEventListener("change",mostrarRestoFormModAlum,false);
+        if(document.getElementById("sel_alumno_alumnos_mod").length==0){
+            var opt=document.createElement("option");
+            opt.value="";
+            addContenido(opt,"Seleccione un alumno");
+            document.getElementById("sel_alumno_alumnos_mod").appendChild(opt);
+        }
         if(document.getElementById("sel_alumno_alumnos_mod").length==1)
         cargarSelectAlumnos("sel_alumno_alumnos_mod");
         document.getElementById("restoFormulario").classList.add("oculto");
@@ -1256,6 +1269,13 @@
         $("form").hide("normal");
         $("#form_modAct").show("normal");
         document.getElementById("sel_actividades_act_mod").addEventListener("change",mostrarRestoFormModActi,false);
+        if(document.getElementById("sel_actividades_act_mod").length==0){
+            var opt=document.createElement("option");
+            opt.value="";
+            addContenido(opt,"Seleccione una actividad");
+            document.getElementById("sel_actividades_act_mod").appendChild(opt);
+        }
+
         if(document.getElementById("sel_actividades_act_mod").length==1)
             cargarSelectActividades("sel_actividades_act_mod");
         document.getElementById("restoFormAct").classList.add("oculto");
@@ -1294,6 +1314,12 @@
         $("form").hide("normal");
         $("#form_modBono").show("normal");
         document.getElementById("sel_alimentos_comedor_mod").addEventListener("change",mostrarRestoFormModComedor,false);
+        if(document.getElementById("sel_alimentos_comedor_mod").length==0){
+            var opt=document.createElement("option");
+            opt.value="";
+            addContenido(opt,"Seleccione un Bono");
+            document.getElementById("sel_alimentos_comedor_mod").appendChild(opt);
+        }
         if(document.getElementById("sel_alimentos_comedor_mod").length==1)
             cargarSelectComedor("sel_alimentos_comedor_mod");
         document.getElementById("restoFormComedor").classList.add("oculto");
@@ -1331,6 +1357,12 @@
         $("#form_modExp").show("normal");
         document.getElementById("sel_alumnos_expediente_mod").addEventListener("change",mostrarRestoFormModExp,false);
         cargarSelectAsignatura("sel_asig_exp_mod");
+        if(document.getElementById("sel_alumnos_expediente_mod").length==0){
+            var opt=document.createElement("option");
+            opt.value="";
+            addContenido(opt,"Seleccione un expediente");
+            document.getElementById("sel_alumnos_expediente_mod").appendChild(opt);
+        }
         if(document.getElementById("sel_alumnos_expediente_mod").length==1)
         cargarSelectExpediente("sel_alumnos_expediente_mod");
         document.getElementById("restoFormExp").classList.add("oculto");
@@ -1366,6 +1398,12 @@
     function mostrarFormModAsig(){
         $("form").hide("normal");
         $("#form_modAsig").show("normal");
+        if(document.getElementById("sel_asignaturas_asig_mod").length==0){
+            var opt=document.createElement("option");
+            opt.value="";
+            addContenido(opt,"Seleccione una asignatura");
+            document.getElementById("sel_asignaturas_asig_mod").appendChild(opt);
+        }
         if(document.getElementById("sel_asignaturas_asig_mod").length==1)
         cargarSelectAsignatura("sel_asignaturas_asig_mod");
         document.getElementById("sel_asignaturas_asig_mod").addEventListener("change",mostrarRestoFormModAsig,false);
