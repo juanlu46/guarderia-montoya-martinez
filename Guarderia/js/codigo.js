@@ -179,7 +179,7 @@
     function añadirExpediente(oExpediente){
         var sRes="Alta de expediente satisfactoria";
         if(buscarExpediente(oExpediente.getAttribute("id"))==null) {
-            var oExpedientes = oXML.querySelector("expediente");
+            var oExpedientes = oXML.querySelector("expedientes");
             oExpedientes.appendChild(oExpediente);
         }
         else
@@ -192,7 +192,7 @@
     function añadirAsignatura(oAsignatura){
         var sRes="Alta de asignatura satisfactoria";
         if(buscarAsignatura(oAsignatura.getAttribute("id"))==null) {
-            var oAsignaturas = oXML.querySelector("expediente");
+            var oAsignaturas = oXML.querySelector("asignaturas");
             oAsignaturas.appendChild(oAsignatura);
         }
         else
@@ -798,7 +798,10 @@
         else {
             var oAlumno=buscarAlumno(form_altaExp.text_AlumnoExp.value);
             if(oAlumno!=null) {
-                oExpedienteActual = newExpediente(form_altaExp.text_AlumnoExp.value,form_altaExp.text_nota.value,form_altaExp.text_observaciones.value);
+                var oNotas=[];
+                for(var i=0;i<form_altaExp.select_expediente.options.length;i++)
+                    oNotas.push(form_altaExp.select_expediente.options[i].value);
+                oExpedienteActual = newExpediente(form_altaExp.text_AlumnoExp.value,oNotas,form_altaExp.text_observaciones.value);
                 alert(añadirExpediente(oExpedienteActual));
                limpiarCampos();
             }
