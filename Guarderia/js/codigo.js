@@ -897,7 +897,7 @@
         }
         else{
             oAsignaturaActual=newAsignatura(form_modAsig.text_id.value,form_modAsig.text_nombre.value,$("#sel_profesores_asig_mod").val(),
-                getAlumnosFormAsig("modificar"));
+            form_modAsig.select_alumnos.querySelectorAll("option"));
             alert(modificarXMLAsignatura(oAsignaturaActual));
             limpiarCampos();
         }
@@ -1433,16 +1433,7 @@ function mostrarFormBajAsig(){
         return oSelect.querySelectorAll("option");
     }
 
-    function getAlumnosFormAsig(sForm){
-        var oForm;
-        switch(sForm){
-            case "alta":
-                oForm=document.getElementById("form_altaAsig");
-                break;
-        }
-        var oSelect=oForm.sel_alum_asig_alta; //Select Alumnos Seleccionado
-        return oSelect.querySelectorAll("option");
-    }
+
 
     //  Metodos rellena Select
     function cargarSelectAlumnos(sIDSelect){
