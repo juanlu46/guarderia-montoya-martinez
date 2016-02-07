@@ -332,36 +332,36 @@
     function modificarXMLProfesor(oProfesor)
     {
         var oProfAnterior = buscarProfesor(oProfesor.getAttribute("dni"));
-        oXML.replaceChild(oProfesor,oProfAnterior);
+        oXML.querySelector("profesores").replaceChild(oProfesor,oProfAnterior);
     }
     function modificarXMLAlumno(oAlumno)
     {
         var oAlumnoAnterior = buscarAlumno(oAlumno.getAttribute("dni"));
-        oXML.replaceChild(oAlumno,oAlumnoAnterior);
+        oXML.querySelector("alumnos").replaceChild(oAlumno,oAlumnoAnterior);
     }
 
     function modificarXMLActividad(oActividad)
     {
         var oActividadAnterior = buscarActividad(oActividad.getAttribute("id"));
-        oXML.replaceChild(oActividad,oActividadAnterior);
+        oXML.querySelector("actividades").replaceChild(oActividad,oActividadAnterior);
     }
 
 
     function modificarXMLComedor(oBono)
     {
         var oComedorAnterior = buscarBono(oBono.getAttribute("id"));
-        oXML.replaceChild(oBono,oComedorAnterior);
+        oXML.querySelector("bonos").replaceChild(oBono,oComedorAnterior);
     }
 
     function modificarXMLExpediente(oExpediente)
     {
         var oExpedienteAnterior = buscarExpediente(oExpediente.getAttribute("id"));
-        oXML.replaceChild(oExpediente,oExpedienteAnterior);
+        oXML.querySelector("expedientes").replaceChild(oExpediente,oExpedienteAnterior);
     }
     function modificarXMLAsignatura(oAsignatura)
     {
         var oAsignaturaAnterior = buscarAsignatura(oAsignatura.getAttribute("id"));
-        oXML.replaceChild(oAsignatura,oAsignaturaAnterior);
+        oXML.querySelector("asignaturas").replaceChild(oAsignatura,oAsignaturaAnterior);
     }
 
     function mostrarFormsAlumnos(){

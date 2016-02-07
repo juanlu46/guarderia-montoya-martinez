@@ -49,7 +49,7 @@
         </asignatura>
     </asignaturas>
     <expedientes>
-        <expediente id="437598983X" > el id es el dni del alumno
+        <expediente id="437598983X" >
             <notas>
                 <notaAsig id="43">9,75</notaAsig>
                 <notaAsig id="56">6,78</notaAsig>
@@ -58,7 +58,7 @@
         </expediente>
     </expedientes>
     <bonos>
-        <bono id="47457858l"> el id es el dni del alumno
+        <bono id="47457858l">
                 <horario>4:50</horario>
                 <alimentosAlergico>
                     <alimentoAlergico>Cacahuete</alimentoAlergico>
