@@ -1,17 +1,15 @@
     window.addEventListener('load',inicio,false);
     var oXML;
     function inicio() {
-        document.getElementById("alumnos").addEventListener("click",mostrarFormsAlumnos,false);
-        document.getElementById("profesores").addEventListener("click",mostrarFormsProf,false);
-        document.getElementById("actividades").addEventListener("click",mostrarFormsAct,false);
-        document.getElementById("comedor").addEventListener("click",mostrarFormsComed,false);
-        document.getElementById("expediente").addEventListener("click",mostrarFormsExp,false);
-        document.getElementById("asignatura").addEventListener("click",mostrarFormsAsig,false);
+        document.getElementById("btnAlumnos").addEventListener("click",mostrarFormsAlumnos,false);
+        document.getElementById("btnProfesores").addEventListener("click",mostrarFormsProf,false);
+        document.getElementById("btnActividades").addEventListener("click",mostrarFormsAct,false);
+        document.getElementById("btnComedor").addEventListener("click",mostrarFormsComed,false);
+        document.getElementById("btnExpediente").addEventListener("click",mostrarFormsExp,false);
+        document.getElementById("btnAsignatura").addEventListener("click",mostrarFormsAsig,false);
 
         //eventos para los listados
-        document.getElementById("listadoAlumnos").addEventListener("click",listadoAlumnos,false);
-        document.getElementById("listadoProfesores").addEventListener("click",listadoProfesores,false);
-        document.getElementById("listadoAsignaturas").addEventListener("click",listadoAsignaturas,false);
+
 
         oXML=loadXMLDoc("xml/datosGuarderia.xml");
         switch(getGet()){
