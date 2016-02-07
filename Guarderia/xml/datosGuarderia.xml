@@ -17,7 +17,7 @@
         <apellidos>Perez</apellidos>
         <edad>12</edad>
         <contacto>954876345</contacto>
-        <direccion>calle falsa, 3</direccion>
+        <direccion>alvarez quintero, 3</direccion>
         <grupo>A</grupo>
         </alumno>
         <alumno dni="47457858l">
@@ -25,7 +25,7 @@
             <apellidos>Jimenez</apellidos>
             <edad>18</edad>
             <contacto>673914877</contacto>
-            <direccion>calle falsa, 4</direccion>
+            <direccion>real, 4</direccion>
             <grupo>B</grupo>
         </alumno>
     </alumnos>

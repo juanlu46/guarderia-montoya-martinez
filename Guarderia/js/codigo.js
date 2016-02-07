@@ -472,7 +472,6 @@
 
         if(todoOk==false){
             alert(sMensajeError);
-            limpiarCampos();
         }
         else {
             oAlumno=newAlumno(form_altaAlum.text_nombre.value,form_altaAlum.text_apellido.value,form_altaAlum.text_dni.value,form_altaAlum.text_edad.value,form_altaAlum.text_tlfn.value,form_altaAlum.text_direccion.value,form_altaAlum.text_grupo.value);
@@ -532,7 +531,7 @@
         if(todoOk==false)
             alert(sMensajeError);
         else
-            alert(borrarAlumno(form_bajaAlum.txt_dni.value));
+            alert(borrarAlumno(form_bajaAlum.text_dni.value));
     }
 
 
@@ -1527,7 +1526,9 @@ function mostrarFormBajAsig(){
         var oAlumno=document.createElement("alumno");
         for(var i=0;i<oTags.length;i++)
             oNodos.push(document.createElement(oTags[i]));
-        var oTagsValues=[sNombre,sApellidos,sDni,iEdad,iContacto,sDireccion,sGrupo];
+        var oTagsValues=[sNombre,sApellidos,iEdad,iContacto,sDireccion,sGrupo];
+        oAlumno.setAttribute("dni",sDni);
+
         for(var i=0;i<oTags.length;i++) {
             addContenido(oNodos[i], oTagsValues[i]);
             oAlumno.appendChild(oNodos[i]);
@@ -1650,10 +1651,11 @@ function listadoAlumnos(){
     datosCabecera[1]= "Apellidos";
     datosCabecera[2]= "Dni";
     datosCabecera[3]= "Edad";
-    datosCabecera[4]= "Grupo";
-    datosCabecera[5]= "Teléfono";
-    datosCabecera[6]= "Dirección";
+    datosCabecera[4]= "Teléfono";
+    datosCabecera[5]= "Dirección";
+    datosCabecera[6]= "Grupo";
     datosCabecera[7]= "Bono Comedor";
+
 
     cabecera.appendChild(crearCabeceraTabla(datosCabecera));
     tabla.appendChild(cabecera);
@@ -1666,9 +1668,9 @@ function listadoAlumnos(){
             datos[1]= alumnos[i].getElementsByTagName("apellidos")[0].textContent;
             datos[2]= alumnos[i].getAttribute("dni");
             datos[3]= alumnos[i].getElementsByTagName("edad")[0].textContent;
-            datos[4]= alumnos[i].getElementsByTagName("grupo")[0].textContent;
-            datos[5]= alumnos[i].getElementsByTagName("contacto")[0].textContent;
-            datos[6]= alumnos[i].getElementsByTagName("direccion")[0].textContent;
+            datos[4]= alumnos[i].getElementsByTagName("contacto")[0].textContent;
+            datos[5]= alumnos[i].getElementsByTagName("direccion")[0].textContent;
+            datos[6]= alumnos[i].getElementsByTagName("grupo")[0].textContent;
         if(buscarBono(alumnos[i].getAttribute("dni")) == null)
            datos[7]="No";
         else
@@ -1699,7 +1701,6 @@ function listadoAlumnos(){
         datosCabecera[2]= "Dni";
         datosCabecera[3]= "Teléfono";
         datosCabecera[4]= "Grupos";
-
         cabecera.appendChild(crearCabeceraTabla(datosCabecera));
         tabla.appendChild(cabecera);
 
