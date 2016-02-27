@@ -1,0 +1,54 @@
+<form name="form_altaAct" id="form_altaAct" class="form-horizontal oculto">
+    <h3 class="text-primary">Alta Actividad</h3>
+    <div class="form-group">
+        <label for="text_id" class="col-sm-4 control-label">ID</label>
+        <div class="col-xs-4">
+            <input type="text" class="form-control" id="text_id" placeholder="Id"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="text_nombre" class="col-sm-4 control-label">Descripción</label>
+        <div class="col-xs-4">
+            <input type="text" class="form-control" id="text_nombre" placeholder="Nombre"/>
+        </div>
+    </div>
+
+    <div class="form-group ">
+        <label for="select_alumnos_act"  class="control-label col-sm-4">Alumnos</label>
+        <div class="input-group">
+            <select multiple id="select_alumnos_act" class="form-control">
+            </select>
+                                 <span class="input-group-btn">
+                                        <button class="btn btn-default botom" id="btnEliminarAlumno_act" type="button">-</button>
+                                      </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-xs-4" id="selectMas">
+            <div class="input-group">
+                <select class="form-control" id="sel_alumno_act_alta">
+                    <option value="">Selecciona un alumno</option>
+                </select>
+                                      <span class="input-group-btn">
+                                        <button class="btn btn-default" id="anadirAlumnosAct" type="button">+</button>
+                                      </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="text_fecha" class="col-sm-4 control-label">Fecha</label>
+        <div class="col-xs-4">
+            <input type="text" class="form-control" id="text_fecha" placeholder="Fecha"/>
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-4 col-xs-4">
+            <button type="button" id="btnAltaAct" class="btn btn-info">Añadir</button>
+            <button type="button"  id="btnCancelarAltaAct"  class="btn btn-danger">Cancelar</button>
+        </div>
+    </div>
+</form>
