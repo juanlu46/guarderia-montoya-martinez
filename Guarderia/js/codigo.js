@@ -1,36 +1,23 @@
     window.addEventListener('load',inicio,false);
     var oXML;
     function inicio() {
-        document.getElementById("btnAlumnos").addEventListener("click",mostrarFormsAlumnos,false);
-        document.getElementById("btnProfesores").addEventListener("click",mostrarFormsProf,false);
-        document.getElementById("btnActividades").addEventListener("click",mostrarFormsAct,false);
-        document.getElementById("btnComedor").addEventListener("click",mostrarFormsComed,false);
-        document.getElementById("btnExpediente").addEventListener("click",mostrarFormsExp,false);
-        document.getElementById("btnAsignatura").addEventListener("click",mostrarFormsAsig,false);
+        document.getElementById("btnAlumnos").addEventListener("click",mostrarMenuAlumnos,false);
+        document.getElementById("btnProfesores").addEventListener("click",mostrarMenuProf,false);
+        ///document.getElementById("btnActividades").addEventListener("click",mostrarFormsAct,false);
 
         //eventos para los listados
-        document.getElementById("btnListarAlum").addEventListener("click",listadoAlumnos,false);
-        document.getElementById("btnListarProf").addEventListener("click",listadoProfesores,false);
-        document.getElementById("btnListarAsig").addEventListener("click",listadoAsignaturas,false);
+       // document.getElementById("btnListarAlum").addEventListener("click",listadoAlumnos,false);
+       // document.getElementById("btnListarProf").addEventListener("click",listadoProfesores,false);
         oXML=loadXMLDoc("xml/datosGuarderia.xml");
         switch(getGet()){
             case "alumno":
-                mostrarFormsAlumnos();
+                mostrarMenuAlumnos();
                 break;
             case "profesor":
-                mostrarFormsProf();
+                mostrarMenuProf();
                 break;
             case "actividades":
                 mostrarFormsAct();
-                break;
-            case 'comedor':
-                mostrarFormsComed();
-                break;
-            case 'expediente':
-                mostrarFormsExp();
-                break;
-            case 'asignatura':
-                mostrarFormsAsig();
                 break;
             case 'listadoAlumnos':
                 listadoAlumnos();
@@ -38,12 +25,11 @@
             case 'listadoProfesores':
                 listadoProfesores();
                 break;
-            default:
-                listadoAsignaturas();
+
         }
     }
+    /*
 
-    /* METODOS TRATAMEINTO XML */
     //Metodos buscar
     function buscarProfesor(sDni){
         var oProfesor=null;
@@ -86,19 +72,6 @@
         return oActividad;
     }
 
-    function buscarBono(sDni){
-        var oBono=null;
-        var bEncontrado=false;
-        var oBonos=oXML.querySelectorAll("bono");
-        for(var i=0;i<oBonos.length && !bEncontrado;i++){
-            var sAlumno=oBonos[i].getAttribute("id");
-            if(sAlumno==sDni){
-                oBono =  oBonos[i];
-                bEncontrado=true;
-            }
-        }
-        return oBono;
-    }
     function buscarExpediente(sDni){
         var oExpediente=null;
         var bEncontrado=false;
@@ -110,18 +83,6 @@
             }
         }
         return oExpediente;
-    }
-    function buscarAsignatura(sId){
-        var oAsignatura=null;
-        var bEncontrado=false;
-        var oAsignaturas=oXML.querySelectorAll("asignatura");
-        for(var i=0;i<oAsignaturas.length && !bEncontrado;i++){
-            if(oAsignaturas[i].getAttribute("id")==sId){
-                oAsignatura =  oAsignaturas[i];
-                bEncontrado=true;
-            }
-        }
-        return oAsignatura;
     }
 
     //Metodos Añadir al XML
@@ -162,18 +123,6 @@
         return sRes;
     }
 
-    function añadirBono(oBono){
-        var sRes="Alta de bono comedor satisfactoria";
-        if(buscarBono(oBono.getAttribute("id"))==null) {
-            var oBonos = oXML.querySelector("bonos");
-            oBonos.appendChild(oBono);
-        }
-        else
-        {
-            sRes="Bono comedor ya registrado";
-        }
-        return sRes;
-    }
 
     function añadirExpediente(oExpediente){
         var sRes="Alta de expediente satisfactoria";
@@ -188,18 +137,7 @@
         return sRes;
     }
 
-    function añadirAsignatura(oAsignatura){
-        var sRes="Alta de asignatura satisfactoria";
-        if(buscarAsignatura(oAsignatura.getAttribute("id"))==null) {
-            var oAsignaturas = oXML.querySelector("asignaturas");
-            oAsignaturas.appendChild(oAsignatura);
-        }
-        else
-        {
-            sRes="Asignatura ya registrado";
-        }
-        return sRes;
-    }
+
 
     //Metodos borrar
     function borrarProfesor(sDni){
@@ -291,17 +229,7 @@
         }
         return sRes;
     }
-    function borrarComedor(sDni){
-        var sRes="Baja de Bono Comedor satisfactoria";
-        var oBono=buscarBono(sDni);
-        if(oBono!=null){
-            oXML.querySelector("bonos").removeChild(oBono);
-        }
-        else{
-            sRes="El Bono Comedor que intenta borrar no existe con ese Dni";
-        }
-        return sRes;
-    }
+
     function borrarExpediente(sDni){
         var sRes="Baja de Expediente satisfactoria";
         var oExpediente=buscarExpediente(sDni);
@@ -311,18 +239,6 @@
         }
         else{
             sRes="El Expediente que intenta borrar no existe con ese Dni";
-        }
-        return sRes;
-    }
-
-    function borrarAsignatura(sId){
-        var sRes="Baja de Asignatura satisfactoria";
-        var oAsignatura=buscarAsignatura(sId);
-        if(oAsignatura!=null){
-            oXML.querySelector("asignaturas").removeChild(oAsignatura);
-        }
-        else{
-            sRes="La Asignatura que intenta borrar no existe con ese Id";
         }
         return sRes;
     }
@@ -345,18 +261,315 @@
         oXML.querySelector("actividades").replaceChild(oActividad,oActividadAnterior);
     }
 
-
-    function modificarXMLComedor(oBono)
-    {
-        var oComedorAnterior = buscarBono(oBono.getAttribute("id"));
-        oXML.querySelector("bonos").replaceChild(oBono,oComedorAnterior);
-    }
-
     function modificarXMLExpediente(oExpediente)
     {
         var oExpedienteAnterior = buscarExpediente(oExpediente.getAttribute("id"));
         oXML.querySelector("expedientes").replaceChild(oExpediente,oExpedienteAnterior);
     }
+*/
+    function validarFormAltaAlum(){
+        var sMensajeError="";
+        var todoOk=true;
+        var oAlumno=null;
+
+       if(!/^[a-z\d_]{2,15}$/i.test(form_altaAlum.text_nombre.value)){
+           sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
+           todoOk=false;
+       }
+        if(!/^[a-z\d_]{4,15}$/i.test(form_altaAlum.text_apellido.value)){
+            sMensajeError+="Apellido incorrecto, el apellido debe tener entre 4 y 15 caracteres\n";
+            todoOk=false;
+        }
+        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_altaAlum.text_dni.value)){
+            sMensajeError+="Dni incorrecto\n";
+            todoOk=false;
+        }
+        if(form_altaAlum.text_edad.value<1 || form_altaAlum.text_edad.value>=99 ){
+            sMensajeError+="Edad incorrecto\n";
+            todoOk=false;
+        }
+        if(!/^[a-z\d_]{1}$/i.test(form_altaAlum.text_grupo.value) ){
+            sMensajeError+="Grupo incorrecto\n";
+            todoOk=false;
+        }
+        if(!/^[9|6|7][0-9]{8}$/.test(form_altaAlum.text_tlfn.value)){
+            sMensajeError+="Teléfono incorrecto\n";
+            todoOk=false;
+        }
+        if(form_altaAlum.text_direccion.value==""){
+            sMensajeError+="Dirección incorrecto\n";
+            todoOk=false;
+        }
+
+
+        if(todoOk==false){
+            alert(sMensajeError);
+        }
+        else {
+            oAlumno=newAlumno(form_altaAlum.text_nombre.value,form_altaAlum.text_apellido.value,form_altaAlum.text_dni.value,form_altaAlum.text_edad.value,form_altaAlum.text_tlfn.value,form_altaAlum.text_direccion.value,form_altaAlum.text_grupo.value);
+                alert(añadirAlumno(oAlumno));
+            limpiarCampos();
+        }
+    }
+
+    function validarFormModAlum(){
+        var sMensajeError="";
+        var todoOk=true;
+
+        if(!/^[a-z\d_]{2,15}$/i.test(form_modAlum.text_nombre.value)){
+            sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
+            todoOk=false;
+        }
+        if(!/^[a-z\d_]{4,15}$/i.test(form_modAlum.text_apellido.value)){
+            sMensajeError+="Apellido incorrecto, el apellido debe tener entre 4 y 15 caracteres\n";
+            todoOk=false;
+        }
+        if(form_modAlum.text_edad.value<1 || form_modAlum.text_edad.value>=99 ){
+            sMensajeError+="Edad incorrecto\n";
+            todoOk=false;
+        }
+        if(!/^[a-z\d_]{1}$/i.test(form_modAlum.text_grupo.value) ){
+            sMensajeError+="Grupo incorrecto\n";
+            todoOk=false;
+        }
+        if(!/^[9|6|7][0-9]{8}$/.test(form_modAlum.text_tlfn.value)){
+            sMensajeError+="Teléfono incorrecto\n";
+            todoOk=false;
+        }
+        if(form_modAlum.text_direccion.value==""){
+            sMensajeError+="Dirección incorrecto\n";
+            todoOk=false;
+        }
+        //FALTA VALIDACION DEL CMAPO GRUPO (una sola letra)
+        if(todoOk==false){
+            alert(sMensajeError);
+        }
+        else{
+            var oAlumnoMod=newAlumno(form_modAlum.txt_nombre.value,form_modAlum.txt_apellido.value,
+            form_modAlum.text_dni.value,form_modAlum.txt_edad.value,form_modAlum.txt_tlfn.value,
+            form_modAlum.txt_direccion.value,form_modAlum.txt_grupo.value);
+            alert(modificarXMLAlumno(oAlumnoMod));
+        }
+    }
+
+    function validarBajaAlum(){
+        var todoOk=true;
+        var sMensajeError="";
+
+        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_bajaAlum.text_dni.value)){
+            sMensajeError="Dni incorrecto\n";
+            todoOk=false;
+        }
+        if(todoOk==false)
+            alert(sMensajeError);
+        else
+            alert(borrarAlumno(form_bajaAlum.text_dni.value));
+    }
+
+
+    function validarFormProf(){
+        var sMensajeError="";
+        var todoOk=true;
+        var oProfesor=null;
+
+        if(!/^[a-z\d_]{2,15}$/i.test(form_altaProf.text_nombre.value)){
+            sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
+            todoOk=false;
+        }
+        if(!/^[a-z\d_]{4,15}$/i.test(form_altaProf.text_apellido.value)){
+            sMensajeError+="Apellido incorrecto, el apellido debe tener entre 4 y 15 caracteres\n";
+            todoOk=false;
+        }
+        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_altaProf.text_dni.value)){
+            sMensajeError+="Dni incorrecto\n";
+            todoOk=false;
+        }
+
+        if(todoOk==false){
+            alert(sMensajeError);
+        }
+        else{
+            oProfesor=newProfesor(form_altaProf.text_nombre.value,form_altaProf.text_apellido.value,
+                form_altaProf.text_dni.value,form_altaProf.text_tlfn.value,getGruposFormProf("alta"));
+            alert(añadirProfesor(oProfesor));
+        }
+}
+
+    function validarFormModProf(){
+        var sMensajeError="";
+        var todoOk=true;
+
+        if(!/^[a-z\d_]{2,15}$/i.test(form_modProf.text_nombre.value)){
+            sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
+            todoOk=false;
+        }
+        if(!/^[a-z\d_]{4,15}$/i.test(form_modProf.text_apellido.value)){
+            sMensajeError+="Apellido incorrecto, el apellido debe tener entre 4 y 15 caracteres\n";
+            todoOk=false;
+        }
+        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_modProf.text_dni.value)){
+            sMensajeError+="Dni incorrecto\n";
+            todoOk=false;
+        }
+        if(!/^[a-z\d_]{1}$/i.test(form_modProf.grupoNuevo.value) ){
+            sMensajeError+="Grupo incorrecto\n";
+            todoOk=false;
+        }
+
+        if(!/^[9|6|7][0-9]{8}$/.test(form_modProf.text_tlfn.value)){
+            sMensajeError+="Teléfono incorrecto\n";
+            todoOk=false;
+        }
+
+        if(todoOk==false){
+            alert(sMensajeError);
+        }
+        else{
+            var oProfesor=newProfesor(form_modProf.text_nombre.value,form_modProf.text_apellido.value,form_modProf.text_dni.value,
+            form_modProf.text_tlfn.value,getGruposFormProf("modificar"));
+            alert(modificarXMLProfesor(oProfesor))
+        }
+    }
+
+    function validarFormBajaProf(){
+        var todoOk=true;
+        var sMensajeError="";
+    if(!/^((\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_bajaProf.text_dni.value)){
+        sMensajeError="Dni incorrecto\n";
+        todoOk=false;
+    }
+    if(todoOk==false)
+        alert(sMensajeError);
+    else
+        alert(borrarProfesor(form_bajaProf.text_dni.value));
+}
+
+     function mostrarFormsAct(){
+         ocultar("menuProf");
+         ocultar("menuAlum");
+         ocultar("menuComed");
+         ocultar("menuExp");
+         ocultar("menuAsig");
+         $("form").hide("normal");
+         document.getElementById("menuAct").classList.remove("oculto");
+         document.getElementById("mostrarFormAltaAct").addEventListener("click", mostrarFormAltaAct, false);
+         document.getElementById("mostrarFormModAct").addEventListener("click", mostrarFormModAct, false);
+         document.getElementById("mostrarFormBajAct").addEventListener("click", mostrarFormBajAct, false);
+     }
+
+     function mostrarFormsExp(){
+         ocultar("menuProf");
+         ocultar("menuAlum");
+         ocultar("menuAct");
+         ocultar("menuComed");
+         ocultar("menuAsig");
+         $("form").hide("normal");
+         document.getElementById("menuExp").classList.remove("oculto");
+         document.getElementById("mostrarFormAltaExp").addEventListener("click", mostrarFormAltaExp, false);
+         document.getElementById("mostrarFormModExp").addEventListener("click", mostrarFormModExp, false);
+         document.getElementById("mostrarFormBajExp").addEventListener("click", mostrarFormBajExp, false);
+     }
+
+    function validarAltaAct(){
+        var sMensajeError="";
+        var todoOk=true;
+        var actividadActual=null;
+
+        if(isNaN(form_altaAct.text_id.value) || form_altaAct.text_id.value==""){
+            sMensajeError+="ID incorrecto\n";
+            todoOk=false;
+        }
+        if(!/^[a-z\d_]{2,15}$/i.test(form_altaAct.text_nombre.value)){
+            sMensajeError+="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
+            todoOk=false;
+        }
+
+        if(todoOk==false){
+            alert(sMensajeError);
+        }
+        else{
+            actividadActual=newActividadExtra(form_altaAct.text_id.value,form_altaAct.text_nombre.value,
+            getAlumnosFormAct("alta"));
+            alert(añadirActividad(actividadActual));
+            limpiarCampos();
+        }
+
+
+    }
+
+    function validarModAct(){
+        var sMensajeError="";
+        var todoOk=true;
+        var actividadActual=null;
+
+        if(!/^[a-z\d_]{2,15}$/i.test(form_modAct.text_nombre.value)){
+            sMensajeError+="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
+            todoOk=false;
+        }
+
+        if(todoOk==false){
+            alert(sMensajeError);
+        }
+        else {
+            actividadActual=newActividadExtra(form_modAct.text_id.value,form_modAct.text_nombre.value,
+            getAlumnosFormAct("modificar"));
+            alert(modificarXMLActividad(actividadActual));
+        }
+}
+
+    function validarBajaAct(){
+        var sMensajeError="";
+        var todoOk=true;
+
+        if (isNaN(form_bajaAct.text_id.value) || form_bajaAct.text_id.value==""){
+            sMensajeError+="ID incorrecto\n";
+            todoOk=false;
+        }
+        if(todoOk==false)
+            alert(sMensajeError);
+        else {
+                alert(borrarActividad(form_bajaAct.text_id.value));
+            }
+    }
+    function validarFormAltaExp(){
+
+        var sMensajeError="";
+        var todoOk=true;
+        var oExpedienteActual=null;
+
+        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_altaExp.text_AlumnoExp.value)){
+            sMensajeError="Dni incorrecto\n";
+            todoOk=false;
+        }
+        if(form_altaExp.text_observaciones.value==""){
+            sMensajeError+="Introduzca alguna observación\n";
+            todoOk=false;
+        }
+        if(!/^\d{1,2}(\.\d{1,2})?$/.test(form_altaExp.text_nota.value)){
+            sMensajeError+="Nota incorrecta\n";
+            todoOk=false;
+        }
+
+
+        if(todoOk==false)
+            alert(sMensajeError);
+        else {
+            var oAlumno=buscarAlumno(form_altaExp.text_AlumnoExp.value);
+            if(oAlumno!=null) {
+                var oNotas=[];
+                for(var i=0;i<form_altaExp.select_expediente.options.length;i++)
+                    oNotas.push(form_altaExp.select_expediente.options[i].value);
+                oExpedienteActual = newExpediente(form_altaExp.text_AlumnoExp.value,oNotas,form_altaExp.text_observaciones.value);
+                alert(añadirExpediente(oExpedienteActual));
+               limpiarCampos();
+            }
+            else {
+                alert("Este alumno no existe");
+                limpiarCampos();
+            }
+        }
+    }
+
     function modificarXMLAsignatura(oAsignatura)
     {
         var oAsignaturaAnterior = buscarAsignatura(oAsignatura.getAttribute("id"));
@@ -694,21 +907,6 @@
         }
         return oActividadExtra;
     }
-    //Constructor de objeto XML Bono comedor
-    function newBonoComedor(sDni,sHorario,oAlimentosAlergico){
-        var oBonoComedor=document.createElement("bono");
-        oBonoComedor.setAttribute("id",sDni);
-        var oHorario=document.createElement("horario");
-        addContenido(oHorario,sHorario);
-        oBonoComedor.appendChild(oHorario);
-        oBonoComedor.appendChild(document.createElement("alimentosAlergico"));
-        for(var i=0;i<oAlimentosAlergico.length;i++){
-            var oAlimento=document.createElement("alimentoAlergico");
-            addContenido(oAlimento,oAlimentosAlergico[i].value);
-            oBonoComedor.querySelector("alimentosAlergico").appendChild(oAlimento);
-        }
-        return oBonoComedor;
-    }
     //Constructor de objeto XML Expediente
     function newExpediente(sDni,oNotas,sObservaciones){
         var oExpediente=document.createElement("expediente");
@@ -726,27 +924,7 @@
         }
         return oExpediente;
     }
-    //Constructor de objeto XML Asignatura
 
-    function newAsignatura(sId,sNombre,oProfesor,oAlumnos){
-        var oAsignatura=document.createElement("asignatura");
-        oAsignatura.setAttribute("id",sId);
-        var oNombre=document.createElement("nombre");
-        addContenido(oNombre,sNombre);
-        var oProf=document.createElement("profesorAsig");
-        addContenido(oProf,oProfesor);
-
-        oAsignatura.appendChild(oNombre);
-        oAsignatura.appendChild(oProf);
-
-        oAsignatura.appendChild(document.createElement("alumnosAsig"));
-        for(var i=0;i<oAlumnos.length;i++){
-            var oAlumnoAux=document.createElement("alumnoAsig");
-            oAlumnoAux.setAttribute("dni",oAlumnos[i].value);
-            oAsignatura.querySelector("alumnosAsig").appendChild(oAlumnoAux);
-        }
-        return oAsignatura;
-    }
 
     //Metodo para añadir nodos de textos
     function addContenido(oNodo,sTexto){
@@ -866,47 +1044,6 @@ function listadoAlumnos(){
         tabla.appendChild(bodyTabla);
         pestana.document.body.appendChild(tabla);
     }
-
-    function listadoAsignaturas(){
-        var pestana = open("","","");
-        pestana.document.title="Listado Asignaturas";
-
-        var tabla=document.createElement("table");
-        var titulo=document.createElement("caption");
-        titulo.appendChild(document.createTextNode("Listado de Asignaturas"));
-        tabla.appendChild(titulo);
-        var cabecera=document.createElement("thead");
-
-        var datosCabecera=new Array(4);
-        datosCabecera[0]= "Id";
-        datosCabecera[1] = "Nombre";
-        datosCabecera[2]= "Profesor";
-        datosCabecera[3]= "Nº Alumnos";
-
-
-
-        cabecera.appendChild(crearCabeceraTabla(datosCabecera));
-        tabla.appendChild(cabecera);
-
-        var oAsignaturas=oXML.querySelectorAll("asignatura");
-        var datos=new Array(4);
-        var bodyTabla=document.createElement("tbody");
-        for(var i=0;i<oAsignaturas.length;i++) {
-            datos[0]= oAsignaturas[i].getAttribute("id");
-            datos[1] = oAsignaturas[i].getElementsByTagName("nombre")[0].textContent;
-            datos[2]= oAsignaturas[i].getElementsByTagName("profesorAsig")[0].textContent;
-
-            datos[3]= oAsignaturas[i].getElementsByTagName("alumnoAsig").length;
-
-            bodyTabla.appendChild(crearFilaTabla(datos));
-        }
-        tabla.appendChild(bodyTabla);
-        pestana.document.body.appendChild(tabla);
-    }
-
-
-
-
     function crearFilaTabla(datos){
         var tr=document.createElement("tr");
 
