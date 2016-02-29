@@ -1,36 +1,23 @@
     window.addEventListener('load',inicio,false);
     var oXML;
     function inicio() {
-        document.getElementById("btnAlumnos").addEventListener("click",mostrarFormsAlumnos,false);
-        document.getElementById("btnProfesores").addEventListener("click",mostrarFormsProf,false);
-        document.getElementById("btnActividades").addEventListener("click",mostrarFormsAct,false);
-        document.getElementById("btnComedor").addEventListener("click",mostrarFormsComed,false);
-        document.getElementById("btnExpediente").addEventListener("click",mostrarFormsExp,false);
-        document.getElementById("btnAsignatura").addEventListener("click",mostrarFormsAsig,false);
+        document.getElementById("btnAlumnos").addEventListener("click",mostrarMenuAlumnos,false);
+        document.getElementById("btnProfesores").addEventListener("click",mostrarMenuProf,false);
+        ///document.getElementById("btnActividades").addEventListener("click",mostrarFormsAct,false);
 
         //eventos para los listados
-        document.getElementById("btnListarAlum").addEventListener("click",listadoAlumnos,false);
-        document.getElementById("btnListarProf").addEventListener("click",listadoProfesores,false);
-        document.getElementById("btnListarAsig").addEventListener("click",listadoAsignaturas,false);
+       // document.getElementById("btnListarAlum").addEventListener("click",listadoAlumnos,false);
+       // document.getElementById("btnListarProf").addEventListener("click",listadoProfesores,false);
         oXML=loadXMLDoc("xml/datosGuarderia.xml");
         switch(getGet()){
             case "alumno":
-                mostrarFormsAlumnos();
+                mostrarMenuAlumnos();
                 break;
             case "profesor":
-                mostrarFormsProf();
+                mostrarMenuProf();
                 break;
             case "actividades":
                 mostrarFormsAct();
-                break;
-            case 'comedor':
-                mostrarFormsComed();
-                break;
-            case 'expediente':
-                mostrarFormsExp();
-                break;
-            case 'asignatura':
-                mostrarFormsAsig();
                 break;
             case 'listadoAlumnos':
                 listadoAlumnos();
@@ -38,12 +25,11 @@
             case 'listadoProfesores':
                 listadoProfesores();
                 break;
-            default:
-                listadoAsignaturas();
+
         }
     }
+    /*
 
-    /* METODOS TRATAMEINTO XML */
     //Metodos buscar
     function buscarProfesor(sDni){
         var oProfesor=null;
@@ -86,19 +72,6 @@
         return oActividad;
     }
 
-    function buscarBono(sDni){
-        var oBono=null;
-        var bEncontrado=false;
-        var oBonos=oXML.querySelectorAll("bono");
-        for(var i=0;i<oBonos.length && !bEncontrado;i++){
-            var sAlumno=oBonos[i].getAttribute("id");
-            if(sAlumno==sDni){
-                oBono =  oBonos[i];
-                bEncontrado=true;
-            }
-        }
-        return oBono;
-    }
     function buscarExpediente(sDni){
         var oExpediente=null;
         var bEncontrado=false;
@@ -110,18 +83,6 @@
             }
         }
         return oExpediente;
-    }
-    function buscarAsignatura(sId){
-        var oAsignatura=null;
-        var bEncontrado=false;
-        var oAsignaturas=oXML.querySelectorAll("asignatura");
-        for(var i=0;i<oAsignaturas.length && !bEncontrado;i++){
-            if(oAsignaturas[i].getAttribute("id")==sId){
-                oAsignatura =  oAsignaturas[i];
-                bEncontrado=true;
-            }
-        }
-        return oAsignatura;
     }
 
     //Metodos Añadir al XML
@@ -162,18 +123,6 @@
         return sRes;
     }
 
-    function añadirBono(oBono){
-        var sRes="Alta de bono comedor satisfactoria";
-        if(buscarBono(oBono.getAttribute("id"))==null) {
-            var oBonos = oXML.querySelector("bonos");
-            oBonos.appendChild(oBono);
-        }
-        else
-        {
-            sRes="Bono comedor ya registrado";
-        }
-        return sRes;
-    }
 
     function añadirExpediente(oExpediente){
         var sRes="Alta de expediente satisfactoria";
@@ -188,18 +137,7 @@
         return sRes;
     }
 
-    function añadirAsignatura(oAsignatura){
-        var sRes="Alta de asignatura satisfactoria";
-        if(buscarAsignatura(oAsignatura.getAttribute("id"))==null) {
-            var oAsignaturas = oXML.querySelector("asignaturas");
-            oAsignaturas.appendChild(oAsignatura);
-        }
-        else
-        {
-            sRes="Asignatura ya registrado";
-        }
-        return sRes;
-    }
+
 
     //Metodos borrar
     function borrarProfesor(sDni){
@@ -291,17 +229,7 @@
         }
         return sRes;
     }
-    function borrarComedor(sDni){
-        var sRes="Baja de Bono Comedor satisfactoria";
-        var oBono=buscarBono(sDni);
-        if(oBono!=null){
-            oXML.querySelector("bonos").removeChild(oBono);
-        }
-        else{
-            sRes="El Bono Comedor que intenta borrar no existe con ese Dni";
-        }
-        return sRes;
-    }
+
     function borrarExpediente(sDni){
         var sRes="Baja de Expediente satisfactoria";
         var oExpediente=buscarExpediente(sDni);
@@ -311,18 +239,6 @@
         }
         else{
             sRes="El Expediente que intenta borrar no existe con ese Dni";
-        }
-        return sRes;
-    }
-
-    function borrarAsignatura(sId){
-        var sRes="Baja de Asignatura satisfactoria";
-        var oAsignatura=buscarAsignatura(sId);
-        if(oAsignatura!=null){
-            oXML.querySelector("asignaturas").removeChild(oAsignatura);
-        }
-        else{
-            sRes="La Asignatura que intenta borrar no existe con ese Id";
         }
         return sRes;
     }
@@ -345,105 +261,12 @@
         oXML.querySelector("actividades").replaceChild(oActividad,oActividadAnterior);
     }
 
-
-    function modificarXMLComedor(oBono)
-    {
-        var oComedorAnterior = buscarBono(oBono.getAttribute("id"));
-        oXML.querySelector("bonos").replaceChild(oBono,oComedorAnterior);
-    }
-
     function modificarXMLExpediente(oExpediente)
     {
         var oExpedienteAnterior = buscarExpediente(oExpediente.getAttribute("id"));
         oXML.querySelector("expedientes").replaceChild(oExpediente,oExpedienteAnterior);
     }
-    function modificarXMLAsignatura(oAsignatura)
-    {
-        var oAsignaturaAnterior = buscarAsignatura(oAsignatura.getAttribute("id"));
-        oXML.querySelector("asignaturas").replaceChild(oAsignatura,oAsignaturaAnterior);
-    }
-
-    function mostrarFormsAlumnos(){
-        ocultar("menuProf");
-        ocultar("menuAct");
-        ocultar("menuComed");
-        ocultar("menuExp");
-        ocultar("menuAsig");
-        $("form").hide("normal");
-        document.getElementById("menuAlum").classList.remove("oculto");
-        document.getElementById("mostrarFormAltaAlum").addEventListener("click",mostrarFormAltaAlum,false);
-        document.getElementById("mostrarFormModAlum").addEventListener("click",mostrarFormModAlum,false);
-        document.getElementById("mostrarFormBajAlum").addEventListener("click",mostrarFormBajAlum,false);
-    }
-
-    function mostrarFormsProf(){
-        ocultar("menuAlum");
-        ocultar("menuAct");
-        ocultar("menuComed");
-        ocultar("menuExp");
-        ocultar("menuAsig");
-        $("form").hide("normal");
-        document.getElementById("menuProf").classList.remove("oculto");
-        document.getElementById("mostrarFormAltaProf").addEventListener("click", mostrarFormAltaProf, false);
-        document.getElementById("mostrarFormModProf").addEventListener("click", mostrarFormModProf, false);
-        document.getElementById("mostrarFormBajProf").addEventListener("click", mostrarFormBajProf, false);
-    }
-    function mostrarFormsAct(){
-        ocultar("menuProf");
-        ocultar("menuAlum");
-        ocultar("menuComed");
-        ocultar("menuExp");
-        ocultar("menuAsig");
-        $("form").hide("normal");
-        document.getElementById("menuAct").classList.remove("oculto");
-        document.getElementById("mostrarFormAltaAct").addEventListener("click", mostrarFormAltaAct, false);
-        document.getElementById("mostrarFormModAct").addEventListener("click", mostrarFormModAct, false);
-        document.getElementById("mostrarFormBajAct").addEventListener("click", mostrarFormBajAct, false);
-    }
-    function mostrarFormsComed(){
-        ocultar("menuProf");
-        ocultar("menuAlum");
-        ocultar("menuAct");
-        ocultar("menuExp");
-        ocultar("menuAsig");
-        $("form").hide("normal");
-        document.getElementById("menuComed").classList.remove("oculto");
-        document.getElementById("mostrarFormAltaComed").addEventListener("click", mostrarFormAltaComed, false);
-        document.getElementById("mostrarFormModComed").addEventListener("click", mostrarFormModComed, false);
-        document.getElementById("mostrarFormBajComed").addEventListener("click", mostrarFormBajComed, false);
-    }
-    function mostrarFormsExp(){
-        ocultar("menuProf");
-        ocultar("menuAlum");
-        ocultar("menuAct");
-        ocultar("menuComed");
-        ocultar("menuAsig");
-        $("form").hide("normal");
-        document.getElementById("menuExp").classList.remove("oculto");
-        document.getElementById("mostrarFormAltaExp").addEventListener("click", mostrarFormAltaExp, false);
-        document.getElementById("mostrarFormModExp").addEventListener("click", mostrarFormModExp, false);
-        document.getElementById("mostrarFormBajExp").addEventListener("click", mostrarFormBajExp, false);
-    }
-    function mostrarFormsAsig(){
-        ocultar("menuProf");
-        ocultar("menuAlum");
-        ocultar("menuAct");
-        ocultar("menuComed");
-        ocultar("menuExp");
-        $("form").hide("normal");
-        document.getElementById("menuAsig").classList.remove("oculto");
-        document.getElementById("mostrarFormAltaAsig").addEventListener("click", mostrarFormAltaAsig, false);
-        document.getElementById("mostrarFormModAsig").addEventListener("click", mostrarFormModAsig, false);
-        document.getElementById("mostrarFormBajAsig").addEventListener("click", mostrarFormBajAsig, false);
-    }
-
-
-
-
-    function ocultar(elemento){
-    document.getElementById(elemento).classList.add("oculto");
-}
-
+*/
     function validarFormAltaAlum(){
         var sMensajeError="";
         var todoOk=true;
@@ -621,6 +444,31 @@
         alert(borrarProfesor(form_bajaProf.text_dni.value));
 }
 
+     function mostrarFormsAct(){
+         ocultar("menuProf");
+         ocultar("menuAlum");
+         ocultar("menuComed");
+         ocultar("menuExp");
+         ocultar("menuAsig");
+         $("form").hide("normal");
+         document.getElementById("menuAct").classList.remove("oculto");
+         document.getElementById("mostrarFormAltaAct").addEventListener("click", mostrarFormAltaAct, false);
+         document.getElementById("mostrarFormModAct").addEventListener("click", mostrarFormModAct, false);
+         document.getElementById("mostrarFormBajAct").addEventListener("click", mostrarFormBajAct, false);
+     }
+
+     function mostrarFormsExp(){
+         ocultar("menuProf");
+         ocultar("menuAlum");
+         ocultar("menuAct");
+         ocultar("menuComed");
+         ocultar("menuAsig");
+         $("form").hide("normal");
+         document.getElementById("menuExp").classList.remove("oculto");
+         document.getElementById("mostrarFormAltaExp").addEventListener("click", mostrarFormAltaExp, false);
+         document.getElementById("mostrarFormModExp").addEventListener("click", mostrarFormModExp, false);
+         document.getElementById("mostrarFormBajExp").addEventListener("click", mostrarFormBajExp, false);
+     }
 
     function validarAltaAct(){
         var sMensajeError="";
@@ -677,91 +525,12 @@
             sMensajeError+="ID incorrecto\n";
             todoOk=false;
         }
-    if(todoOk==false)
-        alert(sMensajeError);
-    else {
-            alert(borrarActividad(form_bajaAct.text_id.value));
-        }
-}
-
-    function validarAltaBono(){
-        var sMensajeError="";
-        var todoOk=true;
-        var oBonoActual=null;
-
-        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_altaBono.text_alumno.value)){
-            sMensajeError="Dni incorrecto\n";
-            todoOk=false;
-        }
-        if(form_altaBono.text_horario.value==""){
-            sMensajeError+="Introduzca el horario\n";
-            todoOk=false;
-        }
         if(todoOk==false)
             alert(sMensajeError);
         else {
-            var oAlumno=buscarAlumno(form_altaBono.text_alumno.value);
-            if(oAlumno!=null) {
-                oBonoActual = newBonoComedor(oAlumno.getAttribute("dni"), form_altaBono.text_horario.value,
-                getAlimentosFormBono("alta"));
-                alert(añadirBono(oBonoActual));
-                limpiarCampos();
+                alert(borrarActividad(form_bajaAct.text_id.value));
             }
-            else
-                alert("Este alumno no existe");
-        }
     }
-
-    function validarModBono(){
-        var sMensajeError="";
-        var todoOk=true;
-        var oBonoActual=null;
-
-        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_modBono.text_alumno.value)){
-            sMensajeError="Dni incorrecto\n";
-            todoOk=false;
-        }
-        if(form_modBono.text_horario.value==""){
-            sMensajeError+="Introduzca el horario\n";
-            todoOk=false;
-        }
-        /* LO DEJAMOS SIN VALIDAR PARA QUE PUEDA DEJARLO EN BLANCO SI NO TIENE?*/
-        if(form_modBono.text_alimentos.value==""){
-            sMensajeError+="Introduzca los alimentos a los que es alérgico. Si no tiene alergías introduzca ninguno \n";
-            todoOk=false;
-        }
-        if(todoOk==false)
-            alert(sMensajeError);
-        else {
-            var oAlumno=buscarAlumno(form_modBono.text_alumno.value);
-            if(oAlumno!=null) {
-               oBonoActual=newBonoComedor(form_modBono.text_alumno.value,form_modBono.txt_horario.value,
-               getAlimentosFormBono("modificar"));
-                alert(modificarXMLComedor(oBonoActual));
-                limpiarCampos();
-            }
-            else
-                alert("Este alumno no existe");
-        }
-    }
-
-    function validarBajaBono(){
-        var sMensajeError="";
-        var todoOk=true;
-
-        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_bajaBono.text_dni.value)){
-            sMensajeError="Dni incorrecto\n";
-            todoOk=false;
-        }
-        if(todoOk==false)
-            alert(sMensajeError);
-        else {
-            alert(borrarComedor(form_bajaBono.text_dni.value));
-            limpiarCampos();
-        }
-    }
-
-
     function validarFormAltaExp(){
 
         var sMensajeError="";
@@ -848,90 +617,6 @@
             limpiarCampos();
         }
     }
-
-    function validarFormAltaAsig(){
-        var sMensajeError="";
-        var todoOk=true;
-        var oAsignaturaActual=null;
-
-        if(!/^[a-z\d_]{2,15}$/i.test(form_altaAsig.text_id.value)){
-            sMensajeError+="ID incorrecto\n";
-            todoOk=false;
-        }
-        if(!/^[a-z\d_]{2,15}$/i.test(form_altaAsig.text_nombre.value)){
-            sMensajeError+="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
-            todoOk=false;
-        }
-
-        if(form_altaAsig.sel_profesores_asig_alta.selectedIndex==0){
-            sMensajeError+="Debe seleccionar un profesor\n";
-            todoOk=false;
-        }
-        if(form_altaAsig.sel_alum_asig_alta.selectedIndex==0){
-            sMensajeError+="Debe seleccionar algún alumno\n";
-            todoOk=false;
-        }
-
-        if(todoOk==false){
-            alert(sMensajeError);
-        }
-        else{
-            oAsignaturaActual=newAsignatura(form_altaAsig.text_id.value,form_altaAsig.text_nombre.value,$("#sel_profesores_asig_alta").val(),
-                form_altaAsig.select_alumnos.querySelectorAll("option"));
-            alert(añadirAsignatura(oAsignaturaActual));
-            limpiarCampos();
-        }
-    }
-
-    function validarFormModAsig(){
-        var sMensajeError="";
-        var todoOk=true;
-        var oAsignaturaActual=null;
-
-
-        if(!/^[a-z\d_]{2,15}$/i.test(form_modAsig.text_nombre.value)){
-            sMensajeError+="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
-            todoOk=false;
-        }
-
-        if(todoOk==false){
-            alert(sMensajeError);
-        }
-        else{
-            oAsignaturaActual=newAsignatura(form_modAsig.text_id.value,form_modAsig.text_nombre.value,$("#sel_profesores_asig_mod").val(),
-            form_modAsig.select_alumnos.querySelectorAll("option"));
-            alert(modificarXMLAsignatura(oAsignaturaActual));
-            limpiarCampos();
-        }
-    }
-
-    function validarBajaAsig(){
-        var sMensajeError="";
-        var todoOk=true;
-
-        if(!/^[a-z\d_]{2,15}$/i.test(form_bajaAsig.text_id.value)){
-            sMensajeError+="ID incorrecto\n";
-            todoOk=false;
-        }
-        if(todoOk==false)
-            alert(sMensajeError);
-        else {
-            alert(borrarAsignatura(form_bajaAsig.text_dni.value));
-            limpiarCampos();
-        }
-
-
-    }
-
-
-
-
-
-
-
-
-
-
     function buscarRepeSelect(oOptions,sValor){
         var bEncontrado=false;
         for(var i=0; i<oOptions.length && !bEncontrado;i++){
@@ -941,10 +626,7 @@
         return bEncontrado;
     }
 
-    function cancelar(){
-        $("form").hide("normal");
-        limpiarCampos();
-    }
+
 
 
     // Metodos añadir select multiple
@@ -1018,34 +700,6 @@
             opt.value=sel_alumno_act_mod.options[sel_alumno_act_mod.selectedIndex].value;
             opt.appendChild(texto);
             form_modAct.select_alumnos_act.appendChild(opt);
-        }
-    }
-    function añadirAlimentosAlta(){
-        if(form_altaBono.alimento_alta.value=="")
-            alert('No puede dejar el campo vacio');
-        else if(buscarRepeSelect(form_altaBono.select_alimentos.options,
-                form_altaBono.alimento_alta.value)) {
-            alert("No puede introducir alimentos repetidos");
-        }
-        else{
-            var opt=document.createElement("option");
-            addContenido(opt,form_altaBono.alimento_alta.value);
-            opt.value=form_altaBono.alimento_alta.value;
-            form_altaBono.select_alimentos.appendChild(opt);
-        }
-    }
-    function añadirAlimentosMod(){
-        if(form_modBono.alimento_mod.value=="")
-            alert('No puede dejar el campo vacio');
-        else if(buscarRepeSelect(form_modBono.select_alimentos.options,
-                form_modBono.alimento_mod.value)) {
-            alert("No puede introducir alimentos repetidos");
-        }
-        else{
-            var opt=document.createElement("option");
-            addContenido(opt,form_modBono.alimento_mod.value);
-            opt.value=form_modBono.alimento_mod.value;
-            form_modBono.select_alimentos.appendChild(opt);
         }
     }
     function añadirNotaAlta(){
@@ -1131,18 +785,6 @@
         for(var i=0;i<oOptionSel.length;i++)
             oSelect.removeChild(oOptionSel[i]);
     }
-    function eliminarAlimentoAlta(){
-        var oSelect=form_altaBono.select_alimentos;
-        var oOptionSel=getSelecteditems(oSelect);
-        for(var i=0;i<oOptionSel.length;i++)
-            oSelect.removeChild(oOptionSel[i]);
-    }
-    function eliminarAlimentoMod(){
-        var oSelect=form_modBono.select_alimentos;
-        var oOptionSel=getSelecteditems(oSelect);
-        for(var i=0;i<oOptionSel.length;i++)
-            oSelect.removeChild(oOptionSel[i]);
-    }
     function eliminarNotaAlta(){
         var oSelect=form_altaExp.select_expediente;
         var oOptionSel=getSelecteditems(oSelect);
@@ -1169,19 +811,97 @@
     }
 
     // Metodos de mostrar formularios
-    function mostrarFormAltaProf(){
+     function ocultar(elemento){
+        document.getElementById(elemento).classList.add("oculto");
+     }
+    function cancelar(){
         $("form").hide("normal");
-        $("#form_altaProf").show("normal");
-        form_modProf.sel_profesor_profesores_mod.selectedIndex="0";
-        document.getElementById("btnAltaProf").addEventListener("click", validarFormProf, false);
-        document.getElementById("btnCancelar").addEventListener("click", cancelar, false);
-        document.getElementById("btnanadirCurso").addEventListener("click",anadirCursoProf,false);
-        document.getElementById("btnEliminarGrupo").addEventListener("click",eliminarCursoProfAlta,false);
+        limpiarCampos();
     }
+     function mostrarMenuAlumnos(){
+         ocultar("menuProf");
+         $("form").hide("normal");
+         document.getElementById("menuAlum").classList.remove("oculto");
+         document.getElementById("mostrarFormAltaAlum").addEventListener("click",mostrarFormAltaAlumno,false);
+         document.getElementById("mostrarFormModAlum").addEventListener("click",mostrarFormModAlum,false);
+         document.getElementById("mostrarFormBajAlum").addEventListener("click",mostrarFormBajAlum,false);
+     }
+
+     function mostrarFormAltaAlumno() {
+         $("form").hide("normal");
+         if( $('#form_altaAlum').size() == 0 )
+         $("<div>").appendTo('.form_altaAlum').load('formularios/alumno/formAltaAlum.html', function(){ $.getScript("js/alumno/altaAlumno.js");cargaAltaAlumno();});
+         $('#form_altaAlum').show("normal");
+         $("#btnAltaAlum").click(validarFormAltaAlum);
+         $("#btnCancelarAltaAlum").click(cancelar);
+     }
+
+     function mostrarFormModAlum() {
+         $("form").hide("normal");
+         if ($('#form_modAlum').size() == 0)
+             $("<div>").appendTo('.form_modAlum').load('formularios/alumno/formModAlum.html', function () {
+                 $.getScript("js/alumno/modAlumno.js");
+                 cargaModALumno();
+             });
+         $('#form_modAlum').show("normal");
+
+         $("#sel_alumno_alumnos_mod").change(mostrarRestoFormModAlum);
+         if ($("#sel_alumno_alumnos_mod").length == 0) {
+             var opt = document.createElement("option");
+             opt.value = "";
+             addContenido(opt, "Seleccione un alumno");
+             document.getElementById("sel_alumno_alumnos_mod").appendChild(opt);
+         }
+         if (document.getElementById("sel_alumno_alumnos_mod").length == 1) {
+             cargarSelectAlumnos("sel_alumno_alumnos_mod");
+             document.getElementById("restoFormulario").classList.add("oculto");
+         }
+         function mostrarRestoFormModAlum() {
+             rellenaCamposAlumno(this.options[this.selectedIndex].value);
+             document.getElementById("restoFormulario").classList.remove("oculto");
+             document.getElementById("btnModAlum").addEventListener("click", validarFormModAlum, false);
+             document.getElementById("btnCancelarModAlum").addEventListener("click", cancelar, false);
+         }
+     }
+     function mostrarFormBajAlum() {
+         $("form").hide("normal");
+         if( $('#form_bajaAlum').size() == 0 )
+            $("<div>").appendTo('.form_bajaAlum').load('formularios/alumno/formBajaAlum.html', function(){ $.getScript("js/alumno/bajaAlumno.js");cargaBajaAlumno();});
+         $('#form_bajaAlum').show("normal");
+
+         $("#btnBajaAlum").click(validarBajaAlum);
+         $("#btnCancelarBajaAlum").click(cancelar);
+     }
+
+
+     function mostrarMenuProf() {
+     ocultar("menuAlum");
+     $("form").hide("normal");
+     document.getElementById("menuProf").classList.remove("oculto");
+     document.getElementById("mostrarFormAltaProf").addEventListener("click", mostrarFormAltaProf, false);
+     document.getElementById("mostrarFormModProf").addEventListener("click", mostrarFormModProf, false);
+     document.getElementById("mostrarFormBajProf").addEventListener("click", mostrarFormBajProf, false);
+     }
+
+     function mostrarFormAltaProf(){
+     $("form").hide("normal");
+     if( $('#form_altaProf').size() == 0 )
+     $("<div>").appendTo('.form_altaProf').load('formularios/profesor/formAltaProf.html', function(){ $.getScript("js/profesor/altaProfe.js");cargaAltaProfe();});
+     $('#form_altaProf').show("normal");
+
+     $('#sel_profesor_profesores_mod').selectedIndex="0";
+     $("#btnAltaProf").click(validarFormProf);
+     $("#btnCancelar").click(cancelar);
+     $("#btnEliminarGrupo").click(eliminarCursoProfAlta);
+     $("#btnanadirCurso").click(anadirCursoProf);
+     }
     function mostrarFormModProf(){
         $("form").hide("normal");
-        $("#form_modProf").show("normal");
-        if(document.getElementById("sel_profesor_profesores_mod").length==0){
+        if( $('#form_modProf').size() == 0 )
+            $("<div>").appendTo('.form_modProf').load('formularios/profesor/formModProf.html', function(){ $.getScript("js/profesor/modProfe.js");cargaModProfe();});
+        $('#form_modProf').show("normal");
+
+        if($("#sel_profesor_profesores_mod").length==0){
             var opt=document.createElement("option");
             opt.value="";
             addContenido(opt,"Seleccione un profesor");
@@ -1201,48 +921,14 @@
     }
     function mostrarFormBajProf(){
         $("form").hide("normal");
-        $("#form_bajaProf").show("normal");
-        form_modProf.sel_profesor_profesores_mod.selectedIndex="0";
+        if( $('#form_bajaProf').size() == 0 )
+            $("<div>").appendTo('.form_bajaProf').load('formularios/profesor/formBajaProf.html', function(){ $.getScript("js/profesor/bajaProfe.js");cargaBajaProfe();});
+        $('#form_bajaProf').show("normal");
+        $('#sel_profesor_profesores_mod').selectedIndex="0";
         document.getElementById("btnBajaProf").addEventListener("click",validarFormBajaProf,false);
         document.getElementById("btnCancelarBajaProf").addEventListener("click", cancelar, false);
     }
 
-    function mostrarFormAltaAlum(){
-        $("form").hide("normal");
-        $("#form_altaAlum").show("normal");
-        form_modAlum.sel_alumno_alumnos_mod.selectedIndex="0";
-        document.getElementById("btnAltaAlum").addEventListener("click",validarFormAltaAlum,false);
-        document.getElementById("btnCancelarAltaAlum").addEventListener("click", cancelar, false);
-    }
-    function mostrarFormModAlum(){
-        $("form").hide("normal");
-        $("#form_modAlum").show("normal");
-        document.getElementById("sel_alumno_alumnos_mod").addEventListener("change",mostrarRestoFormModAlum,false);
-        if(document.getElementById("sel_alumno_alumnos_mod").length==0){
-            var opt=document.createElement("option");
-            opt.value="";
-            addContenido(opt,"Seleccione un alumno");
-            document.getElementById("sel_alumno_alumnos_mod").appendChild(opt);
-        }
-        if(document.getElementById("sel_alumno_alumnos_mod").length==1)
-        cargarSelectAlumnos("sel_alumno_alumnos_mod");
-        document.getElementById("restoFormulario").classList.add("oculto");
-    }
-
-    function mostrarRestoFormModAlum(){
-        rellenaCamposAlumno(this.options[this.selectedIndex].value);
-        document.getElementById("restoFormulario").classList.remove("oculto");
-        document.getElementById("btnModAlum").addEventListener("click",validarFormModAlum,false);
-        document.getElementById("btnCancelarModAlum").addEventListener("click", cancelar, false);
-    }
-
-    function mostrarFormBajAlum(){
-        $("form").hide("normal");
-        $("#form_bajaAlum").show("normal");
-        form_modAlum.sel_alumno_alumnos_mod.selectedIndex="0";
-        document.getElementById("btnBajaAlum").addEventListener("click",validarBajaAlum,false);
-        document.getElementById("btnCancelarBajaAlum").addEventListener("click", cancelar, false);
-}
 
     function mostrarFormAltaAct(){
         $("form").hide("normal");
@@ -1293,46 +979,6 @@
         document.getElementById("btnCancelarBajaAct").addEventListener("click", cancelar, false);
     }
 
-    function mostrarFormAltaComed(){
-        $("form").hide("normal");
-        $("#form_altaBono").show("normal");
-        form_modBono.sel_alimentos_comedor_mod.selectedIndex="0";
-        document.getElementById("btnAltaBono").addEventListener("click",validarAltaBono,false);
-        document.getElementById("btnCancelarAltaBono").addEventListener("click", cancelar, false);
-        document.getElementById("añadirAlimentos_alta").addEventListener("click",añadirAlimentosAlta, false);
-        document.getElementById("btnEliminarAlimento").addEventListener("click",eliminarAlimentoAlta, false);
-    }
-    function mostrarFormModComed(){
-        $("form").hide("normal");
-        $("#form_modBono").show("normal");
-        document.getElementById("sel_alimentos_comedor_mod").addEventListener("change",mostrarRestoFormModComedor,false);
-        if(document.getElementById("sel_alimentos_comedor_mod").length==0){
-            var opt=document.createElement("option");
-            opt.value="";
-            addContenido(opt,"Seleccione un Bono");
-            document.getElementById("sel_alimentos_comedor_mod").appendChild(opt);
-        }
-        if(document.getElementById("sel_alimentos_comedor_mod").length==1)
-            cargarSelectComedor("sel_alimentos_comedor_mod");
-        document.getElementById("restoFormComedor").classList.add("oculto");
-    }
-
-    function mostrarRestoFormModComedor(){
-        rellenaCamposComedor(this.options[this.selectedIndex].value);
-        document.getElementById("restoFormComedor").classList.remove("oculto");
-        document.getElementById("btnModBono").addEventListener("click",validarModBono,false);
-        document.getElementById("btnCancelarModBono").addEventListener("click", cancelar, false);
-        document.getElementById("añadirAlimento_mod").addEventListener("click",añadirAlimentosMod, false);
-        document.getElementById("btnEliminarAlimento_mod").addEventListener("click",eliminarAlimentoMod, false);
-    }
-    function mostrarFormBajComed(){
-        $("form").hide("normal");
-        $("#form_bajaBono").show("normal");
-        form_modBono.sel_alimentos_comedor_mod.selectedIndex="0";
-        document.getElementById("btnBajaBono").addEventListener("click",validarBajaBono,false);
-        document.getElementById("btnCancelarBajaBono").addEventListener("click", cancelar, false);
-    }
-
 
     function mostrarFormAltaExp(){
         $("form").hide("normal");
@@ -1374,51 +1020,6 @@
         document.getElementById("btnBajaExp").addEventListener("click",validarBajaExp,false);
         document.getElementById("btnCancelarBajaExp").addEventListener("click", cancelar, false);
     }
-    function mostrarFormAltaAsig(){
-        $("form").hide("normal");
-        $("#form_altaAsig").show("normal");
-        form_altaAsig.sel_profesores_asig_alta.selectedIndex="0";
-        if(document.getElementById("sel_profesores_asig_alta").length==1)
-        cargarSelectProfesores("sel_profesores_asig_alta");
-        if(document.getElementById("sel_alum_asig_alta").length==1)
-        cargarSelectAlumnos("sel_alum_asig_alta");
-        document.getElementById("añadirAlum_alta_Asig").addEventListener("click",anadirAlumnoAsig,false);
-        document.getElementById("quitarAlum_alta_asig").addEventListener("click",eliminarAlumnoAsigAlta,false);
-       document.getElementById("btnAltaAsig").addEventListener("click",validarFormAltaAsig,false);
-        document.getElementById("btnCancelarAltaAsig").addEventListener("click", cancelar, false);
-    }
-    function mostrarFormModAsig(){
-        $("form").hide("normal");
-        $("#form_modAsig").show("normal");
-        if(document.getElementById("sel_asignaturas_asig_mod").length==0){
-            var opt=document.createElement("option");
-            opt.value="";
-            addContenido(opt,"Seleccione una asignatura");
-            document.getElementById("sel_asignaturas_asig_mod").appendChild(opt);
-        }
-        if(document.getElementById("sel_asignaturas_asig_mod").length==1)
-        cargarSelectAsignatura("sel_asignaturas_asig_mod");
-        document.getElementById("sel_asignaturas_asig_mod").addEventListener("change",mostrarRestoFormModAsig,false);
-    }
-    function mostrarRestoFormModAsig(){
-        document.getElementById("mostrarRestoFormModAsig").classList.remove("oculto");
-        rellenaCamposAsignatura(this.options[this.selectedIndex].value);
-        document.getElementById("añadirAlum_mod_asig").addEventListener("click",anadirAlumnoModAsig,false);
-        document.getElementById("quitarAlum_mod_asig").addEventListener("click",eliminarAlumnoAsigMod,false);
-        form_modAsig.sel_profesores_asig_mod.selectedIndex="0";
-        form_modAsig.sel_alum_asig_mod.selectedIndex="0";
-        document.getElementById("btnModAsig").addEventListener("click",validarFormModAsig,false);
-        document.getElementById("btnCancelarModAsig").addEventListener("click", cancelar, false);
-    }
-
-function mostrarFormBajAsig(){
-    $("form").hide("normal");
-    $("#form_bajaAsig").show("normal");
-    document.getElementById("btnBajaAsig").addEventListener("click",validarBajaAsig,false);
-    document.getElementById("btnCancelarBajaAsig").addEventListener("click", cancelar, false);
-}
-
-
 
 
     //Funciones limpiar campos
@@ -1459,20 +1060,6 @@ function mostrarFormBajAsig(){
         var oSelect=oForm.select_alumnos_act; //Select Alumnos Seleccionado
         return oSelect.querySelectorAll("option");
     }
-    function getAlimentosFormBono(sForm){
-        var oForm;
-        switch(sForm){
-            case "alta":
-                oForm=document.getElementById("form_altaBono");
-                break;
-            default:
-                oForm=document.getElementById("form_modBono");
-        }
-        var oSelect=oForm.select_alimentos;
-        return oSelect.querySelectorAll("option");
-    }
-
-
 
     //  Metodos rellena Select
     function cargarSelectAlumnos(sIDSelect){
@@ -1583,20 +1170,6 @@ function mostrarFormBajAsig(){
         }
 
     }
-    function rellenaCamposComedor(sDni){
-        var oBono=buscarBono(sDni);
-        form_modBono.text_alumno.value=oBono.getAttribute("id");
-        form_modBono.text_horario.value=oBono.querySelector("horario").textContent;
-        var oAlimentos=oBono.querySelectorAll("alimentoAlergico");
-        var oSelect=form_modBono.select_alimentos;
-        for(var i=0;i<oAlimentos.length;i++){
-            var oOption=document.createElement("option");
-            var sValor=oAlimentos[i].textContent;
-            oOption.value=sValor;
-            oOption.textContent=sValor;
-            oSelect.appendChild(oOption);
-        }
-    }
     function rellenaCamposExpediente(sDni){
         var oExpediente=buscarExpediente(sDni);
         form_modExp.text_AlumnoExp.value=sDni;
@@ -1611,16 +1184,7 @@ function mostrarFormBajAsig(){
             oOption.textContent="ID: "+sAsig+" - Nota: "+sNota;
             oSelect.appendChild(oOption);
         }
-    }
-    function rellenaCamposAsignatura(sID){
-        var oAsignatura=buscarAsignatura(sID);
-        form_modAsig.text_id.value=sID;
-        form_modAsig.text_nombre.value=oAsignatura.querySelector("nombre").textContent;
-        var oSelectProfesor=form_modAsig.sel_profesores_asig_mod;
-        for(var i=0;i<oSelectProfesor.options.length;i++){
-            if(oSelectProfesor.options[i].value==oAsignatura.querySelector("profesorAsig").textContent)
-                oSelectProfesor.selectedIndex=""+i;
-        }
+
         var oAlumnos=oAsignatura.querySelectorAll("alumnoAsig");
         var oSelectAlumnos=form_modAsig.select_alumnos;
         for(var i=0;i<oAlumnos.length;i++){
@@ -1632,7 +1196,7 @@ function mostrarFormBajAsig(){
         }
     }
 
-    /* METODOS AUXILIARES*/
+     //METODOS AUXILIARES
     //Devuelve los objetos seleccionados de un select multiple
     function getSelecteditems(oSelect){
         var oOptions=[];
@@ -1699,21 +1263,6 @@ function mostrarFormBajAsig(){
         }
         return oActividadExtra;
     }
-    //Constructor de objeto XML Bono comedor
-    function newBonoComedor(sDni,sHorario,oAlimentosAlergico){
-        var oBonoComedor=document.createElement("bono");
-        oBonoComedor.setAttribute("id",sDni);
-        var oHorario=document.createElement("horario");
-        addContenido(oHorario,sHorario);
-        oBonoComedor.appendChild(oHorario);
-        oBonoComedor.appendChild(document.createElement("alimentosAlergico"));
-        for(var i=0;i<oAlimentosAlergico.length;i++){
-            var oAlimento=document.createElement("alimentoAlergico");
-            addContenido(oAlimento,oAlimentosAlergico[i].value);
-            oBonoComedor.querySelector("alimentosAlergico").appendChild(oAlimento);
-        }
-        return oBonoComedor;
-    }
     //Constructor de objeto XML Expediente
     function newExpediente(sDni,oNotas,sObservaciones){
         var oExpediente=document.createElement("expediente");
@@ -1731,27 +1280,7 @@ function mostrarFormBajAsig(){
         }
         return oExpediente;
     }
-    //Constructor de objeto XML Asignatura
 
-    function newAsignatura(sId,sNombre,oProfesor,oAlumnos){
-        var oAsignatura=document.createElement("asignatura");
-        oAsignatura.setAttribute("id",sId);
-        var oNombre=document.createElement("nombre");
-        addContenido(oNombre,sNombre);
-        var oProf=document.createElement("profesorAsig");
-        addContenido(oProf,oProfesor);
-
-        oAsignatura.appendChild(oNombre);
-        oAsignatura.appendChild(oProf);
-
-        oAsignatura.appendChild(document.createElement("alumnosAsig"));
-        for(var i=0;i<oAlumnos.length;i++){
-            var oAlumnoAux=document.createElement("alumnoAsig");
-            oAlumnoAux.setAttribute("dni",oAlumnos[i].value);
-            oAsignatura.querySelector("alumnosAsig").appendChild(oAlumnoAux);
-        }
-        return oAsignatura;
-    }
 
     //Metodo para añadir nodos de textos
     function addContenido(oNodo,sTexto){
@@ -1871,47 +1400,6 @@ function listadoAlumnos(){
         tabla.appendChild(bodyTabla);
         pestana.document.body.appendChild(tabla);
     }
-
-    function listadoAsignaturas(){
-        var pestana = open("","","");
-        pestana.document.title="Listado Asignaturas";
-
-        var tabla=document.createElement("table");
-        var titulo=document.createElement("caption");
-        titulo.appendChild(document.createTextNode("Listado de Asignaturas"));
-        tabla.appendChild(titulo);
-        var cabecera=document.createElement("thead");
-
-        var datosCabecera=new Array(4);
-        datosCabecera[0]= "Id";
-        datosCabecera[1] = "Nombre";
-        datosCabecera[2]= "Profesor";
-        datosCabecera[3]= "Nº Alumnos";
-
-
-
-        cabecera.appendChild(crearCabeceraTabla(datosCabecera));
-        tabla.appendChild(cabecera);
-
-        var oAsignaturas=oXML.querySelectorAll("asignatura");
-        var datos=new Array(4);
-        var bodyTabla=document.createElement("tbody");
-        for(var i=0;i<oAsignaturas.length;i++) {
-            datos[0]= oAsignaturas[i].getAttribute("id");
-            datos[1] = oAsignaturas[i].getElementsByTagName("nombre")[0].textContent;
-            datos[2]= oAsignaturas[i].getElementsByTagName("profesorAsig")[0].textContent;
-
-            datos[3]= oAsignaturas[i].getElementsByTagName("alumnoAsig").length;
-
-            bodyTabla.appendChild(crearFilaTabla(datos));
-        }
-        tabla.appendChild(bodyTabla);
-        pestana.document.body.appendChild(tabla);
-    }
-
-
-
-
     function crearFilaTabla(datos){
         var tr=document.createElement("tr");
 
