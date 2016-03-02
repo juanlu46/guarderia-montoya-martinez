@@ -1,0 +1,30 @@
+Uso de localstorage para ceacheo de datos de la bbdd:
+    - Aquí cachearemos los grupos de los selects donde vayan los grupos, ya que
+    los grupos no cambian nunca (ni id ni la descripcion), pues es el dato ideal para cachear
+
+Usos de JQuery UI que pide carlos:
+    -Dialog -> los devuelve el php para mostrar el resultado de las acciones que realizamos
+    -Datepicker -> lo utilizamos en los campos de formularios, que son de tipo fecha,
+                    osea el de Extraescolares, que tiene una fecha
+                    (en notas, curso escolar no es fecha, si no string)
+
+Tipos de llamadas ajax que pide carlos:
+    -.load -> para los formularios
+    -$.get -> para  alta, mod, baja de profesor
+    -$.post -> para alta, mod.baja de alumno
+    -$.ajax -> para pedir los listados al servidor
+    -$.getScript -> para cargar los js de cada formulario
+    -Ajax sin jquery -> para pedir los listados al servidor
+
+Tipos de datos de envio/recepcion del servidor:
+    -HTML -> lo que devuelve el php de algunos de los listados
+    -Script javascript -> lo devuelve en cada accion de tramites, en forma de dialog de jquery ui
+    -JSON -> en este formato envias todo lo que sea por post (ya sea $.post o $.ajax con method post)
+    -XML -> en este formato se recibirá algunos listados o para el filtrado de reslultados
+    -Envio de datos serializados (tipo p1=v1&p2=v2) -> con esto enviaras, al menos una vez,
+                                                        los datos de los metodos GET,
+                                                        hay un metodo que se llama serialize,
+                                                        de jquery que te lo hace solo si lo haces
+                                                        sobre un formulario ej: $("#frmAltaAlgo").serialize(),
+                                                        eso devuelve cada campo del formulario en el formato
+                                                        de parametros en la url.
