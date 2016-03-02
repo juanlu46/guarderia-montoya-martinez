@@ -1,11 +1,10 @@
     window.addEventListener('load',inicio,false);
-    // Varibales Globales
     var oXML;
     function inicio() {
         document.getElementById("btnAlumnos").addEventListener("click",mostrarMenuAlumnos,false);
         document.getElementById("btnProfesores").addEventListener("click",mostrarMenuProf,false);
-        ///document.getElementById("btnActividades").addEventListener("click",mostrarFormsAct,false);
-
+        document.getElementById("btnActividades").addEventListener("click",mostrarFormAltaAct,false);
+        $('#btnNotas').click(mostrarFormModNotas);
         //eventos para los listados
        // document.getElementById("btnListarAlum").addEventListener("click",listadoAlumnos,false);
        // document.getElementById("btnListarProf").addEventListener("click",listadoProfesores,false);
@@ -18,7 +17,7 @@
                 mostrarMenuProf();
                 break;
             case "actividades":
-                mostrarFormsAct();
+                mostrarFormAltaAct();
                 break;
             case 'listadoAlumnos':
                 listadoAlumnos();
@@ -29,12 +28,15 @@
 
         }
     }
+
+
     //Metodos buscar
     function buscarProfesor(sDni){
         var oProfesor=null;
         var bEncontrado=false;
+        var oProfesores=oXML.querySelectorAll("profesor");
         for(var i=0;i<oProfesores.length && !bEncontrado;i++){
-            var sDniProf=oProfesores[i].dni;
+            var sDniProf=oProfesores[i].getAttribute("dni");
             if(sDniProf==sDni){
                 oProfesor =  oProfesores[i];
                 bEncontrado=true;
@@ -45,8 +47,9 @@
     function buscarAlumno(sDni){
         var oAlumno=null;
         var bEncontrado=false;
+        var oAlumnos=oXML.querySelectorAll("alumno");
         for(var i=0;i<oAlumnos.length && !bEncontrado;i++){
-            var sDniAlum=oAlumnos[i].dni;
+            var sDniAlum=oAlumnos[i].getAttribute("dni");
             if(sDniAlum==sDni){
                 oAlumno =  oAlumnos[i];
                 bEncontrado=true;
@@ -55,13 +58,14 @@
         return oAlumno;
     }
 
-    function buscarExtraescolar(sId){
+    function buscarActividad(sId){
         var oActividad=null;
         var bEncontrado=false;
-        for(var i=0;i<oExtraescolares.length && !bEncontrado;i++){
-            var sIdAct=oExtraescolares[i].id;
+        var oActividades=oXML.querySelectorAll("actividad");
+        for(var i=0;i<oActividades.length && !bEncontrado;i++){
+            var sIdAct=oActividades[i].getAttribute("id");
             if(sIdAct==sId){
-                oActividad =  oExtraescolares[i];
+                oActividad =  oActividades[i];
                 bEncontrado=true;
             }
         }
@@ -71,9 +75,10 @@
     function buscarExpediente(sDni){
         var oExpediente=null;
         var bEncontrado=false;
-        for(var i=0;i<oNotas.length && !bEncontrado;i++){
-            if(oNotas[i].dni==sDni){
-                oExpediente =  oNotas[i];
+        var oExpeditentes=oXML.querySelectorAll("expediente");
+        for(var i=0;i<oExpeditentes.length && !bEncontrado;i++){
+            if(oExpeditentes[i].getAttribute("id")==sDni){
+                oExpediente =  oExpeditentes[i];
                 bEncontrado=true;
             }
         }
@@ -83,7 +88,7 @@
     //Metodos Añadir al XML
     function añadirProfesor(oProfesor){
         var sRes="Alta de profesor satisfactoria";
-        if(buscarProfesor(oProfesor.dni)==null) {
+        if(buscarProfesor(oProfesor.getAttribute("dni"))==null) {
             var oProfesores = oXML.querySelector("profesores");
             oProfesores.appendChild(oProfesor);
         }
@@ -107,7 +112,7 @@
     }
     function añadirActividad(oActividad){
         var sRes="Alta de actividad satisfactoria";
-        if(buscarExtraescolar(oActividad.getAttribute("id"))==null) {
+        if(buscarActividad(oActividad.getAttribute("id"))==null) {
             var oActividades = oXML.querySelector("actividades");
             oActividades.appendChild(oActividad);
         }
@@ -215,7 +220,7 @@
 
     function borrarActividad(sId){
         var sRes="Baja de actividad satisfactoria";
-        var oActividad=buscarExtraescolar(sId);
+        var oActividad=buscarActividad(sId);
         if(oActividad!=null){
             oXML.querySelector("actividades").removeChild(oActividad);
         }
@@ -252,7 +257,7 @@
 
     function modificarXMLActividad(oActividad)
     {
-        var oActividadAnterior = buscarExtraescolar(oActividad.getAttribute("id"));
+        var oActividadAnterior = buscarActividad(oActividad.getAttribute("id"));
         oXML.querySelector("actividades").replaceChild(oActividad,oActividadAnterior);
     }
 
@@ -262,6 +267,331 @@
         oXML.querySelector("expedientes").replaceChild(oExpediente,oExpedienteAnterior);
     }
 
+    function validarFormAltaAlum(){
+        var sMensajeError="";
+        var todoOk=true;
+        var oAlumno=null;
+
+       if(!/^[a-z\d_]{2,15}$/i.test(form_altaAlum.text_nombre.value)){
+           sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
+           todoOk=false;
+       }
+        if(!/^[a-z\d_]{4,15}$/i.test(form_altaAlum.text_apellido.value)){
+            sMensajeError+="Apellido incorrecto, el apellido debe tener entre 4 y 15 caracteres\n";
+            todoOk=false;
+        }
+        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_altaAlum.text_dni.value)){
+            sMensajeError+="Dni incorrecto\n";
+            todoOk=false;
+        }
+        if(form_altaAlum.text_edad.value<1 || form_altaAlum.text_edad.value>=99 ){
+            sMensajeError+="Edad incorrecto\n";
+            todoOk=false;
+        }
+        if(!/^[a-z\d_]{1}$/i.test(form_altaAlum.text_grupo.value) ){
+            sMensajeError+="Grupo incorrecto\n";
+            todoOk=false;
+        }
+        if(!/^[9|6|7][0-9]{8}$/.test(form_altaAlum.text_tlfn.value)){
+            sMensajeError+="Teléfono incorrecto\n";
+            todoOk=false;
+        }
+        if(form_altaAlum.text_direccion.value==""){
+            sMensajeError+="Dirección incorrecto\n";
+            todoOk=false;
+        }
+
+
+        if(todoOk==false){
+            alert(sMensajeError);
+        }
+        else {
+            oAlumno=newAlumno(form_altaAlum.text_nombre.value,form_altaAlum.text_apellido.value,form_altaAlum.text_dni.value,form_altaAlum.text_edad.value,form_altaAlum.text_tlfn.value,form_altaAlum.text_direccion.value,form_altaAlum.text_grupo.value);
+                alert(añadirAlumno(oAlumno));
+            limpiarCampos();
+        }
+    }
+
+    function validarFormModAlum(){
+        var sMensajeError="";
+        var todoOk=true;
+
+        if(!/^[a-z\d_]{2,15}$/i.test(form_modAlum.text_nombre.value)){
+            sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
+            todoOk=false;
+        }
+        if(!/^[a-z\d_]{4,15}$/i.test(form_modAlum.text_apellido.value)){
+            sMensajeError+="Apellido incorrecto, el apellido debe tener entre 4 y 15 caracteres\n";
+            todoOk=false;
+        }
+        if(form_modAlum.text_edad.value<1 || form_modAlum.text_edad.value>=99 ){
+            sMensajeError+="Edad incorrecto\n";
+            todoOk=false;
+        }
+        if(!/^[a-z\d_]{1}$/i.test(form_modAlum.text_grupo.value) ){
+            sMensajeError+="Grupo incorrecto\n";
+            todoOk=false;
+        }
+        if(!/^[9|6|7][0-9]{8}$/.test(form_modAlum.text_tlfn.value)){
+            sMensajeError+="Teléfono incorrecto\n";
+            todoOk=false;
+        }
+        if(form_modAlum.text_direccion.value==""){
+            sMensajeError+="Dirección incorrecto\n";
+            todoOk=false;
+        }
+        //FALTA VALIDACION DEL CMAPO GRUPO (una sola letra)
+        if(todoOk==false){
+            alert(sMensajeError);
+        }
+        else{
+            var oAlumnoMod=newAlumno(form_modAlum.txt_nombre.value,form_modAlum.txt_apellido.value,
+            form_modAlum.text_dni.value,form_modAlum.txt_edad.value,form_modAlum.txt_tlfn.value,
+            form_modAlum.txt_direccion.value,form_modAlum.txt_grupo.value);
+            alert(modificarXMLAlumno(oAlumnoMod));
+        }
+    }
+
+    function validarBajaAlum(){
+        var todoOk=true;
+        var sMensajeError="";
+
+        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_bajaAlum.text_dni.value)){
+            sMensajeError="Dni incorrecto\n";
+            todoOk=false;
+        }
+        if(todoOk==false)
+            alert(sMensajeError);
+        else
+            alert(borrarAlumno(form_bajaAlum.text_dni.value));
+    }
+
+
+    function validarFormAltaProf(){
+        var sMensajeError="";
+        var todoOk=true;
+        var oProfesor=null;
+
+        if(!/^[a-z\d_]{2,15}$/i.test(form_altaProf.text_nombre.value)){
+            sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
+            todoOk=false;
+        }
+        if(!/^[a-z\d_]{4,15}$/i.test(form_altaProf.text_apellido.value)){
+            sMensajeError+="Apellido incorrecto, el apellido debe tener entre 4 y 15 caracteres\n";
+            todoOk=false;
+        }
+        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_altaProf.text_dni.value)){
+            sMensajeError+="Dni incorrecto\n";
+            todoOk=false;
+        }
+
+        if(todoOk==false){
+            alert(sMensajeError);
+        }
+        else{
+            oProfesor=newProfesor(form_altaProf.text_nombre.value,form_altaProf.text_apellido.value,
+                form_altaProf.text_dni.value,form_altaProf.text_tlfn.value,getGruposFormProf("alta"));
+            alert(añadirProfesor(oProfesor));
+        }
+}
+
+    function validarFormModProf(){
+        var sMensajeError="";
+        var todoOk=true;
+
+        if(!/^[a-z\d_]{2,15}$/i.test(form_modProf.text_nombre.value)){
+            sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
+            todoOk=false;
+        }
+        if(!/^[a-z\d_]{4,15}$/i.test(form_modProf.text_apellido.value)){
+            sMensajeError+="Apellido incorrecto, el apellido debe tener entre 4 y 15 caracteres\n";
+            todoOk=false;
+        }
+        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_modProf.text_dni.value)){
+            sMensajeError+="Dni incorrecto\n";
+            todoOk=false;
+        }
+        if(!/^[a-z\d_]{1}$/i.test(form_modProf.grupoNuevo.value) ){
+            sMensajeError+="Grupo incorrecto\n";
+            todoOk=false;
+        }
+
+        if(!/^[9|6|7][0-9]{8}$/.test(form_modProf.text_tlfn.value)){
+            sMensajeError+="Teléfono incorrecto\n";
+            todoOk=false;
+        }
+
+        if(todoOk==false){
+            alert(sMensajeError);
+        }
+        else{
+            var oProfesor=newProfesor(form_modProf.text_nombre.value,form_modProf.text_apellido.value,form_modProf.text_dni.value,
+            form_modProf.text_tlfn.value,getGruposFormProf("modificar"));
+            alert(modificarXMLProfesor(oProfesor))
+        }
+    }
+
+    function validarFormBajaProf(){
+        var todoOk=true;
+        var sMensajeError="";
+    if(!/^((\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_bajaProf.text_dni.value)){
+        sMensajeError="Dni incorrecto\n";
+        todoOk=false;
+    }
+    if(todoOk==false)
+        alert(sMensajeError);
+    else
+        alert(borrarProfesor(form_bajaProf.text_dni.value));
+}
+
+     function mostrarFormsExp(){
+         ocultar("menuProf");
+         ocultar("menuAlum");
+         ocultar("menuAct");
+         ocultar("menuComed");
+         ocultar("menuAsig");
+         $("form").hide("normal");
+         document.getElementById("menuExp").classList.remove("oculto");
+         document.getElementById("mostrarFormAltaExp").addEventListener("click", mostrarFormAltaExp, false);
+         document.getElementById("mostrarFormModExp").addEventListener("click", mostrarFormModExp, false);
+         document.getElementById("mostrarFormBajExp").addEventListener("click", mostrarFormBajExp, false);
+     }
+
+    function validarAltaAct(){
+        var sMensajeError="";
+        var todoOk=true;
+        var actividadActual=null;
+
+        if(isNaN(form_altaAct.text_id.value) || form_altaAct.text_id.value==""){
+            sMensajeError+="ID incorrecto\n";
+            todoOk=false;
+        }
+        if(!/^[a-z\d_]{2,15}$/i.test(form_altaAct.text_nombre.value)){
+            sMensajeError+="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
+            todoOk=false;
+        }
+
+        if(todoOk==false){
+            alert(sMensajeError);
+        }
+        else{
+            actividadActual=newActividadExtra(form_altaAct.text_id.value,form_altaAct.text_nombre.value,
+            getAlumnosFormAct("alta"));
+            alert(añadirActividad(actividadActual));
+            limpiarCampos();
+        }
+
+
+    }
+
+    function validarModAct(){
+        var sMensajeError="";
+        var todoOk=true;
+        var actividadActual=null;
+
+        if(!/^[a-z\d_]{2,15}$/i.test(form_modAct.text_nombre.value)){
+            sMensajeError+="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
+            todoOk=false;
+        }
+
+        if(todoOk==false){
+            alert(sMensajeError);
+        }
+        else {
+            actividadActual=newActividadExtra(form_modAct.text_id.value,form_modAct.text_nombre.value,
+            getAlumnosFormAct("modificar"));
+            alert(modificarXMLActividad(actividadActual));
+        }
+}
+
+    function validarBajaAct(){
+        var sMensajeError="";
+        var todoOk=true;
+
+        if (isNaN(form_bajaAct.text_id.value) || form_bajaAct.text_id.value==""){
+            sMensajeError+="ID incorrecto\n";
+            todoOk=false;
+        }
+        if(todoOk==false)
+            alert(sMensajeError);
+        else {
+                alert(borrarActividad(form_bajaAct.text_id.value));
+            }
+    }
+    function validarFormAltaExp(){
+
+        var sMensajeError="";
+        var todoOk=true;
+        var oExpedienteActual=null;
+
+        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_altaExp.text_AlumnoExp.value)){
+            sMensajeError="Dni incorrecto\n";
+            todoOk=false;
+        }
+        if(form_altaExp.text_observaciones.value==""){
+            sMensajeError+="Introduzca alguna observación\n";
+            todoOk=false;
+        }
+        if(!/^\d{1,2}(\.\d{1,2})?$/.test(form_altaExp.text_nota.value)){
+            sMensajeError+="Nota incorrecta\n";
+            todoOk=false;
+        }
+
+
+        if(todoOk==false)
+            alert(sMensajeError);
+        else {
+            var oAlumno=buscarAlumno(form_altaExp.text_AlumnoExp.value);
+            if(oAlumno!=null) {
+                var oNotas=[];
+                for(var i=0;i<form_altaExp.select_expediente.options.length;i++)
+                    oNotas.push(form_altaExp.select_expediente.options[i].value);
+                oExpedienteActual = newExpediente(form_altaExp.text_AlumnoExp.value,oNotas,form_altaExp.text_observaciones.value);
+                alert(añadirExpediente(oExpedienteActual));
+               limpiarCampos();
+            }
+            else {
+                alert("Este alumno no existe");
+                limpiarCampos();
+            }
+        }
+    }
+
+    function validarModNota(){
+        var todoOk=true;
+        var sMensajeError="";
+        if($('#text_mat1').value==""){
+            todoOk=false
+            sMensajeError='Escriba la materia 1';
+        }
+        if(isNaN($('#text_nota1').value)){
+            todoOk=false
+            sMensajeError+='La nota de la materia 1 debe ser un número';
+        }
+        if($('#text_mat2').value==""){
+            todoOk=false
+            sMensajeError='Escriba la materia 2';
+        }
+        if(isNaN($('#text_nota2').value)){
+            todoOk=false
+            sMensajeError+='La nota de la materia 2 debe ser un número';
+        }
+        if($('#text_mat3').value==""){
+            todoOk=false
+            sMensajeError='Escriba la materia 3';
+        }
+        if(isNaN($('#text_nota3').value)){
+            todoOk=false
+            sMensajeError+='La nota de la materia 3 debe ser un número';
+        }
+
+        if(todoOk==false)
+            alert(sMensajeError);
+        else{
+            //GUARDAMOS LA NOTA
+        }
+
+    }
 
     function modificarXMLAsignatura(oAsignatura)
     {
@@ -269,27 +599,21 @@
         oXML.querySelector("asignaturas").replaceChild(oAsignatura,oAsignaturaAnterior);
     }
 
-    function mostrarFormsAlumnos(){
+    function mostrarMenuAlumnos(){
         ocultar("menuProf");
         ocultar("menuAct");
-        ocultar("menuComed");
-        ocultar("menuExp");
-        ocultar("menuAsig");
         $("form").hide("normal");
-        document.getElementById("menuAlum").classList.remove("oculto");
+        $("#menuAlum").removeClass("oculto");
         document.getElementById("mostrarFormAltaAlum").addEventListener("click",mostrarFormAltaAlum,false);
         document.getElementById("mostrarFormModAlum").addEventListener("click",mostrarFormModAlum,false);
         document.getElementById("mostrarFormBajAlum").addEventListener("click",mostrarFormBajAlum,false);
     }
 
-    function mostrarFormsProf(){
+    function mostrarMenuProf(){
         ocultar("menuAlum");
         ocultar("menuAct");
-        ocultar("menuComed");
-        ocultar("menuExp");
-        ocultar("menuAsig");
         $("form").hide("normal");
-        document.getElementById("menuProf").classList.remove("oculto");
+        $("#menuProf").removeClass("oculto");
         document.getElementById("mostrarFormAltaProf").addEventListener("click", mostrarFormAltaProf, false);
         document.getElementById("mostrarFormModProf").addEventListener("click", mostrarFormModProf, false);
         document.getElementById("mostrarFormBajProf").addEventListener("click", mostrarFormBajProf, false);
@@ -347,7 +671,7 @@
 
 
     function ocultar(elemento){
-    document.getElementById(elemento).classList.add("oculto");
+    $('#'+elemento).addClass("oculto");
 }
 
     function validarFormModExp(){
@@ -420,42 +744,99 @@
     // Metodos de mostrar formularios
     function mostrarFormAltaProf(){
         $("form").hide("normal");
-        $("#form_altaProf").show("normal");
-        form_modProf.sel_profesor_profesores_mod.selectedIndex="0";
+        if($('#form_altaProf').size() == 0 )
+            $("<div>").appendTo('.form_altaProf').load("formularios/profesor/formAltaProf.html", function(){ $.getScript("js/profesor/altaProfe.js");});
+        else
+            $("#form_altaProf").show("normal");
+        $('#btnAltaProf').click(validarFormAltaProf);
+        $('#btnCancelarAltaProf').click(cancelar);
     }
     function mostrarFormModProf(){
         $("form").hide("normal");
-        $("#form_modProf").show("normal");
+        if($('#form_modProf').size() == 0 )
+            $("<div>").appendTo('.form_modProf').load("formularios/profesor/formModProf.html", function(){ $.getScript("js/profesor/modProfe.js");});
+        else
+            $("#form_modProf").show("normal");
+        $('#sel_profesor_profesores_mod').selectedIndex="0";
+        $('#sel_profesor_profesores_mod').change(mostrarRestoFormModProf);
     }
-
+    function mostrarRestoFormModProf(){
+        $('#restoFormProf').css('display','block');
+        $('#btnModProf').click(validarFormModProf);
+        $('#btnCancelarModProf').click(cancelar);
+    }
     function mostrarFormBajProf(){
         $("form").hide("normal");
-        $("#form_bajaProf").show("normal");
-        form_modProf.sel_profesor_profesores_mod.selectedIndex="0";
+        if($('#form_bajaProf').size() == 0 )
+            $("<div>").appendTo('.form_bajaProf').load("formularios/profesor/formBajaProf.html", function(){ $.getScript("js/profesor/bajaProfe.js");});
+        else
+            $("#form_bajaProf").show("normal");
+        $('#btnBajaProf').click(validarFormBajaProf);
+        $('#btnCancelarBajaProf').click(cancelar);
     }
 
     function mostrarFormAltaAlum(){
         $("form").hide("normal");
-        $("#form_altaAlum").show("normal");
-        form_modAlum.sel_alumno_alumnos_mod.selectedIndex="0";
+        if($('#form_altaAlum').size() == 0 ){
+            $("<div>").appendTo('.form_altaAlum').load("formularios/alumno/formAltaAlum.html", function(){ $.getScript("js/alumno/altaAlumno.js");});
+        }
+        else{
+            $("#form_altaAlum").show("normal");
+        }
+        $('#btnAltaAlum').click(validarFormAltaAlum);
+        $('#btnCancelarAltaAlum').click(cancelar);
     }
     function mostrarFormModAlum(){
         $("form").hide("normal");
-        $("#form_modAlum").show("normal");
+        if($('#form_modAlum').size() == 0 )
+            $("<div>").appendTo('.form_modAlum').load("formularios/alumno/formModAlum.html", function(){ $.getScript("js/alumno/modAlumno.js");});
+        else
+            $("#form_modAlum").show("normal");
+        $('#sel_alumno_alumnos_mod').selectedIndex='0';
+        $('#sel_alumno_alumnos_mod').change(mostrarRestoFormModAlum);
     }
-
+    function mostrarRestoFormModAlum(){
+        $('#restoFormularioModAlum').css('display','block');
+        $('#btnModAlum').click(validarFormModAlum);
+        $('#btnCancelarModAlum').click(cancelar);
+    }
     function mostrarFormBajAlum(){
         $("form").hide("normal");
-        $("#form_bajaAlum").show("normal");
-        form_modAlum.sel_alumno_alumnos_mod.selectedIndex="0";
+        if($('#form_bajaAlum').size() == 0 )
+            $("<div>").appendTo('.form_bajaAlum').load("formularios/alumno/formBajaAlum.html", function(){ $.getScript("js/alumno/bajaAlumno.js");});
+        else
+            $("#form_bajaAlum").show("normal");
+
+        $('#btnBajaAlum').click(validarBajaAlum);
+        $('#btnCancelarBajaAlum').click(cancelar);
 }
 
     function mostrarFormAltaAct(){
+        ocultar("menuProf");
+        ocultar("menuAlum");
         $("form").hide("normal");
-        $("#form_altaAct").show("normal");
-        form_modAct.sel_actividades_act_mod.selectedIndex="0";
+        if($('#form_altaAct').size() == 0 )
+            $("<div>").appendTo('.form_altaAct').load("formularios/formAltaAct.html", function(){ $.getScript("js/altaExtra.js");});
+        else
+            $("#form_altaAct").show("normal");
+        $('#btnAltaAct').click(validarAltaAct);
+        $('#btnCancelarAltaAct').click(cancelar);
     }
-
+    function mostrarFormModNotas(){
+        ocultar("menuProf");
+        ocultar("menuAlum");
+        $("form").hide("normal");
+        if($('#form_modExp').size() == 0 )
+            $("<div>").appendTo('.formModExp').load("formularios/formModNota.html", function(){ $.getScript("js/modNotas.js");});
+        else
+            $("#form_modExp").show("normal");
+        $('#sel_alumnos_expediente_mod').change(mostrarRestoFormModNotas);
+    }
+    function mostrarRestoFormModNotas(){
+        $('#restoFormExp').removeClass('oculto');
+        $('#btnModExp').click(validarModNota);
+        $('#btnCancelarModExp').click(cancelar);
+    }
     function mostrarFormModExp(){
         $("form").hide("normal");
         $("#form_modExp").show("normal");
