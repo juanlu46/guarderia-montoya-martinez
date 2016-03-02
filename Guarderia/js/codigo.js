@@ -4,7 +4,7 @@
         document.getElementById("btnAlumnos").addEventListener("click",mostrarMenuAlumnos,false);
         document.getElementById("btnProfesores").addEventListener("click",mostrarMenuProf,false);
         document.getElementById("btnActividades").addEventListener("click",mostrarFormAltaAct,false);
-        $('#btnNotas').click(mostrarFormModNotas);
+        $('#btnNotas').click(mostrarFormAltaNotas);
         //eventos para los listados
        // document.getElementById("btnListarAlum").addEventListener("click",listadoAlumnos,false);
        // document.getElementById("btnListarProf").addEventListener("click",listadoProfesores,false);
@@ -557,7 +557,7 @@
         }
     }
 
-    function validarModNota(){
+    function validarAltaNota(){
         var todoOk=true;
         var sMensajeError="";
         if($('#text_mat1').value==""){
@@ -822,19 +822,19 @@
         $('#btnAltaAct').click(validarAltaAct);
         $('#btnCancelarAltaAct').click(cancelar);
     }
-    function mostrarFormModNotas(){
+    function mostrarFormAltaNotas(){
         ocultar("menuProf");
         ocultar("menuAlum");
         $("form").hide("normal");
         if($('#form_modExp').size() == 0 )
-            $("<div>").appendTo('.formModExp').load("formularios/formModNota.html", function(){ $.getScript("js/modNotas.js");});
+            $("<div>").appendTo('.formModExp').load("formularios/formAltaNota.html", function(){ $.getScript("js/altaNotas.js");});
         else
             $("#form_modExp").show("normal");
-        $('#sel_alumnos_expediente_mod').change(mostrarRestoFormModNotas);
+        $('#sel_alumnos_expediente_mod').change(mostrarRestoFormAltaNotas);
     }
-    function mostrarRestoFormModNotas(){
+    function mostrarRestoFormAltaNotas(){
         $('#restoFormExp').removeClass('oculto');
-        $('#btnModExp').click(validarModNota);
+        $('#btnModExp').click(validarAltaNota);
         $('#btnCancelarModExp').click(cancelar);
     }
     function mostrarFormModExp(){
