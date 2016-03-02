@@ -12,7 +12,7 @@ Tipos de llamadas ajax que pide carlos:
     -.load -> para los formularios
     -$.get -> para  alta, mod, baja de profesor
     -$.post -> para alta, mod.baja de alumno
-    -$.ajax -> para alta extraescolar y mod notas
+    -$.ajax -> para alta extraescolar(method:post) y alta notas(method:get)
     -$.getScript -> para cargar los js de cada formulario
     -Ajax sin jquery -> para pedir los listados al servidor
 
