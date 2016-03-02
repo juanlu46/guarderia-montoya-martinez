@@ -9,11 +9,11 @@ Usos de JQuery UI que pide carlos:
                     (en notas, curso escolar no es fecha, si no string)
 
 Tipos de llamadas ajax que pide carlos:
-    -.load -> para los formularios
+    -.load -> para los formularios (acabada)
     -$.get -> para  alta, mod, baja de profesor
     -$.post -> para alta, mod.baja de alumno
     -$.ajax -> para alta extraescolar(method:post) y alta notas(method:get)
-    -$.getScript -> para cargar los js de cada formulario
+    -$.getScript -> para cargar los js de cada formulario (acabada)
     -Ajax sin jquery -> para pedir los listados al servidor
 
 

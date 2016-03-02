@@ -68,3 +68,6 @@ function validarFormModAlum(){
         alert(modificarXMLAlumno(oAlumnoMod));
     }
 }
+
+
+

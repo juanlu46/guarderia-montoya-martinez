@@ -1,7 +1,6 @@
 var oFormAltaProfe=$("#form_altaProf");
 function cargaAltaProfe(){
     $("#btnAltaProf").on('click',validarFormAltaProf);
-    $("#btnCancelarAltaProf").on('click',cancelar);
 }
 
 function validarFormAltaProf(){
@@ -31,3 +30,5 @@ function validarFormAltaProf(){
         alert(añadirProfesor(oProfesor));
     }
 }
+
+
