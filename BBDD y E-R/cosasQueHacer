@@ -16,6 +16,7 @@ Tipos de llamadas ajax que pide carlos:
     -$.getScript -> para cargar los js de cada formulario
     -Ajax sin jquery -> para pedir los listados al servidor
 
+
 Tipos de datos de envio/recepcion del servidor:
     -HTML -> lo que devuelve el php de algunos de los listados
     -Script javascript -> lo devuelve en cada accion de tramites, en forma de dialog de jquery ui
