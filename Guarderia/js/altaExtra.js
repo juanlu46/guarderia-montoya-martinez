@@ -34,9 +34,14 @@ function validarAltaAct(){
         alert(sMensajeError);
     }
     else{
-        actividadActual=newActividadExtra(oFormAltaExtra.find("#text_id").val(),oFormAltaExtra.find("#text_nombre").val(),
-            getAlumnosFormAct("alta"));
-        alert(añadirActividad(actividadActual));
+       var  arrayJson=[{
+            "id":oFormAltaExtra.find("#text_id").val(),
+            "nombre":oFormAltaExtra.find("#text_nombre").val()
+            }];
+        $.ajax({url:"php/tramites/altaExtraEscolar.php",data:arrayJson,dataType:'script',method:'POST'});
+
+        getAlumnosFormAct("alta");
+
         limpiarCampos();
     }
 }
