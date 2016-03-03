@@ -453,16 +453,22 @@ function listadoAlumnos(){
     function mostrarAlumnos(){
         oAjaxListarAlumnos=new XMLHttpRequest();
         oAjaxListarAlumnos.open('POST','php/obtenerAlumnos.php');
-        oAjaxListarAlumnos.addEventListener('onreadystatechange',tratarRespuestaListaAlumnos);
+        oAjaxListarAlumnos.addEventListener('readystatechange',tratarRespuestaListaAlumnos);
         oAjaxListarAlumnos.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         oAjaxListarAlumnos.send();
     }
     function tratarRespuestaListaAlumnos(){
-        if(this.readyState==4 && this.status=="200"){
-            var oXml=this.responseXML();
-            alert(oXml.find('alumno'));
+        if(this.readyState==4 && this.status==200){
+            var oXml=this.responseXML;
+            var nombre="";
+            var alumnos=$(oXml).find('alumno');
+            for(var i=0;i<alumnos.size();i++) {
+                 nombre+= $(alumnos[i]).attr("dni");
+            }
+            alert(nombre);
 
         }
 
 
     }
+
