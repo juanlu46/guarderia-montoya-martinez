@@ -2,6 +2,7 @@ var oFormModAlum=$("#form_modAlum");
 function cargaModALumno(){
     $("#restoFormModAlumularioModAlum").addClass("oculto");
     var oSelectAlumnos=$("#sel_alumno_alumnos_mod");
+    $('#sel_alumno_alumnos_mod').selectedIndex='0';
     oSelectAlumnos.on("change",mostrarRestoFormModAlumModAlum);
     if(oSelectAlumnos.length==0){
         $("<option>Seleccione un alumno</option>").appendTo(oSelectAlumnos);

@@ -34,10 +34,8 @@ function validarAltaAct(){
         alert(sMensajeError);
     }
     else{
-       var  arrayJson=[{
-            "id":oFormAltaExtra.find("#text_id").val(),
-            "nombre":oFormAltaExtra.find("#text_nombre").val()
-            }];
+       var  arrayJson='{"id":oFormAltaExtra.find("#text_id").val(),'+
+            '"nombre":oFormAltaExtra.find("#text_nombre").val()}';
         $.ajax({url:"php/tramites/altaExtraEscolar.php",data:arrayJson,dataType:'script',method:'POST'});
 
         getAlumnosFormAct("alta");
