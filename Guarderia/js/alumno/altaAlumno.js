@@ -43,8 +43,10 @@ function validarFormAltaAlum(){
         alert(sMensajeError);
     }
     else {
-        oAlumno=newAlumno(form_altaAlum.text_nombre.val(),form_altaAlum.text_apellido.value,form_altaAlum.text_dni.value,form_altaAlum.text_edad.value,form_altaAlum.text_tlfn.value,form_altaAlum.text_direccion.value,form_altaAlum.text_grupo.value);
-        alert(añadirAlumno(oAlumno));
-        limpiarCampos();
+            var arrayJson=[
+            {"nombre":oFormAltaAlum.find("#text_nombre").val(), "lastName":"Doe"},
+
+        ];
+        $.post('php/altaAlumno.php',oAlumno);
     }
 }

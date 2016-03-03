@@ -21,14 +21,22 @@ function validarFormAltaProf(){
         todoOk=false;
     }
 
+
+
+
+
     if(todoOk==false){
         alert(sMensajeError);
     }
     else{
-        oProfesor=newProfesor(form_altaProf.text_nombre.value,form_altaProf.text_apellido.value,
-            form_altaProf.text_dni.value,form_altaProf.text_tlfn.value,getGruposFormProf("alta"));
-        alert(añadirProfesor(oProfesor));
+        var datos=oFormAltaProfe.serialize();
+       llamadaGetAltaProf(datos);
     }
+}
+
+function llamadaGetAltaProf(data){
+    $.get('php/tramites/altaProfesor.php',data,'script');
+
 }
 
 
