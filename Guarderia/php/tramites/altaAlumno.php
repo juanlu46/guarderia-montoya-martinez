@@ -5,7 +5,8 @@ header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 
 $mySQLi=new mysqli("localhost","root","","guarderia");
 $mySQLi->query("SET NAMES utf8");
-$oAlumno=json_decode($_REQUEST['datos']);
+$sAlumno=$_REQUEST['datos'];
+$oAlumno=json_decode($sAlumno);
 $sql="INSERT INTO alumnos VALUES('".$oAlumno->dni."','".
     $oAlumno->nombre."','".$oAlumno->apellidos."',".$oAlumno->edad.
     ",".$oAlumno->contacto.",'".$oAlumno->direccion."','".$oAlumno->grupo."')";
