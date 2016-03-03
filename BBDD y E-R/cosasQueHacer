@@ -10,9 +10,9 @@ Usos de JQuery UI que pide carlos:
 
 Tipos de llamadas ajax que pide carlos:
     -.load -> para los formularios (acabada)
-    -$.get -> para  alta, mod, baja de profesor
-    -$.post -> para alta, mod.baja de alumno
-    -$.ajax -> para alta extraescolar(method:post) y alta notas(method:get)
+    -$.get -> para  alta, mod, baja de profesor (alta acabada)
+    -$.post -> para alta, mod.baja de alumno (alta acabada)
+    -$.ajax -> para alta extraescolar(method:post) y alta notas(method:get) (acabada)
     -$.getScript -> para cargar los js de cada formulario (acabada)
     -Ajax sin jquery -> para pedir los listados al servidor
 

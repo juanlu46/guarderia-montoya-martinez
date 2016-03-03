@@ -52,7 +52,15 @@ function validarAltaNota(){
     if(todoOk==false)
         alert(sMensajeError);
     else{
-        //GUARDAMOS LA NOTA
+        var arrayJson=[{
+            'materia1': oFormAltaNotas.find("#text_mat1").val(),
+            'nota1':oFormAltaNotas.find("#text_nota1").val(),
+            'materia2': oFormAltaNotas.find("#text_mat2").val(),
+            'nota2':oFormAltaNotas.find("#text_nota2").val(),
+            'materia3': oFormAltaNotas.find("#text_mat3").val(),
+            'nota3':oFormAltaNotas.find("#text_nota3").val()
+        }];
+        $.ajax({url:'php/tramites/altaNota.php',data:arrayJson,dataType:'script',method:'GET'});
     }
 
 }

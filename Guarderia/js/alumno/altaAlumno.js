@@ -43,10 +43,15 @@ function validarFormAltaAlum(){
         alert(sMensajeError);
     }
     else {
-            var arrayJson=[
-            {"nombre":oFormAltaAlum.find("#text_nombre").val(), "lastName":"Doe"},
-
-        ];
-        $.post('php/altaAlumno.php',oAlumno);
+            var arrayJson=[{
+                "nombre":oFormAltaAlum.find("#text_nombre").val(),
+                "apellido":oFormAltaAlum.find("#text_apellido").val(),
+                "dni":oFormAltaAlum.find("#text_dni").val(),
+                "edad":oFormAltaAlum.find("#text_edad").val(),
+                "grupo":oFormAltaAlum.find("#text_grupo").val(),
+                "telefono":oFormAltaAlum.find("#text_tlfn").val(),
+                "direccion":oFormAltaAlum.find("#text_direccion").val()
+            }];
+        $.post('php/altaAlumno.php',arrayJson);
     }
 }
