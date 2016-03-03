@@ -19,16 +19,20 @@ function validarFormAltaProf(){
     if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(oFormAltaProfe.find("#text_dni").val())){
         sMensajeError+="Dni incorrecto\n";
         todoOk=false;
-    }
+    }//FALTA VALIDAR TELEFONO y grupo
 
     if(todoOk==false){
         alert(sMensajeError);
     }
     else{
-        oProfesor=newProfesor(form_altaProf.text_nombre.value,form_altaProf.text_apellido.value,
-            form_altaProf.text_dni.value,form_altaProf.text_tlfn.value,getGruposFormProf("alta"));
-        alert(añadirProfesor(oProfesor));
+        var datos=oFormAltaProfe.serialize();
+       llamadaGetAltaProf(datos);
     }
+}
+
+function llamadaGetAltaProf(data){
+    $.get('php/tramites/altaProfesor.php',data,'script');
+
 }
 
 
