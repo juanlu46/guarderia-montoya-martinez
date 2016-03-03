@@ -14,6 +14,6 @@ if($mySQLi->query($sql))
         $_REQUEST['apellidos'];
 else
     $mensaje.="Se ha producido un error: ".$mySQLi->errno."-".$mySQLi->error;
-$mensaje.=").dialog();";
+$mensaje.="</div>').dialog();";
 
 echo $mensaje;
