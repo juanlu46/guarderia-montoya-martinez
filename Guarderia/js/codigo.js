@@ -266,32 +266,20 @@
         $("form").hide("normal");
         if($('#form_altaProf').size() == 0 )
             $("<div>").appendTo('.form_altaProf').load("formularios/profesor/formAltaProf.html", function(){ $.getScript("js/profesor/altaProfe.js");});
-        else
-            $("#form_altaProf").show("normal");
-        $("#btnCancelarAltaProf").on('click',cancelar);
+        $("#form_altaProf").show("normal");
     }
     function mostrarFormModProf(){
         $("form").hide("normal");
         if($('#form_modProf').size() == 0 )
             $("<div>").appendTo('.form_modProf').load("formularios/profesor/formModProf.html", function(){ $.getScript("js/profesor/modProfe.js");});
-        else
-            $("#form_modProf").show("normal");
-        $('#sel_profesor_profesores_mod').selectedIndex="0";
-        $('#sel_profesor_profesores_mod').change(mostrarRestoFormModProf);
+        $("#form_modProf").show("normal");
     }
-    function mostrarRestoFormModProf(){
-        $('#restoFormProf').css('display','block');
-        $('#btnModProf').click(validarFormModProf);
-        $('#btnCancelarModProf').click(cancelar);
-    }
+
     function mostrarFormBajProf(){
         $("form").hide("normal");
         if($('#form_bajaProf').size() == 0 )
             $("<div>").appendTo('.form_bajaProf').load("formularios/profesor/formBajaProf.html", function(){ $.getScript("js/profesor/bajaProfe.js");});
-        else
-            $("#form_bajaProf").show("normal");
-        $('#btnBajaProf').click(validarFormBajaProf);
-        $('#btnCancelarBajaProf').click(cancelar);
+        $("#form_bajaProf").show("normal");
     }
 
     function mostrarFormAltaAlum(){
@@ -299,35 +287,19 @@
         if($('#form_altaAlum').size() == 0 ){
             $("<div>").appendTo('.form_altaAlum').load("formularios/alumno/formAltaAlum.html", function(){ $.getScript("js/alumno/altaAlumno.js");});
         }
-        else{
-            $("#form_altaAlum").show("normal");
-        }
-        $('#btnAltaAlum').click(validarFormAltaAlum);
-        $('#btnCancelarAltaAlum').click(cancelar);
+        $("#form_altaAlum").show("normal");
     }
     function mostrarFormModAlum(){
         $("form").hide("normal");
         if($('#form_modAlum').size() == 0 )
             $("<div>").appendTo('.form_modAlum').load("formularios/alumno/formModAlum.html", function(){ $.getScript("js/alumno/modAlumno.js");});
-        else
-            $("#form_modAlum").show("normal");
-        $('#sel_alumno_alumnos_mod').selectedIndex='0';
-        $('#sel_alumno_alumnos_mod').change(mostrarRestoFormModAlum);
-    }
-    function mostrarRestoFormModAlum(){
-        $('#restoFormularioModAlum').css('display','block');
-        $('#btnModAlum').click(validarFormModAlum);
-        $('#btnCancelarModAlum').click(cancelar);
+        $("#form_modAlum").show("normal");
     }
     function mostrarFormBajAlum(){
         $("form").hide("normal");
         if($('#form_bajaAlum').size() == 0 )
             $("<div>").appendTo('.form_bajaAlum').load("formularios/alumno/formBajaAlum.html", function(){ $.getScript("js/alumno/bajaAlumno.js");});
-        else
-            $("#form_bajaAlum").show("normal");
-
-        $('#btnBajaAlum').click(validarBajaAlum);
-        $('#btnCancelarBajaAlum').click(cancelar);
+        $("#form_bajaAlum").show("normal");
 }
 
     function mostrarFormAltaAct(){
@@ -336,10 +308,7 @@
         $("form").hide("normal");
         if($('#form_altaAct').size() == 0 )
             $("<div>").appendTo('.form_altaAct').load("formularios/formAltaAct.html", function(){ $.getScript("js/altaExtra.js");});
-        else
-            $("#form_altaAct").show("normal");
-        $('#btnAltaAct').click(validarAltaAct);
-        $('#btnCancelarAltaAct').click(cancelar);
+         $("#form_altaAct").show("normal");
     }
     function mostrarFormAltaNotas(){
         ocultar("menuProf");
@@ -347,8 +316,7 @@
         $("form").hide("normal");
         if($('#form_modExp').size() == 0 )
             $("<div>").appendTo('.formModExp').load("formularios/formAltaNota.html", function(){ $.getScript("js/altaNotas.js");});
-        else
-            $("#form_modExp").show("normal");
+        $("#form_modExp").show("normal");
     }
 
     //Funciones limpiar campos

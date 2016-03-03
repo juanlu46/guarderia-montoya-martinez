@@ -1,5 +1,6 @@
 var oFormModProfe=$("#form_modProf");
 function cargaModProfe(){
+    $('#sel_profesor_profesores_mod').selectedIndex="0";
     var oSelectProfesor=$("#sel_profesor_profesores_mod");
     if(oSelectProfesor.length==0){
         $("<option>Seleccione un profesor</option>").appendTo(oSelectProfesor);
