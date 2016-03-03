@@ -5,31 +5,8 @@
         document.getElementById("btnProfesores").addEventListener("click",mostrarMenuProf,false);
         document.getElementById("btnActividades").addEventListener("click",mostrarFormAltaAct,false);
         $('#btnNotas').click(mostrarFormAltaNotas);
-        //eventos para los listados
-       // document.getElementById("btnListarAlum").addEventListener("click",listadoAlumnos,false);
-       // document.getElementById("btnListarProf").addEventListener("click",listadoProfesores,false);
-        oXML=loadXMLDoc("xml/datosGuarderia.xml");
-
-        switch(getGet()){
-            case "alumno":
-                mostrarMenuAlumnos();
-                break;
-            case "profesor":
-                mostrarMenuProf();
-                break;
-            case "actividades":
-                mostrarFormAltaAct();
-                break;
-            case 'listadoAlumnos':
-                listadoAlumnos();
-                break;
-            case 'listadoProfesores':
-                listadoProfesores();
-                break;
-
-        }
+           oXML=loadXMLDoc("xml/datosGuarderia.xml");
     }
-
 
     //Metodos buscar
     function buscarProfesor(sDni){
@@ -244,97 +221,8 @@
         return sRes;
     }
 
-    //Metodos de modificar
-    function modificarXMLProfesor(oProfesor)
-    {
-        var oProfAnterior = buscarProfesor(oProfesor.getAttribute("dni"));
-        oXML.querySelector("profesores").replaceChild(oProfesor,oProfAnterior);
-    }
-    function modificarXMLAlumno(oAlumno)
-    {
-        var oAlumnoAnterior = buscarAlumno(oAlumno.getAttribute("dni"));
-        oXML.querySelector("alumnos").replaceChild(oAlumno,oAlumnoAnterior);
-    }
 
-    function modificarXMLActividad(oActividad)
-    {
-        var oActividadAnterior = buscarActividad(oActividad.getAttribute("id"));
-        oXML.querySelector("actividades").replaceChild(oActividad,oActividadAnterior);
-    }
-
-    function modificarXMLExpediente(oExpediente)
-    {
-        var oExpedienteAnterior = buscarExpediente(oExpediente.getAttribute("id"));
-        oXML.querySelector("expedientes").replaceChild(oExpediente,oExpedienteAnterior);
-    }
-
-    function validarAltaAct(){
-        var sMensajeError="";
-        var todoOk=true;
-        var actividadActual=null;
-
-        if(isNaN(form_altaAct.text_id.value) || form_altaAct.text_id.value==""){
-            sMensajeError+="ID incorrecto\n";
-            todoOk=false;
-        }
-        if(!/^[a-z\d_]{2,15}$/i.test(form_altaAct.text_nombre.value)){
-            sMensajeError+="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
-            todoOk=false;
-        }
-
-        if(todoOk==false){
-            alert(sMensajeError);
-        }
-        else{
-            actividadActual=newActividadExtra(form_altaAct.text_id.value,form_altaAct.text_nombre.value,
-            getAlumnosFormAct("alta"));
-            alert(añadirActividad(actividadActual));
-            limpiarCampos();
-        }
-
-
-    }
-
-
-
-
-    function validarFormAltaExp(){
-        var sMensajeError="";
-        var todoOk=true;
-        var oExpedienteActual=null;
-
-        if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(form_altaExp.text_AlumnoExp.value)){
-            sMensajeError="Dni incorrecto\n";
-            todoOk=false;
-        }
-        if(form_altaExp.text_observaciones.value==""){
-            sMensajeError+="Introduzca alguna observación\n";
-            todoOk=false;
-        }
-        if(!/^\d{1,2}(\.\d{1,2})?$/.test(form_altaExp.text_nota.value)){
-            sMensajeError+="Nota incorrecta\n";
-            todoOk=false;
-        }
-
-        if(todoOk==false)
-            alert(sMensajeError);
-        else {
-            var oAlumno=buscarAlumno(form_altaExp.text_AlumnoExp.value);
-            if(oAlumno!=null) {
-                var oNotas=[];
-                for(var i=0;i<form_altaExp.select_expediente.options.length;i++)
-                    oNotas.push(form_altaExp.select_expediente.options[i].value);
-                oExpedienteActual = newExpediente(form_altaExp.text_AlumnoExp.value,oNotas,form_altaExp.text_observaciones.value);
-                alert(añadirExpediente(oExpedienteActual));
-               limpiarCampos();
-            }
-            else {
-                alert("Este alumno no existe");
-                limpiarCampos();
-            }
-        }
-    }
-
+// METODOS MOSTRAR MENUS
     function mostrarMenuAlumnos(){
         ocultar("menuProf");
         ocultar("menuAct");
@@ -359,38 +247,6 @@
     $('#'+elemento).addClass("oculto");
 }
 
-    function validarFormModExp(){
-
-        var sMensajeError="";
-        var todoOk=true;
-        var oExpedienteActual=null;
-
-        if(form_modExp.text_observaciones.value==""){
-            sMensajeError+="Introduzca alguna observación\n";
-            todoOk=false;
-        }
-        if(!/^\d{1,2}(\.\d{1,2})?$/.test(form_modExp.text_nota.value)){
-            sMensajeError+="Nota incorrecta\n";
-            todoOk=false;
-        }
-
-
-        if(todoOk==false)
-            alert(sMensajeError);
-        else {
-            var oAlumno=buscarAlumno(form_modExp.text_AlumnoExp.value);
-            if(oAlumno!=null) {
-
-
-                oExpedienteActual = newExpediente(form_modExp.text_AlumnoExp.value,form_modExp.text_nota.value,form_modExp.text_observaciones.value);
-                alert(modificarXMLExpediente(oExpedienteActual));
-                limpiarCampos();
-            }
-            else
-                alert("Este alumno no existe");
-        }
-    }
-
     function buscarRepeSelect(oOptions,sValor){
         var bEncontrado=false;
         for(var i=0; i<oOptions.length && !bEncontrado;i++){
@@ -403,27 +259,6 @@
     function cancelar(){
         $("form").hide("normal");
         limpiarCampos();
-    }
-
-
-    // Metodos añadir select multiple
-
-    function añadirNotaMod(){
-        if(form_modExp.text_nota.value==""){
-            alert("No puede dejar la nota vacia");
-        }
-        else if(!(/([0-9]{1,2})|([0-9]{1,2}\.[0-9]{1,2})/.test(form_modExp.text_nota.value))){
-            alert("La nota debe de tener 2 enteros y 2 decimales como mucho, separados por un punto");
-        }
-        else{
-            var opt=document.createElement("option");
-            addContenido(opt,
-                "ID: "+form_modExp.sel_asig_exp_mod.options[form_modExp.sel_asig_exp_mod.selectedIndex].value+
-                " - Nota: "+form_modExp.text_nota.value);
-            opt.value=form_modExp.sel_asig_exp_mod.options[form_modExp.sel_asig_exp_mod.selectedIndex].value+
-                "-"+form_modExp.text_nota.value;
-            form_modExp.select_expediente.appendChild(opt);
-        }
     }
 
     // Metodos de mostrar formularios
@@ -514,35 +349,6 @@
             $("<div>").appendTo('.formModExp').load("formularios/formAltaNota.html", function(){ $.getScript("js/altaNotas.js");});
         else
             $("#form_modExp").show("normal");
-        $('#sel_alumnos_expediente_mod').change(mostrarRestoFormAltaNotas);
-    }
-    function mostrarRestoFormAltaNotas(){
-        $('#restoFormExp').removeClass('oculto');
-        $('#btnModExp').click(validarAltaNota);
-        $('#btnCancelarModExp').click(cancelar);
-    }
-    function mostrarFormModExp(){
-        $("form").hide("normal");
-        $("#form_modExp").show("normal");
-        document.getElementById("sel_alumnos_expediente_mod").addEventListener("change",mostrarRestoFormModExp,false);
-        cargarSelectAsignatura("sel_asig_exp_mod");
-        if(document.getElementById("sel_alumnos_expediente_mod").length==0){
-            var opt=document.createElement("option");
-            opt.value="";
-            addContenido(opt,"Seleccione un expediente");
-            document.getElementById("sel_alumnos_expediente_mod").appendChild(opt);
-        }
-        if(document.getElementById("sel_alumnos_expediente_mod").length==1)
-        cargarSelectExpediente("sel_alumnos_expediente_mod");
-        document.getElementById("restoFormExp").classList.add("oculto");
-    }
-    function mostrarRestoFormModExp(){
-        rellenaCamposExpediente(this.options[this.selectedIndex].value);
-        document.getElementById("restoFormExp").classList.remove("oculto");
-        document.getElementById("btnModExp").addEventListener("click",validarFormModExp,false);
-        document.getElementById("btnCancelarModExp").addEventListener("click", cancelar, false);
-        document.getElementById("añadirNota_mod").addEventListener("click", añadirNotaMod, false);
-        document.getElementById("btnEliminarNota_mod").addEventListener("click", eliminarNotaMod, false);
     }
 
     //Funciones limpiar campos
@@ -559,45 +365,6 @@
         }
         oTextArea.textContent="";
     }
-
-    //  Metodos rellena Select
-    function cargarSelectAlumnos(sIDSelect){
-        var lugar=document.getElementById(sIDSelect);
-        var oAlumnos=oXML.querySelectorAll("alumno");
-        for(var i=0;i<oAlumnos.length;i++){
-            var opt=document.createElement("option");
-            opt.value=oAlumnos[i].getAttribute("dni");
-            addContenido(opt,oAlumnos[i].getAttribute("dni"));
-            lugar.appendChild(opt);
-        }
-    }
-
-    function cargarSelectExpediente(sIDSelect){
-        var lugar=document.getElementById(sIDSelect);
-        var oExpedientes=oXML.querySelectorAll("expediente");
-        for(var i=0;i<oExpedientes.length;i++){
-            var opt=document.createElement("option");
-            opt.value=oExpedientes[i].getAttribute("id");
-            addContenido(opt,oExpedientes[i].getAttribute("id"));
-            lugar.appendChild(opt);
-        }
-    }
-
-    function rellenaCamposExpediente(sDni){
-        var oExpediente=buscarExpediente(sDni);
-        form_modExp.text_AlumnoExp.value=sDni;
-        form_modExp.text_observaciones.value=oExpediente.querySelector("observaciones").textContent;
-        var oNotas=oExpediente.querySelectorAll("notaAsig");
-        var oSelect=form_modExp.select_expediente;
-        for(var i=0;i<oNotas.length;i++){
-            var oOption=document.createElement("option");
-            var sAsig=oNotas[i].getAttribute("id");
-            var sNota=oNotas[i].textContent;
-            oOption.value=sAsig+"-"+sNota;
-            oOption.textContent="ID: "+sAsig+" - Nota: "+sNota;
-            oSelect.appendChild(oOption);
-        }
-    }
     /* METODOS AUXILIARES*/
     //Devuelve los objetos seleccionados de un select multiple
     function getSelecteditems(oSelect){
@@ -609,94 +376,6 @@
         return oOptions;
     }
 
-    //Constructor de objeto XML, alumno
-    function newAlumno(sNombre,sApellidos,sDni,iEdad,iContacto,sDireccion,sGrupo){
-        var oTags=["nombre","apellidos","edad","contacto","direccion","grupo"];
-        var oNodos=[];
-        var oAlumno=document.createElement("alumno");
-        for(var i=0;i<oTags.length;i++)
-            oNodos.push(document.createElement(oTags[i]));
-        var oTagsValues=[sNombre,sApellidos,iEdad,iContacto,sDireccion,sGrupo];
-        oAlumno.setAttribute("dni",sDni);
-
-        for(var i=0;i<oTags.length;i++) {
-            addContenido(oNodos[i], oTagsValues[i]);
-            oAlumno.appendChild(oNodos[i]);
-        }
-        oAlumno.setAttribute("dni",sDni);
-        return oAlumno;
-    }
-    //Constructor de objeto XML, profesor.
-    function newProfesor(sNombre,sApellidos,sDni,iTelefono,oGrupos){
-        var oTags=["nombre","apellidos","telefono"];
-        var oNodos=[];
-        var oProfesor=document.createElement("profesor");
-        for(var i=0;i<oTags.length;i++)
-            oNodos.push(document.createElement(oTags[i]));
-        var oTagsValues=[sNombre,sApellidos,iTelefono];
-        oProfesor.setAttribute("dni",sDni);
-        for(var i=0;i<oTagsValues.length;i++) {
-            addContenido(oNodos[i], oTagsValues[i]);
-            oProfesor.appendChild(oNodos[i]);
-        }
-        oProfesor.appendChild(document.createElement("grupos"));
-        for(var i=0;i<oGrupos.length;i++) {
-            var sGrupo=oGrupos[i].value;
-            var oGrupoAux=document.createElement("grupo");
-            oGrupoAux.setAttribute("id",sGrupo);
-            addContenido(oGrupoAux,sGrupo);
-            oProfesor.querySelector("grupos").appendChild(oGrupoAux);
-
-        }
-        return oProfesor;
-    }
-    //Constructor de objeto XML Actividad Extraescolar
-    function newActividadExtra(sId,sNombre,oAlumnos){
-        var oActividadExtra=document.createElement("actividad");
-        oActividadExtra.setAttribute("id",sId);
-        var oNombre=document.createElement("nombre");
-        addContenido(oNombre,sNombre);
-        oActividadExtra.appendChild(oNombre);
-        oActividadExtra.appendChild(document.createElement("alumnosAct"));
-        for(var i=0;i<oAlumnos.length;i++){
-            var oAlumnoAux=document.createElement("alumnoAct");
-            oAlumnoAux.setAttribute("dni",oAlumnos[i].value);
-            oActividadExtra.querySelector("alumnosAct").appendChild(oAlumnoAux);
-        }
-        return oActividadExtra;
-    }
-    //Constructor de objeto XML Expediente
-    function newExpediente(sDni,oNotas,sObservaciones){
-        var oExpediente=document.createElement("expediente");
-        oExpediente.setAttribute("id",sDni);
-        var oObser=document.createElement("observaciones");
-        addContenido(oObser,sObservaciones);
-        oExpediente.appendChild(oObser);
-        oExpediente.appendChild(document.createElement("notas"));
-        for(var i=0;i<oNotas.length;i++){
-            var oValores=oNotas[i].split("-");
-            var oNota=document.createElement("notaAsig");
-            oNota.setAttribute("id",oValores[0]);
-            addContenido(oNota,oValores[1]);
-            oExpediente.querySelector("notas").appendChild(oNota);
-        }
-        return oExpediente;
-    }
-
-
-    //Metodo para añadir nodos de textos
-    function addContenido(oNodo,sTexto){
-        var oTexto=document.createTextNode(sTexto);
-        oNodo.appendChild(oTexto);
-    }
-
-    // Metodo para coger parametros GET para cargar incialmente el formulario correspondiente.
-    function getGet(){
-        var url = document.location.href;
-        var getString = url.split('?')[1];
-        var tmp = getString.split('=')[1];
-        return unescape(decodeURI(tmp));
-    }
     //Metodo para cargar un archivo XML
     function loadXMLDoc(filename)
     {
@@ -801,25 +480,4 @@ function listadoAlumnos(){
         }
         tabla.appendChild(bodyTabla);
         pestana.document.body.appendChild(tabla);
-    }
-    function crearFilaTabla(datos){
-        var tr=document.createElement("tr");
-
-        for(var i=0;i<datos.length;i++){
-            var td=document.createElement("td");
-            td.appendChild(document.createTextNode(datos[i]));
-            tr.appendChild(td);
-        }
-        return tr;
-    }
-
-    function crearCabeceraTabla(datos){
-        var tr=document.createElement("tr");
-
-        for(var i=0;i<datos.length;i++){
-            var td=document.createElement("th");
-            td.appendChild(document.createTextNode(datos[i]));
-            tr.appendChild(td);
-        }
-        return tr;
     }
