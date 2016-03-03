@@ -21,10 +21,14 @@ function validarFormAltaProf(){
         sMensajeError+="Dni incorrecto\n";
         todoOk=false;
     }
-
-
-
-
+    if(!/^[9|6|7][0-9]{8}$/.test(oFormAltaProfe.find("#text_tlfn").val())){
+        sMensajeError+="Teléfono incorrecto\n";
+        todoOk=false;
+    }
+    if($('#select_gruposProf').selectedIndex==0){
+        sMensajeError+="Elige un grupo\n";
+        todoOk=false;
+    }
 
     if(todoOk==false){
         alert(sMensajeError);
