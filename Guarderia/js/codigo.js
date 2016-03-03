@@ -5,6 +5,7 @@
         document.getElementById("btnProfesores").addEventListener("click",mostrarMenuProf,false);
         document.getElementById("btnActividades").addEventListener("click",mostrarFormAltaAct,false);
         $('#btnNotas').click(mostrarFormAltaNotas);
+        $('#btnListarAlum').click(mostrarAlumnos);
            oXML=loadXMLDoc("xml/datosGuarderia.xml");
     }
 
@@ -448,4 +449,20 @@ function listadoAlumnos(){
         }
         tabla.appendChild(bodyTabla);
         pestana.document.body.appendChild(tabla);
+    }
+    function mostrarAlumnos(){
+        oAjaxListarAlumnos=new XMLHttpRequest();
+        oAjaxListarAlumnos.open('POST','php/obtenerAlumnos.php');
+        oAjaxListarAlumnos.addEventListener('onreadystatechange',tratarRespuestaListaAlumnos);
+        oAjaxListarAlumnos.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        oAjaxListarAlumnos.send();
+    }
+    function tratarRespuestaListaAlumnos(){
+        if(this.readyState==4 && this.status=="200"){
+            var oXml=this.responseXML();
+            alert(oXml.find('alumno'));
+
+        }
+
+
     }
