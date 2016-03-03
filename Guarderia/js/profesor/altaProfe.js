@@ -19,7 +19,11 @@ function validarFormAltaProf(){
     if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(oFormAltaProfe.find("#text_dni").val())){
         sMensajeError+="Dni incorrecto\n";
         todoOk=false;
-    }//FALTA VALIDAR TELEFONO y grupo
+    }
+
+
+
+
 
     if(todoOk==false){
         alert(sMensajeError);
