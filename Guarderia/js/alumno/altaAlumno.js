@@ -7,7 +7,6 @@ function cargaAltaAlumno(){
 function validarFormAltaAlum(){
     var sMensajeError="";
     var todoOk=true;
-    var oAlumno=null;
 
     if(!/^[a-z\d_]{2,15}$/i.test(oFormAltaAlum.find("#text_nombre").val())){
         sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
@@ -43,15 +42,15 @@ function validarFormAltaAlum(){
         alert(sMensajeError);
     }
     else {
-            var arrayJson=[{
-                "nombre":oFormAltaAlum.find("#text_nombre").val(),
-                "apellido":oFormAltaAlum.find("#text_apellido").val(),
-                "dni":oFormAltaAlum.find("#text_dni").val(),
-                "edad":oFormAltaAlum.find("#text_edad").val(),
-                "grupo":oFormAltaAlum.find("#text_grupo").val(),
-                "telefono":oFormAltaAlum.find("#text_tlfn").val(),
-                "direccion":oFormAltaAlum.find("#text_direccion").val()
-            }];
-        $.post('php/altaAlumno.php',arrayJson);
+            var sJson='{'+
+                '"nombre":"'+oFormAltaAlum.find("#text_nombre").val()+'",'+
+                '"apellido":"'+oFormAltaAlum.find("#text_apellido").val()+'",'+
+                '"dni":"'+oFormAltaAlum.find("#text_dni").val()+'",'+
+                '"edad":"'+oFormAltaAlum.find("#text_edad").val()+'",'+
+                '"grupo":"'+oFormAltaAlum.find("#text_grupo").val()+'",'+
+                '"telefono":"'+oFormAltaAlum.find("#text_tlfn").val()+'",'+
+                '"direccion":"'+oFormAltaAlum.find("#text_direccion").val()+'"'+
+            '}';
+        $.post('php/tramites/altaAlumno.php','datos='+sJson);
     }
 }

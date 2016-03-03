@@ -7,9 +7,9 @@ $mySQLi->query("SET NAMES utf8");
 $select=$mySQLi->query("SELECT * FROM alumnos");
 $xml="<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 while($array=$select->fetch_assoc()){
-    $xml.="<alumno dni='".$array['dni']."'><nombre>".$array['nombre']."</nombre>";
-    $xml.="<apellidos>".$array['apellidos']."</apellidos><edad>".$array['edad']."</edad>";
-    $xml.="<contacto>".$array['contacto']."</contacto><direccion>".$array['direccion']."</direccion>";;
-    $xml.="<grupo>".$array['grupo']."</grupo></alumno>";
+    $xml.="<alumno dni='".$array['DNI']."'><nombre>".$array['NOMBRE']."</nombre>";
+    $xml.="<apellidos>".$array['APELLIDOS']."</apellidos><edad>".$array['EDAD']."</edad>";
+    $xml.="<contacto>".$array['CONTACTO']."</contacto><direccion>".$array['DIRECCION']."</direccion>";;
+    $xml.="<grupo>".$array['GRUPO']."</grupo></alumno>";
 }
 echo $xml;
