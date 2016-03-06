@@ -1,0 +1,27 @@
+<form id="form_listarProfesores" name="form_listarProfesores"  class="form-horizontal oculto">
+    <h3 class="text-primary">Listado de profesores</h3>
+    <div class="form-group">
+        <label for="sel_lista_profesores_grupo" class="col-sm-4 control-label">Por grupo:</label>
+        <div class="col-xs-4">
+            <select class="form-control" id="sel_lista_profesores_grupo">
+                <option value="">Seleccione un grupo</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Ordenar por :</label>
+    <label class="checkbox-inline">
+        <input type="checkbox" id="nombre" value="nombre"> Nombre
+    </label>
+    <label class="checkbox-inline">
+        <input type="checkbox" id="apellidos" value="apellidos"> Apellidos
+    </label>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-3 col-xs-6">
+            <button type="button" id="btnMListarProf" class="btn btn-info">Listar</button>
+            <button type="button" id="btnCancelarListarProf" class="btn btn-danger">Cancelar</button>
+        </div>
+    </div>
+
+</form>

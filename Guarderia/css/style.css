@@ -1,4 +1,3 @@
-
 body{
     background: transparent linear-gradient(#B78CCE, #FFF) no-repeat;
 
@@ -61,4 +60,7 @@ body{
 .botones{
     background-color: #101010;
     color:#9d9d9d;
+}
+.ui-datepicker {
+    margin-left: 400px;
 }
