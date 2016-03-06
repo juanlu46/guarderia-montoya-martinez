@@ -6,7 +6,6 @@
         document.getElementById("btnActividades").addEventListener("click",mostrarFormAltaAct,false);
         $('#btnListarAlum').click(mostrarFormlistadoAlumnos);
         $('#btnNotas').click(mostrarFormAltaNotas);
-        $('#btnListarAlum').click(mostrarAlumnos);
            oXML=loadXMLDoc("xml/datosGuarderia.xml");
     }
 
@@ -324,7 +323,7 @@
         $("form").hide("normal");
         if($('#form_listarAlummnos').size() == 0 )
             $("<div>").appendTo('.listados').load("formularios/listadoAlumnos.html", function(){ $.getScript("js/listarAlum.js");});
-        $.get('php/obtenerGrupos.php',tratarRespuestaGrupos);
+        $.get('php/obtenerGrupos.php',function(){tratarRespuestaGrupos();});
         $("#form_listarAlummnos").show("normal");
 
     }

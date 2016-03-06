@@ -18,22 +18,13 @@ function tratarRespuestaListaAlumnos(){
 
     }
 }
-function tratarRespuestaGrupos(){
-    if(this.readyState==4 && this.status==200){
-        var oXml=this.responseXML;
+function tratarRespuestaGrupos(datos){
         var select=document.getElementById('sel_lista_alumnos_grupo');
-        var grupos=$(oXml).find('grupo');
+        var grupos=$(datos).find('grupo');
         for(var i=0;i<grupos.size();i++) {
             var opt=document.createElement('option');
             opt.id=$(grupos[i]).attr("id");
             opt.appendChild( document.createTextNode($(grupos[i]).find('descripcion').text()));
             select.appendChild(opt);
         }
-
-
-    }
-
-
-
-
 }

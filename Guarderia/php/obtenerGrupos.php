@@ -7,7 +7,7 @@ $mySQLi->query("SET NAMES utf8");
 $select=$mySQLi->query("SELECT * FROM grupos");
 $xml="<?xml version=\"1.0\" encoding=\"UTF-8\"?><grupos>";
 while($array=$select->fetch_assoc()){
-    $xml.="<grupo id='".$array['id']."'><descripcion>".$array['descripcion']."</descripcion>";
+    $xml.="<grupo id='".$array['ID']."'><descripcion>".$array['DESCRIPCION']."</descripcion>";
     $xml.="</grupo>";
 }
 echo $xml."</grupos>";
