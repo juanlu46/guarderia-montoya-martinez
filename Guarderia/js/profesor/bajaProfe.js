@@ -1,4 +1,5 @@
 var oFormBajaProfe=$("#form_bajaProf");
+cargaBajaProfe();
 function cargaBajaProfe(){
     $("#btnBajaProf").on('click',validarFormBajaProf);
     $("#btnCancelarBajaProf").on('click',cancelar);
@@ -12,7 +13,8 @@ function validarFormBajaProf(){
         todoOk=false;
     }
     if(todoOk==false)
-        alert(sMensajeError);
+        $("<div title='Error Validación'>"+sMensajeError+"</div>").dialog();
     else
-        alert(borrarProfesor(oFormBajaProfe.find("#text_dni").val()));
+        var sParametro = 'datos={"dni":"' + oFormBajaProfe.find("#text_dni").val() + '"}';
+        $.get("./php/bajaProfesor.php",sParametro);
 }

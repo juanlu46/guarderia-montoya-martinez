@@ -1,4 +1,5 @@
 var oFormAltaProfe=$("#form_altaProf");
+cargaAltaProfe();
 function cargaAltaProfe(){
     $("#btnAltaProf").on('click',validarFormAltaProf);
     $("#btnCancelarAltaProf").on('click',cancelar);
@@ -7,7 +8,6 @@ function cargaAltaProfe(){
 function validarFormAltaProf(){
     var sMensajeError="";
     var todoOk=true;
-    var oProfesor=null;
 
     if(!/^[a-z\d_]{2,15}$/i.test(oFormAltaProfe.find("#text_nombre").val())){
         sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
@@ -31,7 +31,7 @@ function validarFormAltaProf(){
     }
 
     if(todoOk==false){
-        alert(sMensajeError);
+        $("<div title='Error Validación'>"+sMensajeError+"</div>").dialog();
     }
     else{
         var datos=oFormAltaProfe.serialize();

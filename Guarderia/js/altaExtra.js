@@ -1,4 +1,5 @@
 var oFormAltaExtra=$("#form_altaAct");
+cargaAltaExtra();
 function cargaAltaExtra(){
     var oSelectAlumnos=$("#sel_alumno_act_alta");
     $("#btnAltaAct").on('click',validarAltaAct);
@@ -11,8 +12,7 @@ function cargaAltaExtra(){
 }
 
 function getAlumnosFormAct(){
-    var oForm=$("#form_altaAct");
-    var oSelect=oForm.find("#select_alumnos_act"); //Select Alumnos Seleccionado
+    var oSelect=oFormAltaExtra.find("#select_alumnos_act"); //Select Alumnos Seleccionado
     return oSelect.find("option");
 }
 
@@ -31,11 +31,18 @@ function validarAltaAct(){
     }
 
     if(todoOk==false){
-        alert(sMensajeError);
+        $("<div title='Error Validación'>"+sMensajeError+"</div>").dialog();
     }
     else{
-       var  arrayJson='{"id":oFormAltaExtra.find("#text_id").val(),'+
-            '"nombre":oFormAltaExtra.find("#text_nombre").val()}';
+       var oAlumnos=[];
+        var oOptions=$("#select_alumnos_act").find("option");
+        var x;
+        for(i=0;i<$(oOptions).size();i++){
+            oAlumnos.push($(oOptions[i]).val());
+        }
+       var  arrayJson='{"id":'+oFormAltaExtra.find("#text_id").val()+','+
+            '"nombre":"'+oFormAltaExtra.find("#text_nombre").val()+'","alumnos":'+
+           JSON.stringify(oAlumnos)+'}';
         $.ajax({url:"php/tramites/altaExtraEscolar.php",data:arrayJson,dataType:'script',method:'POST'});
 
         getAlumnosFormAct("alta");

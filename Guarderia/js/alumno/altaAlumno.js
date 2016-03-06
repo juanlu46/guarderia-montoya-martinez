@@ -1,4 +1,5 @@
 var oFormAltaAlum=$("#form_altaAlum");
+cargaAltaAlumno();
 function cargaAltaAlumno(){
     $("#btnAltaAlum").on('click',validarFormAltaAlum);
     $("#btnCancelarAltaAlum").on('click',cancelar)
@@ -39,18 +40,19 @@ function validarFormAltaAlum(){
 
 
     if(todoOk==false){
-        alert(sMensajeError);
+        $("<div title='Error Validación'>"+sMensajeError+"</div>").dialog();
     }
     else {
             var sJson='{'+
                 '"nombre":"'+oFormAltaAlum.find("#text_nombre").val()+'",'+
                 '"apellido":"'+oFormAltaAlum.find("#text_apellido").val()+'",'+
                 '"dni":"'+oFormAltaAlum.find("#text_dni").val()+'",'+
-                '"edad":"'+oFormAltaAlum.find("#text_edad").val()+'",'+
+                '"edad":'+oFormAltaAlum.find("#text_edad").val()+','+
                 '"grupo":"'+oFormAltaAlum.find("#text_grupo").val()+'",'+
-                '"telefono":"'+oFormAltaAlum.find("#text_tlfn").val()+'",'+
+                '"telefono":'+oFormAltaAlum.find("#text_tlfn").val()+','+
                 '"direccion":"'+oFormAltaAlum.find("#text_direccion").val()+'"'+
             '}';
-        $.post('php/tramites/altaAlumno.php','datos='+sJson);
+        var sParametro="datos="+sJson;
+        $.post('php/tramites/altaAlumno.php',sParametro);
     }
 }

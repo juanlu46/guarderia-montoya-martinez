@@ -1,4 +1,5 @@
 var oFormAltaNotas=$("form_modExp");
+cargaAltaNotas();
 function cargaAltaNotas(){
     $('#sel_alumnos_expediente_mod').change(mostrarRestoFormAltaNotas)
 }
@@ -50,7 +51,7 @@ function validarAltaNota(){
         sMensajeError+='La nota de la materia 3 no puede estar vacia';
     }
     if(todoOk==false)
-        alert(sMensajeError);
+        $("<div title='Error Validación'>"+sMensajeError+"</div>").dialog();
     else{
         var arrayJson="{'materia1': oFormAltaNotas.find('#text_mat1').val(),"+
             "'nota1':oFormAltaNotas.find('#text_nota1').val(),"+

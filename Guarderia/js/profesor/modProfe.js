@@ -1,4 +1,5 @@
 var oFormModProfe=$("#form_modProf");
+cargaModProfe();
 function cargaModProfe(){
     $('#sel_profesor_profesores_mod').selectedIndex="0";
     var oSelectProfesor=$("#sel_profesor_profesores_mod");
@@ -37,7 +38,7 @@ function validarFormModProf(){
     }
 
     if(todoOk==false){
-        alert(sMensajeError);
+        $("<div title='Error Validación'>"+sMensajeError+"</div>").dialog();
     }
     else{
         var oProfesor=newProfesor(form_modProf.text_nombre.value,form_modProf.text_apellido.value,form_modProf.text_dni.value,

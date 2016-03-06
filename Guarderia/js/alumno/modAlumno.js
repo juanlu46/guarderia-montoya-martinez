@@ -1,4 +1,5 @@
 var oFormModAlum=$("#form_modAlum");
+cargaModALumno();
 function cargaModALumno(){
     $("#restoFormModAlumularioModAlum").addClass("oculto");
     var oSelectAlumnos=$("#sel_alumno_alumnos_mod");
@@ -60,7 +61,7 @@ function validarFormModAlum(){
     }
     //FALTA VALIDACION DEL CMAPO GRUPO (una sola letra)
     if(todoOk==false){
-        alert(sMensajeError);
+        $("<div title='Error Validación'>"+sMensajeError+"</div>").dialog();
     }
     else{
         var oAlumnoMod=newAlumno(oFormModAlum.find("#txt_nombre").val(),oFormModAlum.find("#txt_apellido").val(),

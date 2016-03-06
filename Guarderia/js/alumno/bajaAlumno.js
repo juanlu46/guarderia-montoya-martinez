@@ -1,4 +1,5 @@
 var oFormBajaAlum=$("#form_bajaAlum");
+cargaBajaAlumno();
 function cargaBajaAlumno(){
     $("#btnBajaAlum").on('click',validarFormBajaAlum);
     $("#btnCancelarBajaAlum").on('click',cancelar);
@@ -12,7 +13,9 @@ function validarFormBajaAlum(){
         todoOk=false;
     }
     if(todoOk==false)
-        alert(sMensajeError);
-    else
-        alert(borrarAlumno(oFormBajaAlum.find("#text_dni").val()));
+        $("<div title='Error Validación'>"+sMensajeError+"</div>").dialog();
+    else {
+        var sParametro = 'datos={"dni":"' + oFormBajaAlum.find("#text_dni").val() + '"}';
+        $.get("./php/bajaAlumno.php",sParametro);
+    }
 }
