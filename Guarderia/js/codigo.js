@@ -5,8 +5,10 @@
         document.getElementById("btnProfesores").addEventListener("click",mostrarMenuProf,false);
         document.getElementById("btnActividades").addEventListener("click",mostrarFormAltaAct,false);
         $('#btnListarAlum').click(mostrarFormlistadoAlumnos);
+        $('#btnListarProf').click(mostrarFormListadoProfesores);
         $('#btnNotas').click(mostrarFormAltaNotas);
-           oXML=loadXMLDoc("xml/datosGuarderia.xml");
+        $('#btnListarAsig').click(mostrarFormListadoExtra);
+
     }
 
     //Metodos buscar
@@ -308,7 +310,10 @@
         ocultar("menuAlum");
         $("form").hide("normal");
         if($('#form_altaAct').size() == 0 )
-            $("<div>").appendTo('.form_altaAct').load("formularios/formAltaAct.html", function(){ $.getScript("js/altaExtra.js");});
+            $("<div>").appendTo('.form_altaAct').load("formularios/formAltaAct.html", function(){ $.getScript("js/altaExtra.js");
+                $( "#text_fecha" ).datepicker({
+                    dateFormat: "yy-mm-dd"
+                });});
          $("#form_altaAct").show("normal");
     }
     function mostrarFormAltaNotas(){
@@ -320,13 +325,37 @@
         $("#form_modExp").show("normal");
     }
     function mostrarFormlistadoAlumnos(){
+        ocultar("menuProf");
+        ocultar("menuAlum");
+        ocultar("menuAlum");
         $("form").hide("normal");
         if($('#form_listarAlummnos').size() == 0 ) {
-            $("<div>").appendTo('.listados').load("formularios/listadoAlumnos.html",function(){$("#form_listarAlummnos").show("normal");});
+            $("<div>").appendTo('.listadoAlum').load("formularios/listadoAlumnos.html",function(){$("#form_listarAlummnos").show("normal");});
             $.get({url: 'php/obtenerGrupos.php', success: tratarRespuestaGrupos});
         }
-
-
+    }
+    function mostrarFormListadoProfesores(){
+        ocultar("menuProf");
+        ocultar("menuAlum");
+        ocultar("menuAlum");
+        $("form").hide("normal");
+        if($('#form_listarProfesores').size() == 0 ) {
+            $("<div>").appendTo('.listadoProf').load("formularios/listadoProfesores.html",function(){$("#form_listarProfesores").show("normal");});
+            $.get({url: 'php/obtenerGrupos.php', success: tratarRespuestaGruposProf});
+        }
+    }
+    function mostrarFormListadoExtra(){
+        ocultar("menuProf");
+        ocultar("menuAlum");
+        ocultar("menuAlum");
+        $("form").hide("normal");
+        if($('#form_listarExtra').size() == 0 ) {
+            $("<div>").appendTo('.listadoExtra').load("formularios/listadoActExtra.html",function(){$("#form_listarExtra").show("normal");
+                $( "#fechaInicio" ).datepicker({dateFormat: "yy-mm-dd"});
+                $( "#fechaFin" ).datepicker({dateFormat: "yy-mm-dd"});});
+                $('#btnMListarExtra').click(mostrarActExtra);
+                $('#btnCancelarListarExtra').click(cancelar());
+        }
     }
 
     //Funciones limpiar campos
@@ -354,129 +383,48 @@
         return oOptions;
     }
 
-    //Metodo para cargar un archivo XML
-    function loadXMLDoc(filename)
-    {
-        if (window.XMLHttpRequest)
-        {
-            xhttp=new XMLHttpRequest();
-        }
-        else // code for IE5 and IE6
-        {
-            xhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xhttp.open("GET",filename,false);
-
-        xhttp.send();
-
-        return xhttp.responseXML;
-    }
 
 function listadoAlumnos(edad,grupo,oXml){
-    var pestana = open("","","");
-    pestana.document.title="Listado Alumnos";
-
-    var tabla=document.createElement("table");
-
-    var titulo=document.createElement("caption");
-    titulo.appendChild(document.createTextNode("Listado de Alumnos"));
-    tabla.appendChild(titulo);
-    var cabecera=document.createElement("thead");
-
-    var datosCabecera=new Array(7);
-    datosCabecera[0] = "Nombre";
-    datosCabecera[1]= "Apellidos";
-    datosCabecera[2]= "Dni";
-    datosCabecera[3]= "Edad";
-    datosCabecera[4]= "Teléfono";
-    datosCabecera[5]= "Dirección";
-    datosCabecera[6]= "Grupo";
-
-
-    cabecera.appendChild(crearCabeceraTabla(datosCabecera));
-    tabla.appendChild(cabecera);
-    var nombre="";
+    var listado="<div id='listarAlum'><table class='table table-hover'><caption>Listado de Alumnos</caption><thead><tr><th>Nombre</th>";
+    listado+="<th>Apellidos</th><th>Dni</th><th>Edad</th><th>Teléfono</th><th>Dirección</th><th>Grupo</th></tr><tbody>";
     var alumnos=$(oXml).find('alumno');
-    var datos=new Array(7);
-    var bodyTabla=document.createElement("tbody");
     for(var i=0;i<alumnos.length;i++) {
-            if(alumnos[i].getElementsByTagName("edad")[0].textContent == edad && alumnos[i].getElementsByTagName("grupo")[0].textContent==grupo ) {
-                datos[0] = $(alumnos[i]).find("nombre").text();
-                datos[1] = $(alumnos[i]).find("apellidos").text();
-                datos[2] = $(alumnos[i]).attr("dni");
-                datos[3] = $(alumnos[i]).find("edad").text();
-                datos[4] = $(alumnos[i]).find("contacto").text();
-                datos[5] = $(alumnos[i]).find("direccion").text();
-                datos[6] = $(alumnos[i]).find("grupo").text();
-
-                bodyTabla.appendChild(crearFilaTabla(datos));
+        listado+="<tr>";
+            if(($(alumnos[i]).find("edad").text() == edad || edad=="") && ($(alumnos[i]).find("grupo").text()==grupo || grupo=="" )) {
+                listado+="<td>"+$(alumnos[i]).find("nombre").text()+"</td>";
+                listado+="<td>"+$(alumnos[i]).find("apellidos").text()+"</td>";
+                listado+="<td>"+$(alumnos[i]).attr("dni")+"</td>";
+                listado+="<td>"+$(alumnos[i]).find("edad").text()+"</td>";
+                listado+="<td>"+$(alumnos[i]).find("contacto").text()+"</td>";
+                listado+="<td>"+$(alumnos[i]).find("direccion").text()+"</td>";
+                listado+="<td>"+$(alumnos[i]).find("grupo").text()+"</td>";
             }
+        listado+="</tr>";
     }
-
-    tabla.appendChild(bodyTabla);
-
-    pestana.document.body.appendChild(tabla);
-
+    listado+="</tbody></table></div>";
+    $('.listadoAlum').append(listado);
+    crearDialogo('listarAlum','Listado Alumnos');
 }
-    function listadoProfesores(){
-        var pestana = open("","","");
-        pestana.document.title="Listado Profesores";
-
-        var tabla=document.createElement("table");
-        var titulo=document.createElement("caption");
-        titulo.appendChild(document.createTextNode("Listado de Profesores"));
-        tabla.appendChild(titulo);
-        var cabecera=document.createElement("thead");
-
-        var datosCabecera=new Array(5);
-        datosCabecera[0] = "Nombre";
-        datosCabecera[1]= "Apellidos";
-        datosCabecera[2]= "Dni";
-        datosCabecera[3]= "Teléfono";
-        datosCabecera[4]= "Grupos";
-        cabecera.appendChild(crearCabeceraTabla(datosCabecera));
-        tabla.appendChild(cabecera);
-
-        var oProfesores=oXML.querySelectorAll("profesor");
-        var datos=new Array(5);
-        var bodyTabla=document.createElement("tbody");
-        for(var i=0;i<oProfesores.length;i++) {
-            datos[0] = oProfesores[i].getElementsByTagName("nombre")[0].textContent;
-            datos[1]= oProfesores[i].getElementsByTagName("apellidos")[0].textContent;
-            datos[2]= oProfesores[i].getAttribute("dni");
-            datos[3]= oProfesores[i].getElementsByTagName("telefono")[0].textContent;
-            datos[4]="";
-            var gruposProfesorActual=oProfesores[i].getElementsByTagName("grupo");
-
-            for(var j=0;j<gruposProfesorActual.length;j++){
-                datos[4]+=gruposProfesorActual[j].getAttribute("id")+" ";
+    function listadoProfesores(grupo,ordenarNombre,ordenarApellidos,oXml){
+        var listado="<div id='listarProf'><table class='table table-hover'><caption>Listado de Profesores</caption><thead><tr><th>Nombre</th>";
+        listado+="<th>Apellidos</th><th>Dni</th><th>Teléfono</th><th>Grupo</th></tr><tbody>";
+        var profesores=$(oXml).find('profesor');
+        for(var i=0;i<profesores.length;i++) {
+            listado+="<tr>";
+            if($(profesores[i]).find("grupo").text()==grupo || grupo=="") {
+                listado += "<td>" + $(profesores[i]).find("nombre").text() + "</td>";
+                listado += "<td>" + $(profesores[i]).find("apellidos").text() + "</td>";
+                listado += "<td>" + $(profesores[i]).attr("dni") + "</td>";
+                listado += "<td>" + $(profesores[i]).find("telefono").text() + "</td>";
+                listado += "<td>" + $(profesores[i]).find("grupo").text() + "</td>";
             }
-            bodyTabla.appendChild(crearFilaTabla(datos));
+            listado+="</tr>";
         }
-        tabla.appendChild(bodyTabla);
-        pestana.document.body.appendChild(tabla);
-    }
-    function crearFilaTabla(datos){
-        var tr=document.createElement("tr");
-
-        for(var i=0;i<datos.length;i++){
-            var td=document.createElement("td");
-            td.appendChild(document.createTextNode(datos[i]));
-            tr.appendChild(td);
-        }
-        return tr;
+        listado+="</tbody></table></div>";
+        $('.listadoProf').append(listado);
+        crearDialogo('listarProf','Listado Profesores');
     }
 
-    function crearCabeceraTabla(datos){
-        var tr=document.createElement("tr");
-
-        for(var i=0;i<datos.length;i++){
-            var td=document.createElement("th");
-            td.appendChild(document.createTextNode(datos[i]));
-            tr.appendChild(td);
-        }
-        return tr;
-    }
     function tratarRespuestaGrupos(datos){
         var select=document.getElementById('sel_lista_alumnos_grupo');
         var grupos=$(datos).find('grupo');
@@ -498,10 +446,77 @@ function listadoAlumnos(edad,grupo,oXml){
     }
     function tratarRespuestaListaAlumnos(){
         if(this.readyState==4 && this.status==200){
-
             var edad = $('#sel_lista_alumnos_edad').val();
             var grupo = $('#sel_lista_alumnos_grupo').val();
             var oXml=this.responseXML;
             listadoAlumnos(edad,grupo,oXml);
+        }
+    }
+
+    function crearDialogo(id,titulo){
+        $( "#"+id ).dialog({
+            autoOpen: true,
+            show: {
+                effect: "blind",
+                duration: 1000
+            },
+            hide: {
+                effect: "explode",
+                duration: 1000
+            },
+            buttons: {
+                "Aceptar": function () {
+                    $(this).dialog("close");
+                }
+            },title:titulo,
+            width:800
+        });
+
+    }
+    function tratarRespuestaGruposProf(datos){
+        var select=$('#sel_lista_profesores_grupo');
+        var grupos=$(datos).find('grupo');
+        for(var i=0;i<grupos.size();i++) {
+            var opt=document.createElement('option');
+            opt.id=$(grupos[i]).attr("id");
+            opt.appendChild( document.createTextNode($(grupos[i]).attr("id")));
+            select.append(opt);
+
+        }
+        $('#btnMListarProf').click(mostrarProfesores);
+    }
+    function mostrarProfesores(){
+        var ordenarNombre = $('#nombre').prop('checked');
+        var ordenarApellidos=$('#apellidos').prop('checked');
+        oAjaxListarProfesores=new XMLHttpRequest();
+        if(ordenarNombre==true)
+             oAjaxListarProfesores.open('GET','php/obtenerProfesores?order=nombre.php');
+        else if(ordenarApellidos==true)
+            oAjaxListarProfesores.open('GET','php/obtenerProfesores?order=apellidos.php');
+        else
+            oAjaxListarProfesores.open('GET','php/obtenerProfesores.php');
+        oAjaxListarProfesores.addEventListener('readystatechange',tratarRespuestaListaProfesores);
+        oAjaxListarProfesores.send();
+    }
+    function tratarRespuestaListaProfesores(){
+        if(this.readyState == 4 && this.status ==200)	{
+            var ordenarNombre = $('#nombre').prop('checked');
+            var ordenarApellidos=$('#apellidos').prop('checked');
+            var grupo = $('#sel_lista_profesores_grupo').val();
+            var oXml=this.responseXML;
+            listadoProfesores(grupo,ordenarNombre,ordenarApellidos,oXml);
+        }
+    }
+    function mostrarActExtra(){
+        oAjaxListarActExtra=new XMLHttpRequest();
+        oAjaxListarActExtra.open('POST','php/obtenerExtraescolares.php');
+        oAjaxListarActExtra.addEventListener('readystatechange',tratarRespuestaListaActExtra);
+        oAjaxListarActExtra.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        oAjaxListarActExtra.send();
+    }
+    function tratarRespuestaListaActExtra(){
+        if(this.readyState==4 && this.status==200){
+            var resultado=this.responseText();
+            crearDialogo('listadoExtra','Listado de Actividades Extraescolares');
         }
     }

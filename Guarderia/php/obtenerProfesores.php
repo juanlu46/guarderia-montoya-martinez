@@ -4,11 +4,11 @@ header('Cache-Control: no-cache, must-revalidate');
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 $mySQLi=new mysqli("localhost","root","","guarderia");
 $mySQLi->query("SET NAMES utf8");
-$select=$mySQLi->query("SELECT * FROM profesores");
+$select=$mySQLi->query("SELECT * FROM profesor");
 $xml="<?xml version=\"1.0\" encoding=\"UTF-8\"?><profesores>";
 while($array=$select->fetch_assoc()){
-    $xml.="<profesor dni='".$array['dni']."'><nombre>".$array['nombre']."</nombre>";
-    $xml.="<apellidos>".$array['apellidos']."</apellidos><telefono>".$array['telefono']."</telefono>";
-    $xml.="<grupo>".$array['grupo']."</grupo></profesor>";
+    $xml.="<profesor dni='".$array['DNI']."'><nombre>".$array['NOMBRE']."</nombre>";
+    $xml.="<apellidos>".$array['APELLIDOS']."</apellidos><telefono>".$array['TELEFONO']."</telefono>";
+    $xml.="<grupo>".$array['GRUPO']."</grupo></profesor>";
 }
 echo $xml."</profesores>";
