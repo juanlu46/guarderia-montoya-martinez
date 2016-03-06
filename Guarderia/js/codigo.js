@@ -321,10 +321,11 @@
     }
     function mostrarFormlistadoAlumnos(){
         $("form").hide("normal");
-        if($('#form_listarAlummnos').size() == 0 )
-            $("<div>").appendTo('.listados').load("formularios/listadoAlumnos.html", function(){ $.getScript("js/listarAlum.js");});
-        $.get('php/obtenerGrupos.php',function(){tratarRespuestaGrupos();});
-        $("#form_listarAlummnos").show("normal");
+        if($('#form_listarAlummnos').size() == 0 ) {
+            $("<div>").appendTo('.listados').load("formularios/listadoAlumnos.html",function(){$("#form_listarAlummnos").show("normal");});
+            $.get({url: 'php/obtenerGrupos.php', success: tratarRespuestaGrupos});
+        }
+
 
     }
 
@@ -371,17 +372,18 @@
         return xhttp.responseXML;
     }
 
-function listadoAlumnos(){
+function listadoAlumnos(edad,grupo,oXml){
     var pestana = open("","","");
     pestana.document.title="Listado Alumnos";
 
     var tabla=document.createElement("table");
+
     var titulo=document.createElement("caption");
     titulo.appendChild(document.createTextNode("Listado de Alumnos"));
     tabla.appendChild(titulo);
     var cabecera=document.createElement("thead");
 
-    var datosCabecera=new Array(8);
+    var datosCabecera=new Array(7);
     datosCabecera[0] = "Nombre";
     datosCabecera[1]= "Apellidos";
     datosCabecera[2]= "Dni";
@@ -389,30 +391,26 @@ function listadoAlumnos(){
     datosCabecera[4]= "Teléfono";
     datosCabecera[5]= "Dirección";
     datosCabecera[6]= "Grupo";
-    datosCabecera[7]= "Bono Comedor";
 
 
     cabecera.appendChild(crearCabeceraTabla(datosCabecera));
     tabla.appendChild(cabecera);
-
-    var alumnos=oXML.querySelectorAll("alumno");
-    var datos=new Array(8);
+    var nombre="";
+    var alumnos=$(oXml).find('alumno');
+    var datos=new Array(7);
     var bodyTabla=document.createElement("tbody");
     for(var i=0;i<alumnos.length;i++) {
-            datos[0] = alumnos[i].getElementsByTagName("nombre")[0].textContent;
-            datos[1]= alumnos[i].getElementsByTagName("apellidos")[0].textContent;
-            datos[2]= alumnos[i].getAttribute("dni");
-            datos[3]= alumnos[i].getElementsByTagName("edad")[0].textContent;
-            datos[4]= alumnos[i].getElementsByTagName("contacto")[0].textContent;
-            datos[5]= alumnos[i].getElementsByTagName("direccion")[0].textContent;
-            datos[6]= alumnos[i].getElementsByTagName("grupo")[0].textContent;
-        if(buscarBono(alumnos[i].getAttribute("dni")) == null)
-           datos[7]="No";
-        else
-            datos[7]="Sí";
+            if(alumnos[i].getElementsByTagName("edad")[0].textContent == edad && alumnos[i].getElementsByTagName("grupo")[0].textContent==grupo ) {
+                datos[0] = $(alumnos[i]).find("nombre").text();
+                datos[1] = $(alumnos[i]).find("apellidos").text();
+                datos[2] = $(alumnos[i]).attr("dni");
+                datos[3] = $(alumnos[i]).find("edad").text();
+                datos[4] = $(alumnos[i]).find("contacto").text();
+                datos[5] = $(alumnos[i]).find("direccion").text();
+                datos[6] = $(alumnos[i]).find("grupo").text();
 
-
-        bodyTabla.appendChild(crearFilaTabla(datos));
+                bodyTabla.appendChild(crearFilaTabla(datos));
+            }
     }
 
     tabla.appendChild(bodyTabla);
@@ -457,4 +455,53 @@ function listadoAlumnos(){
         }
         tabla.appendChild(bodyTabla);
         pestana.document.body.appendChild(tabla);
+    }
+    function crearFilaTabla(datos){
+        var tr=document.createElement("tr");
+
+        for(var i=0;i<datos.length;i++){
+            var td=document.createElement("td");
+            td.appendChild(document.createTextNode(datos[i]));
+            tr.appendChild(td);
+        }
+        return tr;
+    }
+
+    function crearCabeceraTabla(datos){
+        var tr=document.createElement("tr");
+
+        for(var i=0;i<datos.length;i++){
+            var td=document.createElement("th");
+            td.appendChild(document.createTextNode(datos[i]));
+            tr.appendChild(td);
+        }
+        return tr;
+    }
+    function tratarRespuestaGrupos(datos){
+        var select=document.getElementById('sel_lista_alumnos_grupo');
+        var grupos=$(datos).find('grupo');
+        for(var i=0;i<grupos.size();i++) {
+            var opt=document.createElement('option');
+            opt.id=$(grupos[i]).attr("id");
+            opt.appendChild( document.createTextNode($(grupos[i]).attr("id")));
+            select.appendChild(opt);
+        }
+        $('#btnMListarAlum').click(mostrarAlumnos);
+    }
+
+    function mostrarAlumnos(){
+        oAjaxListarAlumnos=new XMLHttpRequest();
+        oAjaxListarAlumnos.open('POST','php/obtenerAlumnos.php');
+        oAjaxListarAlumnos.addEventListener('readystatechange',tratarRespuestaListaAlumnos);
+        oAjaxListarAlumnos.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        oAjaxListarAlumnos.send();
+    }
+    function tratarRespuestaListaAlumnos(){
+        if(this.readyState==4 && this.status==200){
+
+            var edad = $('#sel_lista_alumnos_edad').val();
+            var grupo = $('#sel_lista_alumnos_grupo').val();
+            var oXml=this.responseXML;
+            listadoAlumnos(edad,grupo,oXml);
+        }
     }
