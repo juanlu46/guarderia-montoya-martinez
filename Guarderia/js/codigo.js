@@ -4,6 +4,7 @@
         document.getElementById("btnAlumnos").addEventListener("click",mostrarMenuAlumnos,false);
         document.getElementById("btnProfesores").addEventListener("click",mostrarMenuProf,false);
         document.getElementById("btnActividades").addEventListener("click",mostrarFormAltaAct,false);
+        $('#btnListarAlum').click(mostrarFormlistadoAlumnos);
         $('#btnNotas').click(mostrarFormAltaNotas);
         $('#btnListarAlum').click(mostrarAlumnos);
            oXML=loadXMLDoc("xml/datosGuarderia.xml");
@@ -319,6 +320,14 @@
             $("<div>").appendTo('.formModExp').load("formularios/formAltaNota.html", function(){ $.getScript("js/altaNotas.js");});
         $("#form_modExp").show("normal");
     }
+    function mostrarFormlistadoAlumnos(){
+        $("form").hide("normal");
+        if($('#form_listarAlummnos').size() == 0 )
+            $("<div>").appendTo('.listados').load("formularios/listadoAlumnos.html", function(){ $.getScript("js/listarAlum.js");});
+        $.get('php/obtenerGrupos.php',tratarRespuestaGrupos);
+        $("#form_listarAlummnos").show("normal");
+
+    }
 
     //Funciones limpiar campos
     function limpiarCampos(){
@@ -450,25 +459,3 @@ function listadoAlumnos(){
         tabla.appendChild(bodyTabla);
         pestana.document.body.appendChild(tabla);
     }
-    function mostrarAlumnos(){
-        oAjaxListarAlumnos=new XMLHttpRequest();
-        oAjaxListarAlumnos.open('POST','php/obtenerAlumnos.php');
-        oAjaxListarAlumnos.addEventListener('readystatechange',tratarRespuestaListaAlumnos);
-        oAjaxListarAlumnos.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        oAjaxListarAlumnos.send();
-    }
-    function tratarRespuestaListaAlumnos(){
-        if(this.readyState==4 && this.status==200){
-            var oXml=this.responseXML;
-            var nombre="";
-            var alumnos=$(oXml).find('alumno');
-            for(var i=0;i<alumnos.size();i++) {
-                 nombre+= $(alumnos[i]).attr("dni");
-            }
-            alert(nombre);
-
-        }
-
-
-    }
-
