@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-02-2016 a las 18:13:27
+-- Tiempo de generación: 06-03-2016 a las 21:04:47
 -- Versión del servidor: 10.1.9-MariaDB
 -- Versión de PHP: 5.6.15
 
@@ -39,10 +39,16 @@ CREATE TABLE `alumnos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELACIONES PARA LA TABLA `alumnos`:
---   `GRUPO`
---       `grupos` -> `ID`
+-- Volcado de datos para la tabla `alumnos`
 --
+
+INSERT INTO `alumnos` (`DNI`, `NOMBRE`, `APELLIDOS`, `EDAD`, `CONTACTO`, `DIRECCION`, `GRUPO`) VALUES
+('1234', 'jghjgh', 'hgfjjfg', 1, 545, 'fghfd', 'A'),
+('48122420A', 'Juan Luis', 'Montoya', 20, 666170642, 'C/Teresa de jesus,3', ''),
+('567857', 'FJFKH', 'JHKGJKHK', 6, 67967, 'HJLHJ', 'A'),
+('63456436', 'JFHJ', 'FJHJFG', 45, 56767, 'KGHKJGKGH', 'A'),
+('85678', 'GHLKGF', 'LGHKH', 4, 878967, 'KLHLHJ', 'A'),
+('87678', 'ytryrt', 'etyer', 1, 5645, 'ghfmng', 'A');
 
 -- --------------------------------------------------------
 
@@ -56,12 +62,16 @@ CREATE TABLE `alum_extra` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELACIONES PARA LA TABLA `alum_extra`:
---   `DNI_ALUMNO`
---       `alumnos` -> `DNI`
---   `ID_EXTRAESCOLAR`
---       `extraescolares` -> `ID`
+-- Volcado de datos para la tabla `alum_extra`
 --
+
+INSERT INTO `alum_extra` (`DNI_ALUMNO`, `ID_EXTRAESCOLAR`) VALUES
+('48122420A', 1),
+('48122420A', 2),
+('567857', 1),
+('63456436', 1),
+('63456436', 2),
+('85678', 1);
 
 -- --------------------------------------------------------
 
@@ -76,8 +86,12 @@ CREATE TABLE `extraescolares` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELACIONES PARA LA TABLA `extraescolares`:
+-- Volcado de datos para la tabla `extraescolares`
 --
+
+INSERT INTO `extraescolares` (`ID`, `DESCRIPCION`, `FECHA`) VALUES
+(1, 'JFGJFHJ', '2016-03-02'),
+(2, 'FGJFFG', '2016-03-24');
 
 -- --------------------------------------------------------
 
@@ -91,8 +105,11 @@ CREATE TABLE `grupos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELACIONES PARA LA TABLA `grupos`:
+-- Volcado de datos para la tabla `grupos`
 --
+
+INSERT INTO `grupos` (`ID`, `DESCRIPCION`) VALUES
+('A', 'dgdfgdf');
 
 -- --------------------------------------------------------
 
@@ -112,12 +129,6 @@ CREATE TABLE `notas` (
   `NOTA3` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- RELACIONES PARA LA TABLA `notas`:
---   `DNI_ALUMNO`
---       `alumnos` -> `DNI`
---
-
 -- --------------------------------------------------------
 
 --
@@ -133,12 +144,6 @@ CREATE TABLE `profesor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELACIONES PARA LA TABLA `profesor`:
---   `GRUPO`
---       `grupos` -> `ID`
---
-
---
 -- Índices para tablas volcadas
 --
 
@@ -146,8 +151,7 @@ CREATE TABLE `profesor` (
 -- Indices de la tabla `alumnos`
 --
 ALTER TABLE `alumnos`
-  ADD PRIMARY KEY (`DNI`),
-  ADD UNIQUE KEY `GRUPO` (`GRUPO`);
+  ADD PRIMARY KEY (`DNI`);
 
 --
 -- Indices de la tabla `alum_extra`
@@ -178,18 +182,11 @@ ALTER TABLE `notas`
 -- Indices de la tabla `profesor`
 --
 ALTER TABLE `profesor`
-  ADD PRIMARY KEY (`DNI`),
-  ADD UNIQUE KEY `GRUPO` (`GRUPO`);
+  ADD PRIMARY KEY (`DNI`);
 
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `alumnos`
---
-ALTER TABLE `alumnos`
-  ADD CONSTRAINT `FK_AL_GP` FOREIGN KEY (`GRUPO`) REFERENCES `grupos` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `alum_extra`
@@ -203,74 +200,6 @@ ALTER TABLE `alum_extra`
 --
 ALTER TABLE `notas`
   ADD CONSTRAINT `FK_AL_NT` FOREIGN KEY (`DNI_ALUMNO`) REFERENCES `alumnos` (`DNI`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `profesor`
---
-ALTER TABLE `profesor`
-  ADD CONSTRAINT `FK_PF_GP` FOREIGN KEY (`GRUPO`) REFERENCES `grupos` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-
---
--- Metadatos
---
-USE `phpmyadmin`;
-
---
--- Metadatos para alumnos
---
-
---
--- Metadatos para alum_extra
---
-
---
--- Metadatos para extraescolares
---
-
---
--- Metadatos para grupos
---
-
---
--- Metadatos para notas
---
-
---
--- Metadatos para profesor
---
-
---
--- Metadatos para guarderia
---
-
---
--- Volcado de datos para la tabla `pma__relation`
---
-
-INSERT INTO `pma__relation` (`master_db`, `master_table`, `master_field`, `foreign_db`, `foreign_table`, `foreign_field`) VALUES
-('guarderia', 'ALUM_EXTRA', 'DNI_ALUMNO', 'guarderia', 'alumnos', 'DNI');
-
---
--- Volcado de datos para la tabla `pma__pdf_pages`
---
-
-INSERT INTO `pma__pdf_pages` (`db_name`, `page_descr`) VALUES
-('guarderia', '1');
-
-SET @LAST_PAGE = LAST_INSERT_ID();
-
---
--- Volcado de datos para la tabla `pma__table_coords`
---
-
-INSERT INTO `pma__table_coords` (`db_name`, `table_name`, `pdf_page_number`, `x`, `y`) VALUES
-('guarderia', 'alum_extra', @LAST_PAGE, 102, 15),
-('guarderia', 'alumnos', @LAST_PAGE, 377, 14),
-('guarderia', 'extraescolares', @LAST_PAGE, 103, 142),
-('guarderia', 'grupos', @LAST_PAGE, 601, 182),
-('guarderia', 'notas', @LAST_PAGE, 845, 9),
-('guarderia', 'profesor', @LAST_PAGE, 375, 219);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
