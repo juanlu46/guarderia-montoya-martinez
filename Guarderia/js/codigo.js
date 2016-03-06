@@ -268,40 +268,40 @@
     function mostrarFormAltaProf(){
         $("form").hide("normal");
         if($('#form_altaProf').size() == 0 )
-            $("<div>").appendTo('.form_altaProf').load("formularios/profesor/formAltaProf.html", function(){ $.getScript("js/profesor/altaProfe.js");});
+            $("<div>").appendTo('.form_altaProf').load("formularios/profesor/formAltaProf.html", function(){$("#form_altaProf").show("normal"); $.getScript("js/profesor/altaProfe.js");});
+        $.ajax({url:'php/obtenerGrupos.php',success:rellenarSelectGruposAltaProf});
         $("#form_altaProf").show("normal");
     }
     function mostrarFormModProf(){
         $("form").hide("normal");
         if($('#form_modProf').size() == 0 )
-            $("<div>").appendTo('.form_modProf').load("formularios/profesor/formModProf.html", function(){ $.getScript("js/profesor/modProfe.js");});
+            $("<div>").appendTo('.form_modProf').load("formularios/profesor/formModProf.html", function(){$("#form_modProf").show("normal"); $.getScript("js/profesor/modProfe.js");});
         $("#form_modProf").show("normal");
     }
 
     function mostrarFormBajProf(){
         $("form").hide("normal");
         if($('#form_bajaProf').size() == 0 )
-            $("<div>").appendTo('.form_bajaProf').load("formularios/profesor/formBajaProf.html", function(){ $.getScript("js/profesor/bajaProfe.js");});
+            $("<div>").appendTo('.form_bajaProf').load("formularios/profesor/formBajaProf.html", function(){$("#form_bajaProf").show("normal"); $.getScript("js/profesor/bajaProfe.js");});
         $("#form_bajaProf").show("normal");
     }
 
     function mostrarFormAltaAlum(){
         $("form").hide("normal");
-        if($('#form_altaAlum').size() == 0 ){
-            $("<div>").appendTo('.form_altaAlum').load("formularios/alumno/formAltaAlum.html", function(){ $.getScript("js/alumno/altaAlumno.js");});
-        }
+        if($('#form_altaAlum').size() == 0 )
+            $("<div>").appendTo('.form_altaAlum').load("formularios/alumno/formAltaAlum.html", function(){$("#form_altaAlum").show("normal"); $.getScript("js/alumno/altaAlumno.js");});
         $("#form_altaAlum").show("normal");
     }
     function mostrarFormModAlum(){
         $("form").hide("normal");
         if($('#form_modAlum').size() == 0 )
-            $("<div>").appendTo('.form_modAlum').load("formularios/alumno/formModAlum.html", function(){ $.getScript("js/alumno/modAlumno.js");});
+            $("<div>").appendTo('.form_modAlum').load("formularios/alumno/formModAlum.html", function(){$("#form_modAlum").show("normal"); $.getScript("js/alumno/modAlumno.js");});
         $("#form_modAlum").show("normal");
     }
     function mostrarFormBajAlum(){
         $("form").hide("normal");
         if($('#form_bajaAlum').size() == 0 )
-            $("<div>").appendTo('.form_bajaAlum').load("formularios/alumno/formBajaAlum.html", function(){ $.getScript("js/alumno/bajaAlumno.js");});
+            $("<div>").appendTo('.form_bajaAlum').load("formularios/alumno/formBajaAlum.html", function(){$("#form_bajaAlum").show("normal"); $.getScript("js/alumno/bajaAlumno.js");});
         $("#form_bajaAlum").show("normal");
 }
 
@@ -310,18 +310,19 @@
         ocultar("menuAlum");
         $("form").hide("normal");
         if($('#form_altaAct').size() == 0 )
-            $("<div>").appendTo('.form_altaAct').load("formularios/formAltaAct.html", function(){ $.getScript("js/altaExtra.js");
+            $("<div>").appendTo('.form_altaAct').load("formularios/formAltaAct.html", function(){$("#form_altaAct").show("normal"); $.getScript("js/altaExtra.js");
                 $( "#text_fecha" ).datepicker({
                     dateFormat: "yy-mm-dd"
                 });});
          $("#form_altaAct").show("normal");
+        $.ajax({url:'php/obtenerAlumnos.php',success:rellenarSelectAlumnosAct});
     }
     function mostrarFormAltaNotas(){
         ocultar("menuProf");
         ocultar("menuAlum");
         $("form").hide("normal");
         if($('#form_modExp').size() == 0 )
-            $("<div>").appendTo('.formModExp').load("formularios/formAltaNota.html", function(){ $.getScript("js/altaNotas.js");});
+            $("<div>").appendTo('.formModExp').load("formularios/formAltaNota.html", function(){$("#form_modExp").show("normal"); $.getScript("js/altaNotas.js");});
         $("#form_modExp").show("normal");
     }
     function mostrarFormlistadoAlumnos(){
@@ -343,6 +344,7 @@
             $("<div>").appendTo('.listadoProf').load("formularios/listadoProfesores.html",function(){$("#form_listarProfesores").show("normal");});
             $.get({url: 'php/obtenerGrupos.php', success: tratarRespuestaGruposProf});
         }
+
     }
     function mostrarFormListadoExtra(){
         ocultar("menuProf");
@@ -353,9 +355,10 @@
             $("<div>").appendTo('.listadoExtra').load("formularios/listadoActExtra.html",function(){$("#form_listarExtra").show("normal");
                 $( "#fechaInicio" ).datepicker({dateFormat: "yy-mm-dd"});
                 $( "#fechaFin" ).datepicker({dateFormat: "yy-mm-dd"});});
-                $('#btnMListarExtra').click(mostrarActExtra);
-                $('#btnCancelarListarExtra').click(cancelar());
         }
+        $("#form_listarExtra").show("normal");
+        $('#btnMListarExtra').click(mostrarActExtra);
+        $('#btnCancelarListarExtra').click(cancelar);
     }
 
     //Funciones limpiar campos
@@ -435,6 +438,7 @@ function listadoAlumnos(edad,grupo,oXml){
             select.appendChild(opt);
         }
         $('#btnMListarAlum').click(mostrarAlumnos);
+        $('#btnCancelarListarAlum').click(cancelar);
     }
 
     function mostrarAlumnos(){
@@ -484,6 +488,7 @@ function listadoAlumnos(edad,grupo,oXml){
 
         }
         $('#btnMListarProf').click(mostrarProfesores);
+
     }
     function mostrarProfesores(){
         var ordenarNombre = $('#nombre').prop('checked');
@@ -509,7 +514,7 @@ function listadoAlumnos(edad,grupo,oXml){
     }
     function mostrarActExtra(){
         oAjaxListarActExtra=new XMLHttpRequest();
-        oAjaxListarActExtra.open('POST','php/obtenerExtraescolares.php');
+        oAjaxListarActExtra.open('POST','php/obtenerExraescolares.php');
         oAjaxListarActExtra.addEventListener('readystatechange',tratarRespuestaListaActExtra);
         oAjaxListarActExtra.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         oAjaxListarActExtra.send();
@@ -519,4 +524,26 @@ function listadoAlumnos(edad,grupo,oXml){
             var resultado=this.responseText();
             crearDialogo('listadoExtra','Listado de Actividades Extraescolares');
         }
+    }
+    function rellenarSelectGruposAltaProf(datos){
+        var select=$('#select_gruposProf');
+        var grupos=$(datos).find('grupo');
+        for(var i=0;i<grupos.size();i++) {
+            var opt=document.createElement('option');
+            opt.id=$(grupos[i]).attr("id");
+            opt.appendChild( document.createTextNode($(grupos[i]).attr("id")));
+            select.append(opt);
+        }
+    }
+    function rellenarSelectAlumnosAct(datos){
+        var select=$('#sel_alumno_act_alta');
+        var alumnos=$(datos).find('alumno');
+        for(var i=0;i<alumnos.size();i++) {
+            var opt=document.createElement('option');
+            opt.id=$(alumnos[i]).attr("dni");
+            opt.appendChild( document.createTextNode($(alumnos[i]).find("nombre").text()+" "+$(alumnos[i]).find("apellidos").text()));
+            select.append(opt);
+        }
+
+
     }
