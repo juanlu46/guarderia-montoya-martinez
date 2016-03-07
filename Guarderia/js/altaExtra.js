@@ -4,9 +4,6 @@ function cargaAltaExtra(){
     var oSelectAlumnos=$("#sel_alumno_act_alta");
     $("#btnAltaAct").on('click',validarAltaAct);
     $("#btnCancelarAltaAct").on('click',cancelar);
-    if(oSelectAlumnos.length==1) {
-        cargarSelectAlumnos("sel_alumno_act_alta");
-    }
     $("#anadirAlumnosAct").on('click',anadirAlumnosAltaAct);
     $("#btnEliminarAlumno_act").on('click',eliminarAlumnoActAlta);
 }
@@ -19,7 +16,6 @@ function getAlumnosFormAct(){
 function validarAltaAct(){
     var sMensajeError="";
     var todoOk=true;
-    var actividadActual=null;
 
     if(isNaN(oFormAltaExtra.find("#text_id").val()) || oFormAltaExtra.find("#text_id").val()==""){
         sMensajeError+="ID incorrecto\n";

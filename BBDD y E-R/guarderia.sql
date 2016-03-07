@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.7.1
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-03-2016 a las 22:34:02
--- Versión del servidor: 5.5.39
--- Versión de PHP: 5.4.31
+-- Tiempo de generación: 07-03-2016 a las 20:07:53
+-- Versión del servidor: 10.1.9-MariaDB
+-- Versión de PHP: 5.6.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,11 +14,13 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `guarderia`
 --
+CREATE DATABASE IF NOT EXISTS `guarderia` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `guarderia`;
 
 -- --------------------------------------------------------
 
@@ -26,7 +28,7 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `alumnos`
 --
 
-CREATE TABLE IF NOT EXISTS `alumnos` (
+CREATE TABLE `alumnos` (
   `DNI` varchar(9) NOT NULL,
   `NOMBRE` varchar(15) NOT NULL,
   `APELLIDOS` varchar(30) NOT NULL,
@@ -52,7 +54,7 @@ INSERT INTO `alumnos` (`DNI`, `NOMBRE`, `APELLIDOS`, `EDAD`, `CONTACTO`, `DIRECC
 -- Estructura de tabla para la tabla `alum_extra`
 --
 
-CREATE TABLE IF NOT EXISTS `alum_extra` (
+CREATE TABLE `alum_extra` (
   `DNI_ALUMNO` varchar(9) NOT NULL,
   `ID_EXTRAESCOLAR` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -73,7 +75,7 @@ INSERT INTO `alum_extra` (`DNI_ALUMNO`, `ID_EXTRAESCOLAR`) VALUES
 -- Estructura de tabla para la tabla `extraescolares`
 --
 
-CREATE TABLE IF NOT EXISTS `extraescolares` (
+CREATE TABLE `extraescolares` (
   `ID` int(3) NOT NULL,
   `DESCRIPCION` varchar(50) NOT NULL,
   `FECHA` date NOT NULL
@@ -93,7 +95,7 @@ INSERT INTO `extraescolares` (`ID`, `DESCRIPCION`, `FECHA`) VALUES
 -- Estructura de tabla para la tabla `grupos`
 --
 
-CREATE TABLE IF NOT EXISTS `grupos` (
+CREATE TABLE `grupos` (
   `ID` varchar(1) NOT NULL,
   `DESCRIPCION` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -113,7 +115,7 @@ INSERT INTO `grupos` (`ID`, `DESCRIPCION`) VALUES
 -- Estructura de tabla para la tabla `notas`
 --
 
-CREATE TABLE IF NOT EXISTS `notas` (
+CREATE TABLE `notas` (
   `DNI_ALUMNO` varchar(9) NOT NULL,
   `EVALUACION` varchar(2) NOT NULL,
   `CURSO_ESCOLAR` varchar(9) NOT NULL,
@@ -139,7 +141,7 @@ INSERT INTO `notas` (`DNI_ALUMNO`, `EVALUACION`, `CURSO_ESCOLAR`, `MATERIA1`, `N
 -- Estructura de tabla para la tabla `profesor`
 --
 
-CREATE TABLE IF NOT EXISTS `profesor` (
+CREATE TABLE `profesor` (
   `DNI` varchar(9) NOT NULL,
   `NOMBRE` varchar(15) NOT NULL,
   `APELLIDOS` varchar(30) NOT NULL,
@@ -164,54 +166,48 @@ INSERT INTO `profesor` (`DNI`, `NOMBRE`, `APELLIDOS`, `TELEFONO`, `GRUPO`) VALUE
 -- Indices de la tabla `alumnos`
 --
 ALTER TABLE `alumnos`
- ADD PRIMARY KEY (`DNI`);
+  ADD PRIMARY KEY (`DNI`);
 
 --
 -- Indices de la tabla `alum_extra`
 --
 ALTER TABLE `alum_extra`
- ADD PRIMARY KEY (`DNI_ALUMNO`,`ID_EXTRAESCOLAR`), ADD KEY `FK_EX_EX` (`ID_EXTRAESCOLAR`);
+  ADD PRIMARY KEY (`DNI_ALUMNO`,`ID_EXTRAESCOLAR`),
+  ADD KEY `FK_EX_EX` (`ID_EXTRAESCOLAR`);
 
 --
 -- Indices de la tabla `extraescolares`
 --
 ALTER TABLE `extraescolares`
- ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indices de la tabla `grupos`
 --
 ALTER TABLE `grupos`
- ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indices de la tabla `notas`
 --
 ALTER TABLE `notas`
- ADD PRIMARY KEY (`DNI_ALUMNO`,`EVALUACION`);
+  ADD PRIMARY KEY (`DNI_ALUMNO`,`EVALUACION`);
 
 --
 -- Indices de la tabla `profesor`
 --
 ALTER TABLE `profesor`
- ADD PRIMARY KEY (`DNI`);
+  ADD PRIMARY KEY (`DNI`);
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `alum_extra`
---
-ALTER TABLE `alum_extra`
-ADD CONSTRAINT `FK_AL_EX` FOREIGN KEY (`DNI_ALUMNO`) REFERENCES `alumnos` (`DNI`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `FK_EX_EX` FOREIGN KEY (`ID_EXTRAESCOLAR`) REFERENCES `extraescolares` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Filtros para la tabla `notas`
 --
 ALTER TABLE `notas`
-ADD CONSTRAINT `FK_AL_NT` FOREIGN KEY (`DNI_ALUMNO`) REFERENCES `alumnos` (`DNI`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_AL_NT` FOREIGN KEY (`DNI_ALUMNO`) REFERENCES `alumnos` (`DNI`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

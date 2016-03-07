@@ -5,7 +5,9 @@ function cargaModProfe(){
     var oSelectProfesor=$("#sel_profesor_profesores_mod");
     if(oSelectProfesor.length==0){
         $("<option>Seleccione un profesor</option>").appendTo(oSelectProfesor);
-        cargarSelectProfesores();
+        $.get("./php/obtenerProfesores",function(data){
+            rellenarSelectProfesoresMod(data);
+        });
     }
     oSelectProfesor.on("change",mostrarRestoFormModProf);
     $("#restoFormProf").addClass("oculto");
@@ -54,14 +56,13 @@ function mostrarRestoFormModProf(){
     $("#btnCancelarModProf").on("click", cancelar);
 }
 
-function cargarSelectProfesores(){
-    var lugar=$("#sel_profesor_profesores_mod");
-    var oProfesores=oXML.querySelectorAll("profesor");
-    for(var i=0;i<oProfesores.length;i++){
-        var opt=document.createElement("option");
-        opt.value=oProfesores[i].getAttribute("dni");
-        addContenido(opt,oProfesores[i].getAttribute("dni"));
-        lugar.appendChild(opt);
+function rellenarSelectProfesoresMod(datos){
+    var select=$('#sel_profesor_profesores_mod');
+    var profesor=$(datos).find('profesor');
+    for(var i=0;i<profesor.size();i++) {
+        $("<option value='"+$(profesor[i]).attr("dni")+"'>"+
+            $(profesor).find("nombre")+" "+$(profesor[i]).find("apellidos")+
+            "</option>").appendTo(select);
     }
 }
 
