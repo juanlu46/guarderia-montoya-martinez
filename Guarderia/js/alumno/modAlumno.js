@@ -14,21 +14,24 @@ function cargaModALumno(){
 }
 
 function mostrarRestoFormModAlumModAlum(){
-    rellenaCamposAlumno(this.options[this.selectedIndex].value);
-    $("#restoFormModAlumulario").removeClass("oculto");
+    rellenaCamposAlumno($(this).find("option:selected").val());
+    $("#restoFormularioModAlum").removeClass("oculto");
     $("#btnModAlum").on("click",validarFormModAlum);
     $("#btnCancelarModAlum").on("click", cancelar);
 }
 
 function rellenaCamposAlumno(sDni){
-    var oAlumno=buscarAlumno(sDni);
+    var oAjax=new XMLHttpRequest();
+    oAjax.open("GET","./php/obtenerAlumnos.php",false);
+    oAjax.send(null);
+    var oAlumno=$(oAjax.responseXML).find("alumno[dni='"+sDni+"']");
     oFormModAlum.find("#text_dni").val(sDni);
-    oFormModAlum.find("#text_nombre").val(oAlumno.querySelector("nombre").textContent);
-    oFormModAlum.find("#text_apellido").val(oAlumno.querySelector("apellidos").textContent);
-    oFormModAlum.find("#text_edad").val(oAlumno.querySelector("edad").textContent);
-    oFormModAlum.find("#text_grupo").val(oAlumno.querySelector("grupo").textContent);
-    oFormModAlum.find("#text_tlfn").val(oAlumno.querySelector("contacto").textContent);
-    oFormModAlum.find("#text_direccion").val(oAlumno.querySelector("direccion").textContent);
+    oFormModAlum.find("#text_nombre").val(oAlumno.find("nombre").text());
+    oFormModAlum.find("#text_apellido").val(oAlumno.find("apellidos").text());
+    oFormModAlum.find("#text_edad").val(oAlumno.find("edad").text());
+    oFormModAlum.find("#text_grupo").val(oAlumno.find("grupo").text());
+    oFormModAlum.find("#text_tlfn").val(oAlumno.find("contacto").text());
+    oFormModAlum.find("#text_direccion").val(oAlumno.find("direccion").text());
 }
 
 function validarFormModAlum(){

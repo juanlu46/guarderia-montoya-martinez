@@ -73,18 +73,13 @@ function rellenarSelectProfesoresMod(datos){
 }
 
 function rellenaCamposProfesor(sDni){
-    var oProfesor=buscarProfesor(sDni);
+    var oAjax=new XMLHttpRequest();
+    oAjax.open("GET","./php/obtenerProfesores.php",false);
+    oAjax.send(null);
+    var oProfesor=$(oAjax.responseXML).find("profesor[dni='"+sDni+"']");
     oFormModProfe.find("#text_dni").val(sDni);
-    oFormModProfe.find("#text_nombre").val(oProfesor.querySelector("nombre").textContent);
-    oFormModProfe.find("#text_apellido").val(oProfesor.querySelector("apellidos").textContent);
-    oFormModProfe.find("#text_tlfn").val(oProfesor.querySelector("telefono").textContent);
-    var oGrupos=oProfesor.querySelectorAll("grupo");
-    var oSelect=oFormModProfe.find("#select_gruposProf");
-    for(var i=0;i<oGrupos.length;i++){
-        var oOption=document.createElement("option");
-        var sValor=oGrupos[i].getAttribute("id");
-        oOption.value=sValor;
-        oOption.textContent=sValor;
-        oSelect.appendChild(oOption);
-    }
+    oFormModProfe.find("#text_nombre").val(oProfesor.find("nombre").text());
+    oFormModProfe.find("#text_apellido").val(oProfesor.find("apellidos").text());
+    oFormModProfe.find("#text_tlfn").val(oProfesor.find("telefono").text());
+    oFormModProfe.find("#text_grupo").val(oProfesor.find("grupo").text());
 }
