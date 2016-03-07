@@ -7,10 +7,10 @@ function cargaModALumno(){
     oSelectAlumnos.on("change",mostrarRestoFormModAlumModAlum);
     if(oSelectAlumnos.length==0){
         $("<option>Seleccione un alumno</option>").appendTo(oSelectAlumnos);
-        $.get("./php/obtenerAlumnos.php",function(data){
-            rellenarSelectAlumnosMod(data);
-        })
     }
+    $.get("./php/obtenerAlumnos.php",function(data){
+        rellenarSelectAlumnosMod(data);
+    })
 }
 
 function mostrarRestoFormModAlumModAlum(){

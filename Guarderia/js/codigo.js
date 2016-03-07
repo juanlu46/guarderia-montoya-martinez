@@ -225,16 +225,6 @@
         }
         $(oTextArea).text("");
     }
-    /* METODOS AUXILIARES*/
-    //Devuelve los objetos seleccionados de un select multiple
-    function getSelecteditems(oSelect){
-        var oOptions=[];
-        for(var i=0;i<oSelect.options.length;i++){
-            if(oSelect.options[i].selected)
-                oOptions.push(oSelect.options[i]);
-        }
-        return oOptions;
-    }
 
 
 function listadoAlumnos(edad,grupo,oXml){
@@ -448,7 +438,7 @@ function listadoAlumnos(edad,grupo,oXml){
         var alumnos=$(datos).find('alumno');
         for(var i=0;i<alumnos.size();i++) {
             $("<option value='"+$(alumnos[i]).attr("dni")+"'>"+
-                $(alumnos).find("nombre")+" "+$(alumnos[i]).find("apellidos")+
+                $(alumnos[i]).find("nombre").text()+" "+$(alumnos[i]).find("apellidos").text()+
                 "</option>").appendTo(select);
         }
     }

@@ -64,9 +64,6 @@ function anadirAlumnosAltaAct(){
     }
 }
 
-function eliminarAlumnoActAlta(){
-    var oSelect=$("#select_alumnos_act");
-    var oOptionSel=getSelecteditems(oSelect[0]);
-    for(var i=0;i<oOptionSel.length;i++)
-        oSelect.removeChild(oOptionSel[i]);
+function eliminarAlumnoActAlta() {
+    $("#select_alumnos_act").find("option:selected").remove();
 }

@@ -5,10 +5,10 @@ function cargaModProfe(){
     var oSelectProfesor=$("#sel_profesor_profesores_mod");
     if(oSelectProfesor.length==0){
         $("<option>Seleccione un profesor</option>").appendTo(oSelectProfesor);
-        $.get("./php/obtenerProfesores",function(data){
-            rellenarSelectProfesoresMod(data);
-        });
     }
+    $.get("./php/obtenerProfesores.php",function(data){
+        rellenarSelectProfesoresMod(data);
+    });
     oSelectProfesor.on("change",mostrarRestoFormModProf);
     $("#restoFormProf").addClass("oculto");
 }
@@ -67,7 +67,7 @@ function rellenarSelectProfesoresMod(datos){
     var profesor=$(datos).find('profesor');
     for(var i=0;i<profesor.size();i++) {
         $("<option value='"+$(profesor[i]).attr("dni")+"'>"+
-            $(profesor).find("nombre")+" "+$(profesor[i]).find("apellidos")+
+            $(profesor[i]).find("nombre").text()+" "+$(profesor[i]).find("apellidos").text()+
             "</option>").appendTo(select);
     }
 }
