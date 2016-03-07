@@ -43,9 +43,15 @@ function validarFormModProf(){
         $("<div title='Error Validación'>"+sMensajeError+"</div>").dialog();
     }
     else{
-        var oProfesor=newProfesor(form_modProf.text_nombre.value,form_modProf.text_apellido.value,form_modProf.text_dni.value,
-            form_modProf.text_tlfn.value,getGruposFormProf("modificar"));
-        alert(modificarXMLProfesor(oProfesor))
+        var sJson='{'+
+            '"nombre":"'+oFormModProfe.find("#text_nombre").val()+'",'+
+            '"apellido":"'+oFormModProfe.find("#text_apellido").val()+'",'+
+            '"dni":"'+oFormModProfe.find("#text_dni").val()+'",'+
+            '"grupo":"'+oFormModProfe.find("#text_grupo")()+'",'+
+            '"telefono":'+oFormModProfe.find("#text_tlfn")()+','+
+            '}';
+        var sParametros="datos="+sJson;
+        $.ajax('php/tramites/modProfesor.php',sParametros,'POST');
     }
 }
 

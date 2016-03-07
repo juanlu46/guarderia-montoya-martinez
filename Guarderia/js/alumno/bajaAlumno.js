@@ -15,7 +15,6 @@ function validarFormBajaAlum(){
     if(todoOk==false)
         $("<div title='Error Validación'>"+sMensajeError+"</div>").dialog();
     else {
-        var sParametro = 'datos={"dni":"' + oFormBajaAlum.find("#text_dni").val() + '"}';
-        $.get("./php/bajaAlumno.php",sParametro);
+        borrarAlumno(oFormBajaAlum.find("#text_dni").val());
     }
 }

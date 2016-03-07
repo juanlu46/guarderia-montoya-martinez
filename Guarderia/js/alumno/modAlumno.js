@@ -64,10 +64,17 @@ function validarFormModAlum(){
         $("<div title='Error Validación'>"+sMensajeError+"</div>").dialog();
     }
     else{
-        var oAlumnoMod=newAlumno(oFormModAlum.find("#txt_nombre").val(),oFormModAlum.find("#txt_apellido").val(),
-            oFormModAlum.find("#text_dni").val(),oFormModAlum.find("#txt_edad").val(),oFormModAlum.find("#txt_tlfn").val(),
-            oFormModAlum.find("#txt_direccion").val(),oFormModAlum.find("#txt_grupo").val());
-        alert(modificarXMLAlumno(oAlumnoMod));
+        var sJson='{'+
+            '"nombre":"'+oFormAltaAlum.find("#text_nombre").val()+'",'+
+            '"apellido":"'+oFormAltaAlum.find("#text_apellido").val()+'",'+
+            '"dni":"'+oFormAltaAlum.find("#text_dni").val()+'",'+
+            '"edad":'+oFormAltaAlum.find("#text_edad").val()+','+
+            '"grupo":"'+oFormAltaAlum.find("#text_grupo").val()+'",'+
+            '"telefono":'+oFormAltaAlum.find("#text_tlfn").val()+','+
+            '"direccion":"'+oFormAltaAlum.find("#text_direccion").val()+'"'+
+            '}';
+        var sParametros="datos="+sJson;
+        $.ajax('php/tramites/modAlumno.php',sParametros,'POST');
     }
 }
 

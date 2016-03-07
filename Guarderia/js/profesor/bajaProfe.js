@@ -15,6 +15,5 @@ function validarFormBajaProf(){
     if(todoOk==false)
         $("<div title='Error Validación'>"+sMensajeError+"</div>").dialog();
     else
-        var sParametro = 'datos={"dni":"' + oFormBajaProfe.find("#text_dni").val() + '"}';
-        $.get("./php/bajaProfesor.php",sParametro);
+        borrarProfesor(oFormBajaProfe.find("#text_dni").val());
 }
