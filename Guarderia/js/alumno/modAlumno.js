@@ -68,16 +68,16 @@ function validarFormModAlum(){
     }
     else{
         var sJson='{'+
-            '"nombre":"'+oFormAltaAlum.find("#text_nombre").val()+'",'+
-            '"apellido":"'+oFormAltaAlum.find("#text_apellido").val()+'",'+
-            '"dni":"'+oFormAltaAlum.find("#text_dni").val()+'",'+
-            '"edad":'+oFormAltaAlum.find("#text_edad").val()+','+
-            '"grupo":"'+oFormAltaAlum.find("#text_grupo").val()+'",'+
-            '"telefono":'+oFormAltaAlum.find("#text_tlfn").val()+','+
-            '"direccion":"'+oFormAltaAlum.find("#text_direccion").val()+'"'+
+            '"nombre":"'+oFormModAlum.find("#text_nombre").val()+'",'+
+            '"apellidos":"'+oFormModAlum.find("#text_apellido").val()+'",'+
+            '"dni":"'+oFormModAlum.find("#text_dni").val()+'",'+
+            '"edad":'+oFormModAlum.find("#text_edad").val()+','+
+            '"grupo":"'+oFormModAlum.find("#text_grupo").val()+'",'+
+            '"contacto":'+oFormModAlum.find("#text_tlfn").val()+','+
+            '"direccion":"'+oFormModAlum.find("#text_direccion").val()+'"'+
             '}';
         var sParametros="datos="+sJson;
-        $.ajax('php/tramites/modAlumno.php',sParametros,'POST');
+        $.post('php/tramites/modAlumno.php',sParametros);
     }
 }
 

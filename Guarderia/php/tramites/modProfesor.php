@@ -9,7 +9,7 @@ $sql="UPDATE profesor SET DNI='".$_REQUEST['dni']."',NOMBRE='".$_REQUEST['nombre
     "' WHERE DNI='".$_REQUEST['dni']."'";
 $mensaje="$(\"<div title='Modificar profesor'>";
 if($mySQLi->query($sql))
-    $mensaje.="Se hamodificado con éxito al profesor ".$_REQUEST['nombre']." ".
+    $mensaje.="Se ha modificado con éxito al profesor ".$_REQUEST['nombre']." ".
         $_REQUEST['apellidos'];
 else
     $mensaje.="Se ha producido un error: ".$mySQLi->errno."-".$mySQLi->error;

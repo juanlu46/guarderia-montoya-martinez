@@ -12,7 +12,7 @@ $sql="UPDATE alumnos SET DNI='".$oAlumno->dni."',NOMBRE='".$oAlumno->nombre."',"
     "'";
 $mensaje="$(\"<div title='Modificar alumno'>";
 if($mySQLi->query($sql))
-    $mensaje.="Se hamodificado con éxito al alumno ".$oAlumno->nombre." ".
+    $mensaje.="Se ha modificado con éxito al alumno ".$oAlumno->nombre." ".
         $oAlumno->apellidos;
 else
     $mensaje.="Se ha producido un error: ".$mySQLi->errno."-".$mySQLi->error;

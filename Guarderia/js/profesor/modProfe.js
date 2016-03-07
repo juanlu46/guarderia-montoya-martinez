@@ -43,15 +43,8 @@ function validarFormModProf(){
         $("<div title='Error Validación'>"+sMensajeError+"</div>").dialog();
     }
     else{
-        var sJson='{'+
-            '"nombre":"'+oFormModProfe.find("#text_nombre").val()+'",'+
-            '"apellido":"'+oFormModProfe.find("#text_apellido").val()+'",'+
-            '"dni":"'+oFormModProfe.find("#text_dni").val()+'",'+
-            '"grupo":"'+oFormModProfe.find("#text_grupo")()+'",'+
-            '"telefono":'+oFormModProfe.find("#text_tlfn")()+','+
-            '}';
-        var sParametros="datos="+sJson;
-        $.ajax('php/tramites/modProfesor.php',sParametros,'POST');
+        $.get('php/tramites/modProfesor.php',oFormModProfe.serialize()+"&dni="+
+            oFormModProfe.find("#text_dni").val());
     }
 }
 
