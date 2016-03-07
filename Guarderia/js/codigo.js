@@ -1,5 +1,5 @@
     window.addEventListener('load',inicio,false);
-    var oXML;
+
     function inicio() {
         document.getElementById("btnAlumnos").addEventListener("click",mostrarMenuAlumnos,false);
         document.getElementById("btnProfesores").addEventListener("click",mostrarMenuProf,false);
@@ -324,6 +324,9 @@
         if($('#form_modExp').size() == 0 )
             $("<div>").appendTo('.formModExp').load("formularios/formAltaNota.html", function(){$("#form_modExp").show("normal"); $.getScript("js/altaNotas.js");});
         $("#form_modExp").show("normal");
+        $.get('php/obtenerAlumnos.php',function(){ rellenarSelectAlumnosMod(data);});
+
+
     }
     function mostrarFormlistadoAlumnos(){
         ocultar("menuProf");
@@ -352,13 +355,15 @@
         ocultar("menuAlum");
         $("form").hide("normal");
         if($('#form_listarExtra').size() == 0 ) {
-            $("<div>").appendTo('.listadoExtra').load("formularios/listadoActExtra.html",function(){$("#form_listarExtra").show("normal");
-                $( "#fechaInicio" ).datepicker({dateFormat: "yy-mm-dd"});
-                $( "#fechaFin" ).datepicker({dateFormat: "yy-mm-dd"});});
+            $("<div>").appendTo('#listadoExtra').load("formularios/listadoActExtra.html", function () {
+                $("#form_listarExtra").show("normal");
+                $("#fechaInicio").datepicker({dateFormat: "yy-mm-dd"});
+                $("#fechaFin").datepicker({dateFormat: "yy-mm-dd"});
+                $('#btnMListarExtra').click(mostrarActExtra);
+                $('#btnCancelarListarExtra').click(cancelar);
+            });
         }
         $("#form_listarExtra").show("normal");
-        $('#btnMListarExtra').click(mostrarActExtra);
-        $('#btnCancelarListarExtra').click(cancelar);
     }
 
     //Funciones limpiar campos
@@ -408,7 +413,7 @@ function listadoAlumnos(edad,grupo,oXml){
     $('.listadoAlum').append(listado);
     crearDialogo('listarAlum','Listado Alumnos');
 }
-    function listadoProfesores(grupo,ordenarNombre,ordenarApellidos,oXml){
+    function listadoProfesores(grupo,oXml){
         var listado="<div id='listarProf'><table class='table table-hover'><caption>Listado de Profesores</caption><thead><tr><th>Nombre</th>";
         listado+="<th>Apellidos</th><th>Dni</th><th>Teléfono</th><th>Grupo</th></tr><tbody>";
         var profesores=$(oXml).find('profesor');
@@ -509,41 +514,86 @@ function listadoAlumnos(edad,grupo,oXml){
             var ordenarApellidos=$('#apellidos').prop('checked');
             var grupo = $('#sel_lista_profesores_grupo').val();
             var oXml=this.responseXML;
-            listadoProfesores(grupo,ordenarNombre,ordenarApellidos,oXml);
+            listadoProfesores(grupo,oXml);
         }
     }
     function mostrarActExtra(){
-        oAjaxListarActExtra=new XMLHttpRequest();
-        oAjaxListarActExtra.open('POST','php/obtenerExraescolares.php');
-        oAjaxListarActExtra.addEventListener('readystatechange',tratarRespuestaListaActExtra);
-        oAjaxListarActExtra.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        oAjaxListarActExtra.send();
+        var sMensajeError="";
+        var fechaIni=$('#fechaInicio').val();
+        var fechaFin=$('#fechaFin').val();
+        var fFechaIni =  new Date(fechaIni);
+        var fFechaFin = new Date(fechaFin);
+
+        if(fFechaFin<fFechaIni){
+            sMensajeError='La fecha de Inicio no puede ser mayor a la de fin';
+        }
+        else  if(fechaIni=="" || fechaFin==""){
+            sMensajeError+='Debe rellenar las dos fechas';
+        }
+
+        if(sMensajeError=="") {
+            oAjaxListarActExtra = new XMLHttpRequest();
+            if (fechaIni == "" && fechaFin == "")
+                oAjaxListarActExtra.open('GET', 'php/obtenerExraescolares.php');
+            else
+                oAjaxListarActExtra.open('GET', 'php/obtenerExraescolares.php?fechaInicio='+fechaIni+'&fechaFin='+fechaFin);
+            oAjaxListarActExtra.addEventListener('readystatechange', tratarRespuestaListaActExtra);
+            oAjaxListarActExtra.send();
+        }
+        else{
+            $("<div title='Error Validación'>"+sMensajeError+"</div>").dialog({
+                autoOpen: true,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                },
+                buttons: {
+                    "Aceptar": function () {
+                        $(this).dialog("close");
+                    }
+                },modal:true,
+                width:800
+            });
+
+        }
     }
     function tratarRespuestaListaActExtra(){
         if(this.readyState==4 && this.status==200){
-            var resultado=this.responseText();
-            crearDialogo('listadoExtra','Listado de Actividades Extraescolares');
+           $(this.responseText).dialog({
+               autoOpen: true,
+               show: {
+                   effect: "blind",
+                   duration: 1000
+               },
+               hide: {
+                   effect: "explode",
+                   duration: 1000
+               },
+               buttons: {
+                   "Aceptar": function () {
+                       $(this).dialog("close");
+                   }
+               },
+               width:800
+           });
         }
     }
     function rellenarSelectGruposAltaProf(datos){
         var select=$('#select_gruposProf');
         var grupos=$(datos).find('grupo');
         for(var i=0;i<grupos.size();i++) {
-            var opt=document.createElement('option');
-            opt.id=$(grupos[i]).attr("id");
-            opt.appendChild( document.createTextNode($(grupos[i]).attr("id")));
-            select.append(opt);
+            $("<option value='"+$(grupos[i]).attr("id")+"'>"+$(grupos[i]).attr("id")+"</option>").appendTo(select);
         }
     }
     function rellenarSelectAlumnosAct(datos){
         var select=$('#sel_alumno_act_alta');
         var alumnos=$(datos).find('alumno');
         for(var i=0;i<alumnos.size();i++) {
-            var opt=document.createElement('option');
-            opt.id=$(alumnos[i]).attr("dni");
-            opt.appendChild( document.createTextNode($(alumnos[i]).find("nombre").text()+" "+$(alumnos[i]).find("apellidos").text()));
-            select.append(opt);
+            $("<option value='"+$(alumnos[i]).attr("dni")+"'>"+$(alumnos[i]).find("nombre").text()+
+                $(alumnos[i]).find("apellidos").text()+"</option>").appendTo(select);
         }
-
-
     }
