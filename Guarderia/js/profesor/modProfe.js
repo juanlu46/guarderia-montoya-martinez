@@ -13,6 +13,7 @@ function cargaModProfe(){
     $("#restoFormProf").addClass("oculto");
 }
 
+
 function validarFormModProf(){
     var sMensajeError="";
     var todoOk=true;

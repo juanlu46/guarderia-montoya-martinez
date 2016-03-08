@@ -3,6 +3,24 @@ cargaAltaProfe();
 function cargaAltaProfe(){
     $("#btnAltaProf").on('click',validarFormAltaProf);
     $("#btnCancelarAltaProf").on('click',cancelar);
+    cargarGruposLocalStorage();
+}
+
+function cargarGruposLocalStorage(){
+    if(localStorage.getItem("grupos")==null) {
+        $.ajax({url: 'php/obtenerGrupos.php', success: function(data){
+            oGrupos=$(data).find("grupo");
+            var array=[];
+            for(var i=0;i<$(oGrupos).size();i++){
+                array.push($(oGrupos[i]).attr("id"));
+            }
+            localStorage.setItem("grupos",JSON.stringify(array));
+            rellenarSelectGruposAltaProf(array);
+        }});
+    }
+    else{
+        rellenarSelectGruposAltaProf(JSON.parse(localStorage.getItem("grupos")));
+    }
 }
 
 function validarFormAltaProf(){

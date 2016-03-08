@@ -7,7 +7,7 @@
         $('#btnListarAlum').click(mostrarFormlistadoAlumnos);
         $('#btnListarProf').click(mostrarFormListadoProfesores);
         $('#btnNotas').click(mostrarFormAltaNotas);
-        $('#btnListarAsig').click(mostrarFormListadoExtra);
+        $('#btnListarAsig').click(mostrarActExtra);
 
     }
 
@@ -28,17 +28,6 @@
         oAjax.open("GET","./php/obtenerAlumnos.php",false);
         oAjax.send(null);
         if($(oAjax.responseXML).find("alumno[dni='"+sDni+"']").size()>0) {
-            bEncontrado = true;
-        }
-        return bEncontrado;
-    }
-
-    function buscarActividad(sId){
-        var bEncontrado=false;
-        var oAjax=new XMLHttpRequest();
-        oAjax.open("GET","./php/obtenerExraescolares.php?"+encodeURI("xml=true"),false);
-        oAjax.send(null);
-        if($(oAjax.responseXML).find("extraescolar[id='"+sId+"']").size()>0) {
             bEncontrado = true;
         }
         return bEncontrado;
@@ -114,7 +103,6 @@
         $("form").hide("normal");
         if($('#form_altaProf').size() == 0 )
             $("<div>").appendTo('.form_altaProf').load("formularios/profesor/formAltaProf.html", function(){$("#form_altaProf").show("normal"); $.getScript("js/profesor/altaProfe.js");});
-        $.ajax({url:'php/obtenerGrupos.php',success:rellenarSelectGruposAltaProf});
         $("#form_altaProf").show("normal");
     }
     function mostrarFormModProf(){
@@ -194,25 +182,9 @@
         }
 
     }
-    function mostrarFormListadoExtra(){
-        ocultar("menuProf");
-        ocultar("menuAlum");
-        ocultar("menuAlum");
-        $("form").hide("normal");
-        if($('#form_listarExtra').size() == 0 ) {
-            $("<div>").appendTo('#listadoExtra').load("formularios/listadoActExtra.html", function () {
-                $("#form_listarExtra").show("normal");
-                $("#fechaInicio").datepicker({dateFormat: "yy-mm-dd"});
-                $("#fechaFin").datepicker({dateFormat: "yy-mm-dd"});
-                $('#btnMListarExtra').click(mostrarActExtra);
-                $('#btnCancelarListarExtra').click(cancelar);
-            });
-        }
-        $("#form_listarExtra").show("normal");
-    }
 
     //Funciones limpiar campos
-    function limpiarCampos(){
+    function limpiarCampos(oForm){
         var oInputs=$("input[type='text']");
         var oSelects=$("select");
         var oTextArea=$("textarea");
@@ -223,10 +195,33 @@
             for(var j=0;j<$(oOptions).size();j++)
                 $(oSelects[i]).find(oOptions[j]).remove();
         }
+        switch(oForm){
+            case "modAlum":
+                $.get("./php/obtenerAlumnos.php",function(data){
+                    rellenarSelectAlumnosMod(data);
+                });
+                break;
+            case "modProfe":
+                $.get("./php/obtenerProfesores.php",function(data){
+                    rellenarSelectProfesoresMod(data);
+                });
+                break;
+            case "altaAct":
+                $.ajax({url:'php/obtenerAlumnos.php',success:rellenarSelectAlumnosAct});
+                break;
+            case "altaNotas":
+                $.get({url:'php/obtenerAlumnos.php',success:rellenarSelectAlumnosExtra});
+                $("#text_evaluacion").append('<option value="1º">Primera</option><option value="2º">Segunda</option><option value="3º">Tercera</option>');
+                $("#select_curso").append('<option value="2015/2016">2015/2016</option><option value="2014/2015">2014/2015</option>');
+                break;
+            case "altaProfe":
+                cargarGruposLocalStorage();
+                break;
+        }
         $(oTextArea).text("");
     }
 
-
+// Metodos de Listados
 function listadoAlumnos(edad,grupo,oXml){
     var listado="<div id='listarAlum'><table class='table table-hover'><caption>Listado de Alumnos</caption><thead><tr><th>Nombre</th>";
     listado+="<th>Apellidos</th><th>Dni</th><th>Edad</th><th>Teléfono</th><th>Dirección</th><th>Grupo</th></tr><tbody>";
@@ -353,45 +348,10 @@ function listadoAlumnos(edad,grupo,oXml){
         }
     }
     function mostrarActExtra(){
-        var sMensajeError="";
-        var fechaIni=$('#fechaInicio').val();
-        var fechaFin=$('#fechaFin').val();
-        var fFechaIni =  new Date(fechaIni);
-        var fFechaFin = new Date(fechaFin);
-
-        if(fFechaFin<fFechaIni){
-            sMensajeError='La fecha de Inicio no puede ser mayor a la de fin';
-        }
-
-        if(sMensajeError=="") {
-            oAjaxListarActExtra = new XMLHttpRequest();
-            if (fechaIni == "" && fechaFin == "")
-                oAjaxListarActExtra.open('GET', 'php/obtenerExraescolares.php');
-            else
-                oAjaxListarActExtra.open('GET', 'php/obtenerExraescolares.php?fechaInicio='+fechaIni+'&fechaFin='+fechaFin);
-            oAjaxListarActExtra.addEventListener('readystatechange', tratarRespuestaListaActExtra);
-            oAjaxListarActExtra.send();
-        }
-        else{
-            $("<div title='Error Validación'>"+sMensajeError+"</div>").dialog({
-                autoOpen: true,
-                show: {
-                    effect: "blind",
-                    duration: 1000
-                },
-                hide: {
-                    effect: "explode",
-                    duration: 1000
-                },
-                buttons: {
-                    "Aceptar": function () {
-                        $(this).dialog("close");
-                    }
-                },modal:true,
-                width:800
-            });
-
-        }
+        oAjaxListarActExtra = new XMLHttpRequest();
+        oAjaxListarActExtra.open('GET', 'php/obtenerExraescolares.php');
+        oAjaxListarActExtra.addEventListener('readystatechange', tratarRespuestaListaActExtra);
+        oAjaxListarActExtra.send();
     }
     function tratarRespuestaListaActExtra(){
         if(this.readyState==4 && this.status==200){
@@ -414,12 +374,11 @@ function listadoAlumnos(edad,grupo,oXml){
            });
         }
     }
-    function rellenarSelectGruposAltaProf(datos){
+    function rellenarSelectGruposAltaProf(array){
         $('select option').remove();
         var select=$('#select_gruposProf');
-        var grupos=$(datos).find('grupo');
-        for(var i=0;i<grupos.size();i++) {
-            $("<option value='"+$(grupos[i]).attr("id")+"'>"+$(grupos[i]).attr("id")+"</option>").appendTo(select);
+        for(var i=0;i<array.length;i++) {
+            $("<option value='"+array[i]+"'>"+array[i]+"</option>").appendTo(select);
         }
     }
     function rellenarSelectAlumnosAct(datos){
@@ -443,7 +402,7 @@ function listadoAlumnos(edad,grupo,oXml){
         }
     }
     function rellenarSelectAlumnosExtra(datos){
-        $('#sel_alumnos_expediente_mod option').remove();
+        $('#sel_alumnos_expediente_mod').find('option').remove();
         var select=$('#sel_alumnos_expediente_mod');
         var alumnos=$(datos).find('alumno');
         for(var i=0;i<alumnos.size();i++) {
