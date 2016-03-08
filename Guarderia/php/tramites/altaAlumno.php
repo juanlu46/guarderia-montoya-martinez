@@ -13,9 +13,8 @@ $sql="INSERT INTO alumnos VALUES('".$oAlumno->dni."','".
 $mensaje="$(\"<div title='Alta Profesor'>";
 if($mySQLi->query($sql))
     $mensaje.="Se ha dado de alta con éxito al alumno ".$oAlumno->nombre." ".
-        $oAlumno->apellido;
+        $oAlumno->apellido."</div>\").dialog();limpiarCampos();";
 else
-    $mensaje.="Se ha producido un error: ".$mySQLi->errno."-".$mySQLi->error;
-$mensaje.="</div>\").dialog();";
+    $mensaje.="Se ha producido un error: ".$mySQLi->errno."-".$mySQLi->error."</div>\").dialog();";
 
 echo $mensaje;

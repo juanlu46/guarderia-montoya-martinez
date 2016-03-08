@@ -17,12 +17,12 @@ if($mySQLi->query($sql)) {
         $sql2.=",('" . $oAlumnos[$i] . "',".$id.")";
     }
     if($mySQLi->query($sql2))
-        $mensaje.= "Se ha dado de alta con éxito la actividad extraescolar";
+        $mensaje.= "Se ha dado de alta con éxito la actividad extraescolar"."</div>\").dialog();limpiarCampos();";
     else
-        $mensaje.="Se ha producido un error: ".$mySQLi->errno."-".$mySQLi->error;
+        $mensaje.="Se ha producido un error: ".$mySQLi->errno."-".$mySQLi->error."</div>\").dialog();";
 }
 else
-    $mensaje.="Se ha producido un error: ".$mySQLi->errno."-".$mySQLi->error;
-$mensaje.="</div>\").dialog();";
+    $mensaje.="Se ha producido un error: ".$mySQLi->errno."-".$mySQLi->error."</div>\").dialog();";
+
 
 echo $mensaje;

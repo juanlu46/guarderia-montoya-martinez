@@ -21,8 +21,8 @@ function validarAltaAct(){
         sMensajeError+="ID incorrecto\n";
         todoOk=false;
     }
-    if(!/^[a-z\d_]{2,15}$/i.test(oFormAltaExtra.find("#text_nombre").val())){
-        sMensajeError+="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
+    if(!/^[a-zA-Z\d_\/\s\/ ]{2,50}$/i.test(oFormAltaExtra.find("#text_nombre").val())){
+        sMensajeError+="Descipcion incorrecta, el nombre debe tener entre 2 y 50 caracteres\n";
         todoOk=false;
     }
 
@@ -49,9 +49,7 @@ function validarAltaAct(){
 
 function anadirAlumnosAltaAct(){
     var oSelect=$("#sel_alumno_act_alta");
-    if(oSelect[0].selectedIndex==0)
-        alert('No hay opción seleccionada');
-    else if(buscarRepeSelect(form_altaAct.select_alumnos_act.options,
+     if(buscarRepeSelect(form_altaAct.select_alumnos_act.options,
             sel_alumno_act_alta.options[sel_alumno_act_alta.selectedIndex].value)) {
         alert("No puede introducir alumnos repetidos");
     }

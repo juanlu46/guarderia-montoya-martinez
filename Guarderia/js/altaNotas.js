@@ -1,4 +1,4 @@
-var oFormAltaNotas=$("form_modExp");
+var oFormAltaNotas=$("#form_modExp");
 cargaAltaNotas();
 function cargaAltaNotas(){
     $('#sel_alumnos_expediente_mod').change(mostrarRestoFormAltaNotas)
@@ -58,7 +58,8 @@ function validarAltaNota(){
             "'materia2':"+oFormAltaNotas.find('#text_mat2').val()+","+
             "'nota2':"+oFormAltaNotas.find('#text_nota2').val()+","+
             "'materia3':"+oFormAltaNotas.find('#text_mat3').val()+","+
-            "'nota3':"+oFormAltaNotas.find('#text_nota3').val()+"}";
+            "'nota3':"+oFormAltaNotas.find('#text_nota3').val()+","+
+            "'dni':"+oFormAltaNotas.find('#text_AlumnoExp').val()+"}";
         $.ajax({url:'php/tramites/altaNota.php',data:arrayJson,dataType:'script',method:'GET'});
     }
 

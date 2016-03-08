@@ -21,8 +21,8 @@ function validarFormModProf(){
         sMensajeError="Nombre incorrecto, el nombre debe tener entre 2 y 15 caracteres\n";
         todoOk=false;
     }
-    if(!/^[a-z\d_]{4,15}$/i.test(oFormModProfe.find("#text_apellido").val())){
-        sMensajeError+="Apellido incorrecto, el apellido debe tener entre 4 y 15 caracteres\n";
+    if(!/^[a-z\d_]{2,15}$/i.test(oFormModProfe.find("#text_apellido").val())){
+        sMensajeError+="Apellido incorrecto, el apellido debe tener entre 2 y 15 caracteres\n";
         todoOk=false;
     }
     if(!/^(([A-Z]\d{8})|(\d{8}[A-Z])|(\d{8}[a-z]))$/.test(oFormModProfe.find("#text_dni").val())){

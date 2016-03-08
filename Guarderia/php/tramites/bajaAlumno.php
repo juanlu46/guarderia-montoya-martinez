@@ -9,9 +9,9 @@ $oAlumno=json_decode($sAlumno);
 $sql="DELETE FROM alumnos WHERE DNI='".$oAlumno->dni."'";
 $mensaje="$(\"<div title='Baja alumno'>";
 if($mySQLi->query($sql))
-    $mensaje.="Se ha dado de baja con éxito al alumno";
+    $mensaje.="Se ha dado de baja con éxito al alumno</div>\").dialog();limpiarCampos();";
 else
-    $mensaje.="Se ha producido un error: ".$mySQLi->errno."-".$mySQLi->error;
-$mensaje.="</div>\").dialog();";
+    $mensaje.="Se ha producido un error: ".$mySQLi->errno."-".$mySQLi->error."</div>\").dialog();";
+
 
 echo $mensaje;
