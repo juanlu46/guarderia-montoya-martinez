@@ -362,9 +362,6 @@ function listadoAlumnos(edad,grupo,oXml){
         if(fFechaFin<fFechaIni){
             sMensajeError='La fecha de Inicio no puede ser mayor a la de fin';
         }
-        else  if(fechaIni=="" || fechaFin==""){
-            sMensajeError+='Debe rellenar las dos fechas';
-        }
 
         if(sMensajeError=="") {
             oAjaxListarActExtra = new XMLHttpRequest();
