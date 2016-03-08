@@ -221,7 +221,7 @@
         for(var i=0;i<$(oSelects).size();i++){
             var oOptions=$(oSelects[i]).find("option");
             for(var j=0;j<$(oOptions).size();j++)
-                $(oSelects[i]).remove(oOptions[j]);
+                $(oSelects[i]).find(oOptions[j]).remove();
         }
         $(oTextArea).text("");
     }

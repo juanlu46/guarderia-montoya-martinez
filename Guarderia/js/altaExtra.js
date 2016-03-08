@@ -31,19 +31,14 @@ function validarAltaAct(){
     }
     else{
        var oAlumnos=[];
-        var oOptions=$("#select_alumnos_act").find("option");
-        var x;
+        var oOptions=getAlumnosFormAct();
         for(i=0;i<$(oOptions).size();i++){
             oAlumnos.push($(oOptions[i]).val());
         }
        var  arrayJson='{"id":'+oFormAltaExtra.find("#text_id").val()+','+
-            '"nombre":"'+oFormAltaExtra.find("#text_nombre").val()+'","alumnos":'+
-           JSON.stringify(oAlumnos)+'}';
-        $.ajax({url:"php/tramites/altaExtraEscolar.php",data:arrayJson,dataType:'script',method:'POST'});
-
-        getAlumnosFormAct("alta");
-
-        limpiarCampos();
+            '"descripcion":"'+oFormAltaExtra.find("#text_nombre").val()+'","alumnos":'+
+           JSON.stringify(oAlumnos)+',"fecha":"'+oFormAltaExtra.find("#text_fecha").val()+'"}';
+        $.ajax({url:"php/tramites/altaExtraEscolar.php",data:"datos="+arrayJson,method:'POST'});
     }
 }
 
@@ -51,14 +46,11 @@ function anadirAlumnosAltaAct(){
     var oSelect=$("#sel_alumno_act_alta");
      if(buscarRepeSelect(form_altaAct.select_alumnos_act.options,
             sel_alumno_act_alta.options[sel_alumno_act_alta.selectedIndex].value)) {
-        alert("No puede introducir alumnos repetidos");
+        $("<div title='Error'>No puede introducir alumnos repetidos</div>").dialog();
     }
     else{
-        var opt=document.createElement("option");
-        var texto=document.createTextNode(sel_alumno_act_alta.options[sel_alumno_act_alta.selectedIndex].value);
-        opt.value=sel_alumno_act_alta.options[sel_alumno_act_alta.selectedIndex].value;
-        opt.appendChild(texto);
-        form_altaAct.select_alumnos_act.appendChild(opt);
+         var sDni=oSelect.find("option:selected").val();
+         $("<option value='"+sDni+"'>"+sDni+"</option>").appendTo("#select_alumnos_act");
     }
 }
 

@@ -4,24 +4,17 @@ function cargaAltaNotas(){
     $('#sel_alumnos_expediente_mod').change(mostrarRestoFormAltaNotas)
 }
 function rellenaCamposExpediente(sDni){
-    var oExpediente=buscarExpediente(sDni);
-    form_modExp.text_AlumnoExp.value=sDni;
-    form_modExp.text_observaciones.value=oExpediente.querySelector("observaciones").textContent;
-    var oNotas=oExpediente.querySelectorAll("notaAsig");
-    var oSelect=form_modExp.select_expediente;
-    for(var i=0;i<oNotas.length;i++){
-        var oOption=document.createElement("option");
-        var sAsig=oNotas[i].getAttribute("id");
-        var sNota=oNotas[i].textContent;
-        oOption.value=sAsig+"-"+sNota;
-        oOption.textContent="ID: "+sAsig+" - Nota: "+sNota;
-        oSelect.appendChild(oOption);
-    }
+    oFormAltaNotas.find("#text_AlumnoExp").val(sDni);
 }
 function mostrarRestoFormAltaNotas(){
+    if($("#text_evaluacion").find("option").size()==0)
+        $("#text_evaluacion").append('<option value="1º">Primera</option><option value="2º">Segunda</option><option value="3º">Tercera</option>');
+    if($("#select_curso").find("option").size()==0)
+        $("#select_curso").append('<option value="2015/2016">2015/2016</option><option value="2014/2015">2014/2015</option>');
     $('#restoFormExp').removeClass('oculto');
     $('#btnModExp').click(validarAltaNota);
     $('#btnCancelarModExp').click(cancelar);
+    rellenaCamposExpediente($("#sel_alumnos_expediente_mod").find("option:selected").val());
 }
 function validarAltaNota(){
     var todoOk=true;
@@ -53,14 +46,7 @@ function validarAltaNota(){
     if(todoOk==false)
         $("<div title='Error Validación'>"+sMensajeError+"</div>").dialog();
     else{
-        var arrayJson="{'materia1':"+oFormAltaNotas.find('#text_mat1').val()+","+
-            "'nota1':"+oFormAltaNotas.find('#text_nota1').val()+","+
-            "'materia2':"+oFormAltaNotas.find('#text_mat2').val()+","+
-            "'nota2':"+oFormAltaNotas.find('#text_nota2').val()+","+
-            "'materia3':"+oFormAltaNotas.find('#text_mat3').val()+","+
-            "'nota3':"+oFormAltaNotas.find('#text_nota3').val()+","+
-            "'dni':"+oFormAltaNotas.find('#text_AlumnoExp').val()+"}";
-        $.ajax({url:'php/tramites/altaNota.php',data:arrayJson,dataType:'script',method:'GET'});
+        $.ajax({url:'php/tramites/altaNota.php',data:oFormAltaNotas.serialize(),method:'GET'});
     }
 
 }

@@ -5,7 +5,8 @@ header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 
 $mySQLi=new mysqli("localhost","root","","guarderia");
 $mySQLi->query("SET NAMES utf8");
-$oExtraescolar=json_decode($_REQUEST['datos']);
+$sExtraescolar=$_REQUEST['datos'];
+$oExtraescolar=json_decode($sExtraescolar);
 $sql="INSERT INTO extraescolares VALUES(".$oExtraescolar->id.",'".$oExtraescolar->descripcion."',".
     $oExtraescolar->fecha.")";
 $mensaje="$(\"<div title='Alta Extraescolar'>";
